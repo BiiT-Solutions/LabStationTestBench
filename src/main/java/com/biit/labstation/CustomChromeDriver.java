@@ -4,11 +4,14 @@ package com.biit.labstation;
 import io.github.bonigarcia.wdm.WebDriverManager;
 import jakarta.annotation.PostConstruct;
 import jakarta.annotation.PreDestroy;
+import org.openqa.selenium.By;
 import org.openqa.selenium.Dimension;
 import org.openqa.selenium.Point;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
@@ -21,7 +24,7 @@ public class CustomChromeDriver {
     private static final boolean DESTROY_DRIVER = true;
     private static final Integer WIDTH = 1920;
     private static final Integer HEIGHT = 1080;
-    private static final Duration WAIT_TIMEOUT_SECS = Duration.ofSeconds(10);
+    private static final Duration WAIT_TIMEOUT_SECS = Duration.ofSeconds(3);
 
     private String language = "en-EN";
 
@@ -41,8 +44,6 @@ public class CustomChromeDriver {
         if (headless) {
             chromeOptions.addArguments("--headless=new");
         }
-//        chromeOptions.setCapability("chrome.switches",
-//                Collections.singletonList("--ignore-certificate-errors,--web-security=false,--ssl-protocol=any,--ignore-ssl-errors=true"));
         chromeOptions.setAcceptInsecureCerts(true);
         return chromeOptions;
     }
@@ -76,4 +77,15 @@ public class CustomChromeDriver {
         return headlessMode;
     }
 
+    private WebDriverWait getWebDriverWait() {
+        return webDriverWait;
+    }
+
+    public WebElement findElement(By field) {
+        return getDriver().findElement(field);
+    }
+
+    public WebElement findElementWaiting(By field) {
+        return getWebDriverWait().until(ExpectedConditions.visibilityOfElementLocated(field));
+    }
 }
