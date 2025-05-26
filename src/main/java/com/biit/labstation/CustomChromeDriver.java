@@ -1,0 +1,79 @@
+package com.biit.labstation;
+
+
+import io.github.bonigarcia.wdm.WebDriverManager;
+import jakarta.annotation.PostConstruct;
+import jakarta.annotation.PreDestroy;
+import org.openqa.selenium.Dimension;
+import org.openqa.selenium.Point;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.chrome.ChromeOptions;
+import org.openqa.selenium.support.ui.WebDriverWait;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Component;
+
+import java.time.Duration;
+
+@Component
+public class CustomChromeDriver {
+
+    private static final boolean DESTROY_DRIVER = true;
+    private static final Integer WIDTH = 1920;
+    private static final Integer HEIGHT = 1080;
+    private static final Duration WAIT_TIMEOUT_SECS = Duration.ofSeconds(10);
+
+    private String language = "en-EN";
+
+    private WebDriver driver;
+
+    private WebDriverWait webDriverWait;
+
+    @Value("${headless.mode:true}")
+    private boolean headlessMode;
+
+    private ChromeOptions getChromeOptions(boolean headless) {
+        final ChromeOptions chromeOptions = new ChromeOptions();
+        chromeOptions.addArguments("start-maximized");
+        chromeOptions.addArguments("lang=" + language);
+        chromeOptions.addArguments("--no-sandbox");
+        chromeOptions.addArguments("--disable-search-engine-choice-screen");
+        if (headless) {
+            chromeOptions.addArguments("--headless=new");
+        }
+//        chromeOptions.setCapability("chrome.switches",
+//                Collections.singletonList("--ignore-certificate-errors,--web-security=false,--ssl-protocol=any,--ignore-ssl-errors=true"));
+        chromeOptions.setAcceptInsecureCerts(true);
+        return chromeOptions;
+    }
+
+    @PostConstruct
+    public WebDriver getDriver() {
+        if (driver == null) {
+            WebDriverManager.chromedriver().setup();
+            driver = new ChromeDriver(getChromeOptions(isHeadless()));
+            driver.manage().window().setPosition(new Point(0, 0));
+            driver.manage().window().setSize(new Dimension(WIDTH, HEIGHT));
+            webDriverWait = new WebDriverWait(driver, WAIT_TIMEOUT_SECS);
+        }
+        return driver;
+    }
+
+    @PreDestroy
+    public void closeDriver() {
+        if (DESTROY_DRIVER) {
+            try {
+                getDriver().close();
+                getDriver().quit();
+                driver = null;
+            } catch (NullPointerException npe) {
+                // Already destroyed.
+            }
+        }
+    }
+
+    public boolean isHeadless() {
+        return headlessMode;
+    }
+
+}
