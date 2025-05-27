@@ -18,8 +18,8 @@ import static org.awaitility.Awaitility.await;
 @Test(groups = "login")
 @DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_CLASS)
 public class LoginIT extends AbstractTestNGSpringContextTests {
-    private static final String ADMIN_USER_NAME = "admin@test.com";
-    private static final String ADMIN_USER_PASSWORD = "asd123";
+    public static final String ADMIN_USER_NAME = "admin@test.com";
+    public static final String ADMIN_USER_PASSWORD = "asd123";
 
     @Autowired
     private UserManager userManager;

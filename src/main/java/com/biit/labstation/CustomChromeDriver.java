@@ -17,6 +17,8 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 import java.time.Duration;
+import java.util.HashMap;
+import java.util.Map;
 
 @Component
 public class CustomChromeDriver {
@@ -26,7 +28,7 @@ public class CustomChromeDriver {
     private static final Integer HEIGHT = 1080;
     private static final Duration WAIT_TIMEOUT_SECS = Duration.ofSeconds(3);
 
-    private String language = "en-EN";
+    private String language = "en-GB";
 
     private WebDriver driver;
 
@@ -38,9 +40,13 @@ public class CustomChromeDriver {
     private ChromeOptions getChromeOptions(boolean headless) {
         final ChromeOptions chromeOptions = new ChromeOptions();
         chromeOptions.addArguments("start-maximized");
-        chromeOptions.addArguments("lang=" + language);
         chromeOptions.addArguments("--no-sandbox");
         chromeOptions.addArguments("--disable-search-engine-choice-screen");
+        chromeOptions.addArguments("--lang=" + language);
+        //Previous line not working, adding a workaround.
+        Map<String, Object> prefs = new HashMap<>();
+        prefs.put("intl.accept_languages", language);
+        chromeOptions.setExperimentalOption("prefs", prefs);
         if (headless) {
             chromeOptions.addArguments("--headless=new");
         }
