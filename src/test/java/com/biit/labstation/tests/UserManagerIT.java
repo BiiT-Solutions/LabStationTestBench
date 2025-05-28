@@ -126,8 +126,8 @@ public class UserManagerIT extends AbstractTestNGSpringContextTests {
     public void addApplications() {
         //Appointment Center
         userManager.addApplication("AppointmentCenter", "Tool for handling appointments");
-        userManager.addApplicationRole("AppointmentCenter", "admin");
-        userManager.linkApplicationRoleWithServiceRole("AppointmentCenter", "admin", "admin");
+        userManager.addApplicationRole("AppointmentCenter", "ADMIN");
+        userManager.linkApplicationRoleWithServiceRole("AppointmentCenter", "ADMIN", "admin");
         userManager.addServiceRole("AppointmentCenter", "editor");
         userManager.linkApplicationRoleWithServiceRole("AppointmentCenter", "editor", "editor");
         userManager.addServiceRole("AppointmentCenter", "manager");

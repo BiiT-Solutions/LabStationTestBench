@@ -187,18 +187,18 @@ public class UserManager {
         popup.close();
     }
 
-    public void linkApplicationRoleWithServiceRole(String service, String role, String backendRole) {
+    public void linkApplicationRoleWithServiceRole(String backendService, String role, String backendRole) {
         try {
             selectApplicationsOnMenu();
         } catch (Exception e) {
             //Already on this tab.
         }
-        selectTableRow(service, 1);
+        selectTableRow(backendService, 1);
         pressTableButton("button-linkage");
         popup.selectTableRow(role, 1);
         popup.findElement("popup-button-linkage").click();
         popup.findElement("popup-button-plus").click();
-        dropdown.selectItem("service-selector", service);
+        dropdown.selectItem("service-selector", backendService);
         dropdown.selectItem("role-selector", backendRole);
         popup.findElement("assign-role-button").click();
         popup.close();
