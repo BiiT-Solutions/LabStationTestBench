@@ -44,7 +44,7 @@ public class CustomChromeDriver {
         chromeOptions.addArguments("--disable-search-engine-choice-screen");
         chromeOptions.addArguments("--lang=" + language);
         //Previous line not working, adding a workaround.
-        Map<String, Object> prefs = new HashMap<>();
+        final Map<String, Object> prefs = new HashMap<>();
         prefs.put("intl.accept_languages", language);
         chromeOptions.setExperimentalOption("prefs", prefs);
         if (headless) {
