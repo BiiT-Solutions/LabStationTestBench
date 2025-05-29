@@ -1,0 +1,31 @@
+package com.biit.labstation.components;
+
+public enum PopupId {
+    USER("user-popup"),
+    APPLICATION("application-popup"),
+    SERVICE("service-popup"),
+    ORGANIZATION("organization-popup"),
+    TEAM("team-popup"),
+    ROLE("role-popup"),
+    USER_ROLE("user-role-popup"),
+    USER_GROUP("user-group-popup"),
+    APPLICATION_ROLE_SERVICES("application-role-services-popup"),
+    APPLICATION_ROLE("application-role-popup"),
+    APPLICATION_ROLE_ASSIGN("application-role-assign-popup"),
+    APPLICATION_ROLE_SELECTOR("application-role-selector-popup"),
+    RESET_PASSWORD("reset-password-popup"),
+    CONFIRMATION("confirmation-popup"),
+    CONFIRMATION_ASSIGN("confirmation-assign-popup"),
+    CONFIRMATION_UNASSIGN("confirmation-unassign-popup"),
+    CONFIRMATION_DELETE("confirmation-delete-popup");
+
+    private final String id;
+
+    PopupId(String id) {
+        this.id = id;
+    }
+
+    public String getId() {
+        return id;
+    }
+}

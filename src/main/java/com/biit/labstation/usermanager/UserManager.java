@@ -5,7 +5,9 @@ import com.biit.labstation.components.Dropdown;
 import com.biit.labstation.components.Login;
 import com.biit.labstation.components.NavBar;
 import com.biit.labstation.components.Popup;
+import com.biit.labstation.components.PopupId;
 import com.biit.labstation.components.Table;
+import com.biit.labstation.components.TableId;
 import com.biit.labstation.logger.LabStationLogger;
 import org.openqa.selenium.By;
 import org.openqa.selenium.support.ui.Select;
@@ -119,36 +121,42 @@ public class UserManager {
         }
     }
 
-    public void pressTableButton(String id) {
-        table.getMenuItem(id).click();
+    public void pressTableButton(TableId tableId, String id) {
+        table.getMenuItem(tableId, id).click();
+        try {
+            Thread.sleep(WAITING_TIME);
+        } catch (InterruptedException e) {
+            //Ignore
+            Thread.currentThread().interrupt();
+        }
     }
 
-    public String getTableContent(int row, int column) {
-        return table.getContent(row, column);
+    public String getTableContent(TableId tableId, int row, int column) {
+        return table.getContent(tableId, row, column);
     }
 
-    public void selectTableRow(int row) {
-        table.selectRow(row);
+    public void selectTableRow(TableId tableId, int row) {
+        table.selectRow(tableId, row);
     }
 
-    public void selectTableRow(String label, int column) {
-        table.selectRow(label, column);
+    public void selectTableRow(TableId tableId, String label, int column) {
+        table.selectRow(tableId, label, column);
     }
 
-    public int getTableSize() {
-        return table.countRows();
+    public int getTableSize(TableId tableId) {
+        return table.countRows(tableId);
     }
 
-    public void unselectTableRow(int row) {
-        table.unselectRow(row);
+    public void unselectTableRow(TableId tableId, int row) {
+        table.unselectRow(tableId, row);
     }
 
     public void addService(String name, String description) {
         selectServicesOnMenu();
-        pressTableButton("button-plus");
-        popup.findElement("service-name").findElement(By.id("input")).sendKeys(name);
-        popup.findElement("service-description").findElement(By.id("input")).sendKeys(description);
-        popup.findElement("popup-service-save-button").click();
+        pressTableButton(TableId.SERVICE_TABLE, "button-plus");
+        popup.findElement(PopupId.SERVICE, "service-name").findElement(By.id("input")).sendKeys(name);
+        popup.findElement(PopupId.SERVICE, "service-description").findElement(By.id("input")).sendKeys(description);
+        popup.findElement(PopupId.SERVICE, "popup-service-save-button").click();
     }
 
     public void addServiceRole(String service, String role) {
@@ -157,20 +165,20 @@ public class UserManager {
         } catch (Exception e) {
             //Already on this tab.
         }
-        selectTableRow(service, 1);
-        pressTableButton("button-linkage");
-        popup.findElement("popup-service-button-plus").click();
-        popup.findElement("create-service-role").findElement(By.id("input")).sendKeys(role);
-        popup.findElement("popup-save-button").click();
-        popup.close();
+        selectTableRow(TableId.SERVICE_TABLE, service, 1);
+        pressTableButton(TableId.SERVICE_TABLE, "button-linkage");
+        popup.findElement(PopupId.ROLE, "popup-service-button-plus").click();
+        popup.findElement(PopupId.ROLE, "create-service-role").findElement(By.id("input")).sendKeys(role);
+        popup.findElement(PopupId.ROLE, "popup-save-button").click();
+        popup.close(PopupId.ROLE);
     }
 
     public void addApplication(String name, String description) {
         selectApplicationsOnMenu();
-        pressTableButton("button-plus");
-        popup.findElement("application-name").findElement(By.id("input")).sendKeys(name);
-        popup.findElement("application-description").findElement(By.id("input")).sendKeys(description);
-        popup.findElement("popup-save-button").click();
+        pressTableButton(TableId.APPLICATION_TABLE, "button-plus");
+        popup.findElement(PopupId.APPLICATION, "application-name").findElement(By.id("input")).sendKeys(name);
+        popup.findElement(PopupId.APPLICATION, "application-description").findElement(By.id("input")).sendKeys(description);
+        popup.findElement(PopupId.APPLICATION, "popup-save-button").click();
     }
 
     public void addApplicationRole(String application, String role) {
@@ -179,66 +187,66 @@ public class UserManager {
         } catch (Exception e) {
             //Already on this tab.
         }
-        selectTableRow(application, 1);
-        pressTableButton("button-linkage");
-        popup.findElement("popup-application-button-plus").click();
-        dropdown.selectItem("role-selector", role);
-        popup.findElement("assign-button").click();
-        popup.close();
+        selectTableRow(TableId.APPLICATION_TABLE, application, 1);
+        pressTableButton(TableId.APPLICATION_TABLE, "button-linkage");
+        popup.findElement(PopupId.APPLICATION_ROLE, "popup-application-roles-button-plus").click();
+        dropdown.selectItem(PopupId.APPLICATION_ROLE_SELECTOR.getId(), role);
+        popup.findElement(PopupId.APPLICATION_ROLE, "assign-button").click();
+        popup.close(PopupId.APPLICATION_ROLE);
     }
 
-    public void linkApplicationRoleWithServiceRole(String backendService, String role, String backendRole) {
+    public void linkApplicationRoleWithServiceRole(String application, String backendService, String role, String backendRole) {
         try {
             selectApplicationsOnMenu();
         } catch (Exception e) {
             //Already on this tab.
         }
-        selectTableRow(backendService, 1);
-        pressTableButton("button-linkage");
-        popup.selectTableRow(role, 1);
-        popup.findElement("popup-button-linkage").click();
-        popup.findElement("popup-button-plus").click();
+        selectTableRow(TableId.APPLICATION_TABLE, application, 1);
+        pressTableButton(TableId.APPLICATION_TABLE, "button-linkage");
+        popup.selectTableRow(TableId.ROLE_TABLE, role, 1);
+        popup.findElement(PopupId.APPLICATION_ROLE, "popup-application-roles-button-linkage").click();
+        popup.findElement(PopupId.APPLICATION_ROLE_ASSIGN, "popup-button-plus").click();
         dropdown.selectItem("service-selector", backendService);
         dropdown.selectItem("role-selector", backendRole);
-        popup.findElement("assign-role-button").click();
-        popup.close();
+        popup.findElement(PopupId.APPLICATION_ROLE_ASSIGN, "assign-role-button").click();
+        popup.close(PopupId.APPLICATION_ROLE_ASSIGN);
         //One close for the role assigner, the second for the role list.
-        popup.close();
+        popup.close(PopupId.APPLICATION_ROLE);
     }
 
-    public String getCurrentPage() {
-        return table.getCurrentPage();
+    public String getCurrentPage(TableId tableId) {
+        return table.getCurrentPage(tableId);
     }
 
-    public String getTotalPages() {
-        return table.getTotalPages();
+    public String getTotalPages(TableId tableId) {
+        return table.getTotalPages(tableId);
     }
 
 
-    public void goFirstPage() {
-        table.goFirstPage();
+    public void goFirstPage(TableId tableId) {
+        table.goFirstPage(tableId);
     }
 
-    public void goPreviousPage() {
-        table.goPreviousPage();
+    public void goPreviousPage(TableId tableId) {
+        table.goPreviousPage(tableId);
     }
 
-    public void goNextPage() {
-        table.goNextPage();
+    public void goNextPage(TableId tableId) {
+        table.goNextPage(tableId);
     }
 
-    public void goLastPage() {
-        table.goLastPage();
+    public void goLastPage(TableId tableId) {
+        table.goLastPage(tableId);
     }
 
     public void addRole(String name, String description) {
         selectRolesOnMenu();
-        pressTableButton("button-plus");
-        popup.findElement("create-role").findElement(By.id("role-name")).findElement(By.id("input")).sendKeys(name);
+        pressTableButton(TableId.ROLE_TABLE, "button-plus");
+        popup.findElement(PopupId.ROLE, "role-name").findElement(By.id("input")).sendKeys(name);
         if (description != null) {
-            popup.findElement("create-role").findElement(By.id("role-description")).findElement(By.id("input")).sendKeys(name);
+            popup.findElement(PopupId.ROLE, "role-description").findElement(By.id("input")).sendKeys(name);
         }
-        popup.findElement("popup-save-button").click();
+        popup.findElement(PopupId.ROLE, "save-role-button").click();
     }
 
     public void linkRoleWithApplication(String role, String application, String service, String backendRole) {
@@ -247,22 +255,22 @@ public class UserManager {
         } catch (Exception e) {
             //Already on this tab.
         }
-        selectTableRow(role, 1);
-        pressTableButton("button-linkage");
-        popup.findElement("application-button-plus").click();
-        final Select applicationSelector = new Select(popup.findElement("application-selector").findElement(By.id("input")));
+        selectTableRow(TableId.APPLICATION_TABLE, role, 1);
+        pressTableButton(TableId.APPLICATION_TABLE, "button-linkage");
+        popup.findElement(null, "application-button-plus").click();
+        final Select applicationSelector = new Select(popup.findElement(null, "application-selector").findElement(By.id("input")));
         applicationSelector.selectByVisibleText(application);
-        popup.findElement("assign-application-button").click();
+        popup.findElement(null, "assign-application-button").click();
 
-        popup.selectTableRow(application, 1);
-        popup.findElement("application-button-linkage").click();
-        popup.findElement("popup-button-plus").click();
-        final Select serviceSelector = new Select(popup.findElement("service-selector").findElement(By.id("input")));
+        popup.selectTableRow(TableId.APPLICATION_ROLE_TABLE, application, 1);
+        popup.findElement(null, "application-button-linkage").click();
+        popup.findElement(null, "popup-button-plus").click();
+        final Select serviceSelector = new Select(popup.findElement(null, "service-selector").findElement(By.id("input")));
         serviceSelector.selectByVisibleText(service);
-        final Select roleSelector = new Select(popup.findElement("role-selector").findElement(By.id("input")));
+        final Select roleSelector = new Select(popup.findElement(null, "role-selector").findElement(By.id("input")));
         roleSelector.selectByVisibleText(backendRole);
-        popup.findElement("assign-role-button").click();
-        popup.selectTableRow(role, 1);
+        popup.findElement(null, "assign-role-button").click();
+        popup.selectTableRow(TableId.APPLICATION_ROLE_TABLE, role, 1);
     }
 
 }

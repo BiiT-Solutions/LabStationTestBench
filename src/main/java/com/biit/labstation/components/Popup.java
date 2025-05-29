@@ -17,28 +17,37 @@ public class Popup {
         this.table = table;
     }
 
-    public WebElement findElement(String id) {
-        return customChromeDriver.findElementWaiting(By.id("biit-popup")).findElement(By.id("content")).findElement(By.id(id));
+    public WebElement findElement(PopupId popupId, String id) {
+        if (popupId != null) {
+            return customChromeDriver.findElementWaiting(By.id(popupId.getId())).findElement(By.id("biit-popup")).findElement(By.id("content")).findElement(By.id(id));
+        } else {
+            return customChromeDriver.findElementWaiting(By.id("biit-popup")).findElement(By.id("content")).findElement(By.id(id));
+        }
     }
 
-    public void selectLastRow() {
-        table.selectLastRow();
-    }
-
-    public void selectRow(int rowIndex) {
-        table.selectRow(rowIndex);
-    }
-
-    public void close() {
+    public void close(PopupId popupId) {
         try {
-            customChromeDriver.findElementWaiting(By.id("biit-popup")).findElement(By.id("header")).findElement(By.id("popup-x-button")).click();
+            if (popupId != null) {
+                customChromeDriver.findElementWaiting(By.id(popupId.getId())).findElement(By.id("biit-popup")).findElement(By.id("header")).findElement(By.id("popup-x-button")).click();
+            } else {
+                customChromeDriver.findElementWaiting(By.id("biit-popup")).findElement(By.id("header")).findElement(By.id("popup-x-button")).click();
+            }
         } catch (Exception e) {
             //Cannot close.
             LabStationLogger.errorMessage(this.getClass(), e);
         }
     }
 
-    public void selectTableRow(String label, int column) {
-        table.selectRow(label, column);
+    public void selectTableRow(TableId tableId, String label, int column) {
+        table.selectRow(tableId, label, column);
+    }
+
+
+    public void selectTableLastRow(TableId tableId) {
+        table.selectLastRow(tableId);
+    }
+
+    public void selectTableRow(TableId tableId, int rowIndex) {
+        table.selectRow(tableId, rowIndex);
     }
 }
