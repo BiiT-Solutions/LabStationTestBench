@@ -18,4 +18,10 @@ public class Dropdown {
         customChromeDriver.findElementWaiting(By.id(parent)).findElement(By.id("dropdown")).findElement(By.xpath(".//div[@id='content']/a[contains(text(), '"
                 + item + "')]")).click();
     }
+
+    public void selectItem(String parent, String selector, String item) {
+        customChromeDriver.findElementWaiting(By.id(parent)).findElement(By.id(selector)).findElement(By.id("input")).click();
+        customChromeDriver.findElementWaiting(By.id(parent)).findElement(By.id(selector)).findElement(By.id("dropdown")).findElement(By.xpath(".//div[@id='content']/a[contains(text(), '"
+                + item + "')]")).click();
+    }
 }

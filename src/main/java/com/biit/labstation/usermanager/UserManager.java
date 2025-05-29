@@ -10,7 +10,6 @@ import com.biit.labstation.components.Table;
 import com.biit.labstation.components.TableId;
 import com.biit.labstation.logger.LabStationLogger;
 import org.openqa.selenium.By;
-import org.openqa.selenium.support.ui.Select;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
@@ -244,33 +243,42 @@ public class UserManager {
         pressTableButton(TableId.ROLE_TABLE, "button-plus");
         popup.findElement(PopupId.ROLE, "role-name").findElement(By.id("input")).sendKeys(name);
         if (description != null) {
-            popup.findElement(PopupId.ROLE, "role-description").findElement(By.id("input")).sendKeys(name);
+            popup.findElement(PopupId.ROLE, "role-description").findElement(By.id("input")).sendKeys(description);
         }
         popup.findElement(PopupId.ROLE, "save-role-button").click();
     }
 
-    public void linkRoleWithApplication(String role, String application, String service, String backendRole) {
+    public void linkRoleWithApplication(String role, String application) {
         try {
-            selectApplicationsOnMenu();
+            selectRolesOnMenu();
         } catch (Exception e) {
             //Already on this tab.
         }
-        selectTableRow(TableId.APPLICATION_TABLE, role, 1);
-        pressTableButton(TableId.APPLICATION_TABLE, "button-linkage");
-        popup.findElement(null, "application-button-plus").click();
-        final Select applicationSelector = new Select(popup.findElement(null, "application-selector").findElement(By.id("input")));
-        applicationSelector.selectByVisibleText(application);
-        popup.findElement(null, "assign-application-button").click();
+        selectTableRow(TableId.ROLE_TABLE, role, 1);
+        pressTableButton(TableId.ROLE_TABLE, "button-linkage");
+        popup.findElement(PopupId.ROLE, "application-button-plus").click();
+        dropdown.selectItem(PopupId.ASSIGN_APPLICATION_SELECTOR.getId(), application);
 
+        popup.findElement(PopupId.ASSIGN_APPLICATION_SELECTOR, "assign-application-button").click();
+        popup.close(PopupId.ROLE);
+    }
+
+    public void linkRoleWithApplicationService(String role, String application, String service, String backendRole) {
+        try {
+            selectRolesOnMenu();
+        } catch (Exception e) {
+            //Already on this tab.
+        }
+        selectTableRow(TableId.ROLE_TABLE, role, 1);
+        pressTableButton(TableId.ROLE_TABLE, "button-linkage");
         popup.selectTableRow(TableId.APPLICATION_ROLE_TABLE, application, 1);
-        popup.findElement(null, "application-button-linkage").click();
-        popup.findElement(null, "popup-button-plus").click();
-        final Select serviceSelector = new Select(popup.findElement(null, "service-selector").findElement(By.id("input")));
-        serviceSelector.selectByVisibleText(service);
-        final Select roleSelector = new Select(popup.findElement(null, "role-selector").findElement(By.id("input")));
-        roleSelector.selectByVisibleText(backendRole);
-        popup.findElement(null, "assign-role-button").click();
-        popup.selectTableRow(TableId.APPLICATION_ROLE_TABLE, role, 1);
+        popup.findElement(PopupId.ROLE, "application-button-linkage").click();
+        popup.findElement(PopupId.SERVICE_ROLE, "popup-button-plus").click();
+        dropdown.selectItem(PopupId.APPLICATION_ROLE_SERVICES.getId(), "service-selector", service);
+        dropdown.selectItem(PopupId.APPLICATION_ROLE_SERVICES.getId(), "role-selector", backendRole);
+        popup.findElement(PopupId.APPLICATION_ROLE_SERVICES, "assign-role-button").click();
+        popup.close(PopupId.SERVICE_ROLE);
+        popup.close(PopupId.ROLE);
     }
 
 }

@@ -13,6 +13,8 @@ public enum PopupId {
     APPLICATION_ROLE("application-role-popup"),
     APPLICATION_ROLE_ASSIGN("application-role-assign-popup"),
     APPLICATION_ROLE_SELECTOR("application-role-selector-popup"),
+    ASSIGN_APPLICATION_SELECTOR("assign-application-popup"),
+    SERVICE_ROLE("service-role-popup"),
     RESET_PASSWORD("reset-password-popup"),
     CONFIRMATION("confirmation-popup"),
     CONFIRMATION_ASSIGN("confirmation-assign-popup"),
