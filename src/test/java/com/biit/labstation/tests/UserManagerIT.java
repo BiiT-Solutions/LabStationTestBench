@@ -30,8 +30,8 @@ public class UserManagerIT extends AbstractTestNGSpringContextTests {
     @Autowired
     private SnackBar snackBar;
 
-    @Value("${retry.first.login}")
-    private boolean retryFirstLogin;
+    @Value("${starts.from.clean.database}")
+    private boolean startsFormCleanDatabase;
 
     @BeforeClass
     public void setup() throws InterruptedException {
@@ -39,7 +39,7 @@ public class UserManagerIT extends AbstractTestNGSpringContextTests {
         //Creates admin user.
         userManager.login(ADMIN_USER_NAME, ADMIN_USER_PASSWORD);
         //After a complete wipe out of the database, the first login is for creating user, the second one for accessing it.
-        if (retryFirstLogin) {
+        if (startsFormCleanDatabase) {
             Thread.sleep(2000);
             userManager.login(ADMIN_USER_NAME, ADMIN_USER_PASSWORD);
         }
@@ -116,15 +116,24 @@ public class UserManagerIT extends AbstractTestNGSpringContextTests {
         userManager.addServiceRole("ProfileMatcher", "editor");
         userManager.addServiceRole("ProfileMatcher", "viewer");
 
-        // We need to change table page, but when it is the first access,
-        // UserManagerSystem services is created on background and not shown on the table until refreshed.
-        // So we force the refresh moving to a different view.
-        userManager.selectApplicationsOnMenu();
 
         //XForms
         userManager.addService("XForms", "Form Runner");
+        //Takes some millis to refresh and appear the component.
+        try {
+            Thread.sleep(200);
+        } catch (InterruptedException e) {
+            //Ignore
+            Thread.currentThread().interrupt();
+        }
         userManager.goNextPage(TableId.SERVICE_TABLE);
         userManager.addServiceRole("XForms", "user");
+
+        //UserManagerSystem
+        userManager.goPreviousPage(TableId.SERVICE_TABLE);
+        userManager.addServiceRole("UserManagerSystem", "admin");
+        userManager.addServiceRole("UserManagerSystem", "editor");
+        userManager.addServiceRole("UserManagerSystem", "viewer");
     }
 
     @Test(dependsOnMethods = "checkUserExists")
@@ -133,7 +142,8 @@ public class UserManagerIT extends AbstractTestNGSpringContextTests {
         userManager.addRole("CADT", "Fill up the CADT test.");
         userManager.addRole("Credibility", "Credibility form access.");
         userManager.addRole("Customer List", "Shows all the customers in the FactDashboard.");
-        userManager.addRole("Happiness At Work", "HaW form.");
+        userManager.addRole("Organization List", "Access to all the organizations in the FactDashboard.");
+        userManager.addRole("Happiness at Work", "HaW form.");
         userManager.addRole("NCA", "NCA form.");
         userManager.addRole("admin", "Other admins.");
         userManager.addRole("ceo", null);
@@ -169,16 +179,122 @@ public class UserManagerIT extends AbstractTestNGSpringContextTests {
     @Test(dependsOnMethods = {"addApplications", "addRoles"})
     public void addApplicationsRoles() {
         userManager.addApplicationRole("AppointmentCenter", "admin");
-        userManager.linkApplicationRoleWithServiceRole("AppointmentCenter", "AppointmentCenter", "admin", "admin");
+        userManager.linkApplicationRoleWithServiceRole("AppointmentCenter", "admin", "AppointmentCenter", "admin");
         userManager.addApplicationRole("AppointmentCenter", "editor");
-        userManager.linkApplicationRoleWithServiceRole("AppointmentCenter", "AppointmentCenter", "editor", "editor");
+        userManager.linkApplicationRoleWithServiceRole("AppointmentCenter", "editor", "AppointmentCenter", "editor");
         userManager.addApplicationRole("AppointmentCenter", "manager");
-        userManager.linkApplicationRoleWithServiceRole("AppointmentCenter", "AppointmentCenter", "manager", "editor");
-        userManager.linkApplicationRoleWithServiceRole("AppointmentCenter", "AppointmentCenter", "manager", "viewer");
+        userManager.linkApplicationRoleWithServiceRole("AppointmentCenter", "manager", "AppointmentCenter", "editor");
+        userManager.linkApplicationRoleWithServiceRole("AppointmentCenter", "manager", "AppointmentCenter", "viewer");
         userManager.addApplicationRole("AppointmentCenter", "speaker");
-        userManager.linkApplicationRoleWithServiceRole("AppointmentCenter", "AppointmentCenter", "speaker", "editor");
-        userManager.linkApplicationRoleWithServiceRole("AppointmentCenter", "AppointmentCenter", "speaker", "viewer");
+        userManager.linkApplicationRoleWithServiceRole("AppointmentCenter", "speaker", "AppointmentCenter", "editor");
+        userManager.linkApplicationRoleWithServiceRole("AppointmentCenter", "speaker", "AppointmentCenter", "viewer");
         userManager.addApplicationRole("AppointmentCenter", "user");
+        userManager.linkApplicationRoleWithServiceRole("AppointmentCenter", "user", "AppointmentCenter", "viewer");
+
+        userManager.addApplicationRole("BaseFormDroolsEngine", "admin");
+        userManager.linkApplicationRoleWithServiceRole("BaseFormDroolsEngine", "admin", "BaseFormDroolsEngine", "admin");
+        userManager.addApplicationRole("BaseFormDroolsEngine", "user");
+        userManager.linkApplicationRoleWithServiceRole("BaseFormDroolsEngine", "user", "BaseFormDroolsEngine", "viewer");
+
+        userManager.addApplicationRole("BiitSurveys", "user");
+        userManager.linkApplicationRoleWithServiceRole("BiitSurveys", "user", "FactManager", "editor");
+
+        userManager.addApplicationRole("CardGame", "user");
+        userManager.linkApplicationRoleWithServiceRole("CardGame", "user", "FactManager", "editor");
+
+        userManager.addApplicationRole("DataTide", "admin");
+        userManager.linkApplicationRoleWithServiceRole("DataTide", "admin", "DataTide", "admin");
+
+        userManager.addApplicationRole("FactManager", "admin");
+        userManager.linkApplicationRoleWithServiceRole("FactManager", "admin", "FactManager", "admin");
+        userManager.addApplicationRole("FactManager", "user");
+        userManager.linkApplicationRoleWithServiceRole("FactManager", "user", "FactManager", "viewer");
+
+        //Facts dashboard CADT will be done later.
+
+        userManager.addApplicationRole("FactsDashboard", "Credibility");
+        userManager.linkApplicationRoleWithServiceRole("FactsDashboard", "Credibility", "FactManager", "viewer");
+        userManager.linkApplicationRoleWithServiceRole("FactsDashboard", "Credibility", "InfographicEngine", "viewer");
+
+        userManager.addApplicationRole("FactsDashboard", "Customer List");
+        userManager.linkApplicationRoleWithServiceRole("FactsDashboard", "Customer List", "UserManagerSystem", "editor");
+
+        userManager.addApplicationRole("FactsDashboard", "Happiness at Work");
+        userManager.linkApplicationRoleWithServiceRole("FactsDashboard", "Happiness at Work", "FactManager", "viewer");
+
+        userManager.addApplicationRole("FactsDashboard", "NCA");
+        userManager.linkApplicationRoleWithServiceRole("FactsDashboard", "NCA", "FactManager", "viewer");
+        userManager.linkApplicationRoleWithServiceRole("FactsDashboard", "NCA", "InfographicEngine", "viewer");
+
+        userManager.addApplicationRole("FactsDashboard", "Organization List");
+        userManager.linkApplicationRoleWithServiceRole("FactsDashboard", "Organization List", "UserManagerSystem", "editor");
+
+        userManager.addApplicationRole("FactsDashboard", "ceo");
+        userManager.linkApplicationRoleWithServiceRole("FactsDashboard", "ceo", "FactManager", "admin");
+        userManager.linkApplicationRoleWithServiceRole("FactsDashboard", "ceo", "InfographicEngine", "viewer");
+
+        userManager.addApplicationRole("FactsDashboard", "practitioner");
+        userManager.linkApplicationRoleWithServiceRole("FactsDashboard", "practitioner", "UserManagerSystem", "editor");
+
+        userManager.addApplicationRole("FactsDashboard", "teamleader");
+        userManager.linkApplicationRoleWithServiceRole("FactsDashboard", "teamleader", "FactManager", "admin");
+        userManager.linkApplicationRoleWithServiceRole("FactsDashboard", "teamleader", "InfographicEngine", "viewer");
+
+        userManager.addApplicationRole("FactsDashboard", "xls access");
+        userManager.linkApplicationRoleWithServiceRole("FactsDashboard", "teamleader", "FactManager", "viewer");
+
+        userManager.addApplicationRole("InfographicEngine", "admin");
+        userManager.linkApplicationRoleWithServiceRole("InfographicEngine", "admin", "InfographicEngine", "admin");
+
+        userManager.addApplicationRole("InfographicEngine", "practitioner");
+        userManager.linkApplicationRoleWithServiceRole("InfographicEngine", "practitioner", "FactManager", "editor");
+        userManager.linkApplicationRoleWithServiceRole("InfographicEngine", "practitioner", "InfographicEngine", "editor");
+
+        userManager.addApplicationRole("InfographicEngine", "user");
+        userManager.linkApplicationRoleWithServiceRole("InfographicEngine", "user", "InfographicEngine", "viewer");
+
+        userManager.addApplicationRole("KafkaProxy", "admin");
+        userManager.linkApplicationRoleWithServiceRole("KafkaProxy", "admin", "KafkaProxy", "admin");
+
+        userManager.addApplicationRole("KafkaProxy", "user");
+        userManager.linkApplicationRoleWithServiceRole("KafkaProxy", "admin", "KafkaProxy", "editor");
+        userManager.linkApplicationRoleWithServiceRole("KafkaProxy", "admin", "KafkaProxy", "viewer");
+
+        userManager.addApplicationRole("KnowledgeSystem", "admin");
+        userManager.linkApplicationRoleWithServiceRole("KnowledgeSystem", "admin", "KnowledgeSystem", "admin");
+
+        userManager.addApplicationRole("KnowledgeSystem", "user");
+        userManager.linkApplicationRoleWithServiceRole("KnowledgeSystem", "user", "KnowledgeSystem", "viewer");
+
+        userManager.goNextPage(TableId.APPLICATION_TABLE);
+
+        userManager.addApplicationRole("MetaViewerStructure", "admin");
+        userManager.linkApplicationRoleWithServiceRole("MetaViewerStructure", "admin", "MetaViewerStructure", "admin");
+
+        userManager.addApplicationRole("MetaViewerStructure", "user");
+        userManager.linkApplicationRoleWithServiceRole("MetaViewerStructure", "user", "MetaViewerStructure", "viewer");
+
+        userManager.addApplicationRole("ProfileMatcher", "admin");
+        userManager.linkApplicationRoleWithServiceRole("ProfileMatcher", "admin", "ProfileMatcher", "admin");
+
+        userManager.addApplicationRole("ProfileMatcher", "manager");
+        userManager.linkApplicationRoleWithServiceRole("ProfileMatcher", "manager", "ProfileMatcher", "editor");
+
+        userManager.addApplicationRole("ProfileMatcher", "user");
+        userManager.linkApplicationRoleWithServiceRole("ProfileMatcher", "user", "ProfileMatcher", "viewer");
+
+        userManager.addApplicationRole("UserManagerSystem", "admin");
+        userManager.linkApplicationRoleWithServiceRole("UserManagerSystem", "admin", "UserManagerSystem", "admin");
+
+        userManager.addApplicationRole("UserManagerSystem", "editor");
+        userManager.linkApplicationRoleWithServiceRole("UserManagerSystem", "editor", "UserManagerSystem", "editor");
+
+        userManager.addApplicationRole("UserManagerSystem", "user");
+        userManager.linkApplicationRoleWithServiceRole("UserManagerSystem", "user", "UserManagerSystem", "viewer");
+
+        userManager.addApplicationRole("XForms", "user");
+        userManager.linkApplicationRoleWithServiceRole("XForms", "user", "FactManager", "viewer");
+        userManager.linkApplicationRoleWithServiceRole("XForms", "user", "XForms", "user");
     }
 
 
@@ -190,6 +306,16 @@ public class UserManagerIT extends AbstractTestNGSpringContextTests {
         userManager.linkRoleWithApplication("CADT", "FactsDashboard");
         userManager.linkRoleWithApplicationService("CADT", "FactsDashboard", "FactManager", "viewer");
         userManager.linkRoleWithApplicationService("CADT", "FactsDashboard", "InfographicEngine", "viewer");
+
+        //Check that role is inserted on the application.
+        userManager.selectApplicationsOnMenu();
+        userManager.selectTableRow(TableId.APPLICATION_TABLE, "FactsDashboard", 1);
+        userManager.pressTableButton(TableId.APPLICATION_TABLE, "button-linkage");
+        //No exception must be there.
+        userManager.selectTableRow(TableId.ROLE_TABLE, "CADT", 1);
+        userManager.pressTableButton(TableId.ROLE_TABLE, "button-linkage");
+        Assert.assertEquals(userManager.getTableContent(TableId.SERVICE_TABLE, 0, 1), "FactManager");
+        Assert.assertEquals(userManager.getTableContent(TableId.SERVICE_TABLE, 1, 1), "InfographicEngine");
     }
 
 

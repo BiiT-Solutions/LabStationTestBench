@@ -81,6 +81,18 @@ public class Table {
         }
     }
 
+    public void unselectRow(TableId tableId, String label, int column) {
+        await().atMost(Duration.ofSeconds(WAITING_TIME_SECONDS)).until(() -> {
+            for (int i = 0; i < countRows(tableId); i++) {
+                if (Objects.equals(getContent(tableId, i, column), label)) {
+                    unselectRow(tableId, i);
+                    return true;
+                }
+            }
+            return false;
+        });
+    }
+
     public void selectLastRow(TableId tableId) {
         selectRow(tableId, countRows(tableId) - 1);
     }

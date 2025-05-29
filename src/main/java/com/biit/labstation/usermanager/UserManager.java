@@ -15,7 +15,7 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class UserManager {
-    private static final int WAITING_TIME = 500;
+    private static final int WAITING_TIME = 300;
     private final CustomChromeDriver customChromeDriver;
     private final Login login;
     private final NavBar navBar;
@@ -139,7 +139,11 @@ public class UserManager {
     }
 
     public void selectTableRow(TableId tableId, String label, int column) {
+        try{
         table.selectRow(tableId, label, column);
+        } catch (Exception e) {
+            //Already selected.
+        }
     }
 
     public int getTableSize(TableId tableId) {
@@ -148,6 +152,14 @@ public class UserManager {
 
     public void unselectTableRow(TableId tableId, int row) {
         table.unselectRow(tableId, row);
+    }
+
+    public void unselectTableRow(TableId tableId, String label, int column) {
+        try {
+            table.unselectRow(tableId, label, column);
+        } catch (Exception e) {
+            //Already unselected.
+        }
     }
 
     public void addService(String name, String description) {
@@ -170,6 +182,7 @@ public class UserManager {
         popup.findElement(PopupId.ROLE, "create-service-role").findElement(By.id("input")).sendKeys(role);
         popup.findElement(PopupId.ROLE, "popup-save-button").click();
         popup.close(PopupId.ROLE);
+        unselectTableRow(TableId.SERVICE_TABLE, service, 1);
     }
 
     public void addApplication(String name, String description) {
@@ -192,9 +205,10 @@ public class UserManager {
         dropdown.selectItem(PopupId.APPLICATION_ROLE_SELECTOR.getId(), role);
         popup.findElement(PopupId.APPLICATION_ROLE, "assign-button").click();
         popup.close(PopupId.APPLICATION_ROLE);
+        unselectTableRow(TableId.APPLICATION_TABLE, application, 1);
     }
 
-    public void linkApplicationRoleWithServiceRole(String application, String backendService, String role, String backendRole) {
+    public void linkApplicationRoleWithServiceRole(String application, String role, String backendService, String backendRole) {
         try {
             selectApplicationsOnMenu();
         } catch (Exception e) {
@@ -211,6 +225,7 @@ public class UserManager {
         popup.close(PopupId.APPLICATION_ROLE_ASSIGN);
         //One close for the role assigner, the second for the role list.
         popup.close(PopupId.APPLICATION_ROLE);
+        unselectTableRow(TableId.APPLICATION_TABLE, application, 1);
     }
 
     public String getCurrentPage(TableId tableId) {
