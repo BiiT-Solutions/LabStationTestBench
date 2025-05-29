@@ -61,66 +61,66 @@ public class UserManagerIT extends AbstractTestNGSpringContextTests {
     }
 
 
-//    @Test(dependsOnMethods = "checkUserExists")
-//    public void addBackendServices() {
-//        //Appointment Center
-//        userManager.addService("AppointmentCenter", "Tool for handling appointments");
-//        userManager.addServiceRole("AppointmentCenter", "admin");
-//        userManager.addServiceRole("AppointmentCenter", "editor");
-//        userManager.addServiceRole("AppointmentCenter", "manager");
-//        userManager.addServiceRole("AppointmentCenter", "viewer");
-//
-//        //BaseFormDroolsEngine
-//        userManager.addService("BaseFormDroolsEngine", "ABCD Rules runner");
-//        userManager.addServiceRole("BaseFormDroolsEngine", "admin");
-//        userManager.addServiceRole("BaseFormDroolsEngine", "editor");
-//        userManager.addServiceRole("BaseFormDroolsEngine", "viewer");
-//
-//        //DataTide
-//        userManager.addService("DataTide", "Dummy data generator");
-//        userManager.addServiceRole("DataTide", "admin");
-//
-//        //FactManager
-//        userManager.addService("FactManager", "Facts storage and search functionality");
-//        userManager.addServiceRole("FactManager", "admin");
-//        userManager.addServiceRole("FactManager", "editor");
-//        userManager.addServiceRole("FactManager", "viewer");
-//
-//        //InfographicEngine
-//        userManager.addService("InfographicEngine", "Created beautiful SVGs");
-//        userManager.addServiceRole("InfographicEngine", "admin");
-//        userManager.addServiceRole("InfographicEngine", "editor");
-//        userManager.addServiceRole("InfographicEngine", "viewer");
-//
-//        //KafkaProxy
-//        userManager.addService("KafkaProxy", "For sending Kafka events through a REST API");
-//        userManager.addServiceRole("KafkaProxy", "admin");
-//        userManager.addServiceRole("KafkaProxy", "editor");
-//        userManager.addServiceRole("KafkaProxy", "viewer");
-//
-//        //KafkaProxy
-//        userManager.addService("KnowledgeSystem", "Storing Knowledge");
-//        userManager.addServiceRole("KnowledgeSystem", "admin");
-//        userManager.addServiceRole("KnowledgeSystem", "editor");
-//        userManager.addServiceRole("KnowledgeSystem", "viewer");
-//
-//        //MetaViewerStructure
-//        userManager.addService("MetaViewerStructure", "Filtering elements");
-//        userManager.addServiceRole("MetaViewerStructure", "admin");
-//        userManager.addServiceRole("MetaViewerStructure", "editor");
-//        userManager.addServiceRole("MetaViewerStructure", "viewer");
-//
-//        //ProfileMatcher
-//        userManager.addService("ProfileMatcher", "Search profiles for vacancies");
-//        userManager.addServiceRole("ProfileMatcher", "admin");
-//        userManager.addServiceRole("ProfileMatcher", "editor");
-//        userManager.addServiceRole("ProfileMatcher", "viewer");
-//
-//        //XForms
-//        userManager.addService("XForms", "Form Runner");
-//        userManager.goNextPage(TableId.SERVICE_TABLE);
-//        userManager.addServiceRole("XForms", "user");
-//    }
+    @Test(dependsOnMethods = "checkUserExists")
+    public void addBackendServices() {
+        //Appointment Center
+        userManager.addService("AppointmentCenter", "Tool for handling appointments");
+        userManager.addServiceRole("AppointmentCenter", "admin");
+        userManager.addServiceRole("AppointmentCenter", "editor");
+        userManager.addServiceRole("AppointmentCenter", "manager");
+        userManager.addServiceRole("AppointmentCenter", "viewer");
+
+        //BaseFormDroolsEngine
+        userManager.addService("BaseFormDroolsEngine", "ABCD Rules runner");
+        userManager.addServiceRole("BaseFormDroolsEngine", "admin");
+        userManager.addServiceRole("BaseFormDroolsEngine", "editor");
+        userManager.addServiceRole("BaseFormDroolsEngine", "viewer");
+
+        //DataTide
+        userManager.addService("DataTide", "Dummy data generator");
+        userManager.addServiceRole("DataTide", "admin");
+
+        //FactManager
+        userManager.addService("FactManager", "Facts storage and search functionality");
+        userManager.addServiceRole("FactManager", "admin");
+        userManager.addServiceRole("FactManager", "editor");
+        userManager.addServiceRole("FactManager", "viewer");
+
+        //InfographicEngine
+        userManager.addService("InfographicEngine", "Created beautiful SVGs");
+        userManager.addServiceRole("InfographicEngine", "admin");
+        userManager.addServiceRole("InfographicEngine", "editor");
+        userManager.addServiceRole("InfographicEngine", "viewer");
+
+        //KafkaProxy
+        userManager.addService("KafkaProxy", "For sending Kafka events through a REST API");
+        userManager.addServiceRole("KafkaProxy", "admin");
+        userManager.addServiceRole("KafkaProxy", "editor");
+        userManager.addServiceRole("KafkaProxy", "viewer");
+
+        //KafkaProxy
+        userManager.addService("KnowledgeSystem", "Storing Knowledge");
+        userManager.addServiceRole("KnowledgeSystem", "admin");
+        userManager.addServiceRole("KnowledgeSystem", "editor");
+        userManager.addServiceRole("KnowledgeSystem", "viewer");
+
+        //MetaViewerStructure
+        userManager.addService("MetaViewerStructure", "Filtering elements");
+        userManager.addServiceRole("MetaViewerStructure", "admin");
+        userManager.addServiceRole("MetaViewerStructure", "editor");
+        userManager.addServiceRole("MetaViewerStructure", "viewer");
+
+        //ProfileMatcher
+        userManager.addService("ProfileMatcher", "Search profiles for vacancies");
+        userManager.addServiceRole("ProfileMatcher", "admin");
+        userManager.addServiceRole("ProfileMatcher", "editor");
+        userManager.addServiceRole("ProfileMatcher", "viewer");
+
+        //XForms
+        userManager.addService("XForms", "Form Runner");
+        userManager.goNextPage(TableId.SERVICE_TABLE);
+        userManager.addServiceRole("XForms", "user");
+    }
 
     @Test(dependsOnMethods = "checkUserExists")
     public void addRoles() {
@@ -142,8 +142,8 @@ public class UserManagerIT extends AbstractTestNGSpringContextTests {
     }
 
 
-    //@Test(dependsOnMethods = {"addBackendServices"})
-    @Test(dependsOnMethods = "checkUserExists")
+    @Test(dependsOnMethods = {"addBackendServices"})
+    //@Test(dependsOnMethods = "checkUserExists")
     public void addApplications() {
         //Appointment Center
         userManager.addApplication("AppointmentCenter", "Tool for handling appointments");
