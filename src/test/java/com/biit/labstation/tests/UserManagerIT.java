@@ -314,8 +314,8 @@ public class UserManagerIT extends AbstractTestNGSpringContextTests {
         //No exception must be there.
         userManager.selectTableRow(TableId.ROLE_TABLE, "CADT", 1);
         userManager.pressTableButton(TableId.ROLE_TABLE, "popup-application-roles-button-linkage");
-        Assert.assertEquals(userManager.getTableContent(TableId.SERVICE_TABLE, 0, 1), "FactManager");
-        Assert.assertEquals(userManager.getTableContent(TableId.SERVICE_TABLE, 1, 1), "InfographicEngine");
+        Assert.assertEquals(userManager.getTableContent(TableId.APPLICATION_ROLE_TABLE, 0, 1), "FactManager");
+        Assert.assertEquals(userManager.getTableContent(TableId.APPLICATION_ROLE_TABLE, 1, 1), "InfographicEngine");
     }
 
 
