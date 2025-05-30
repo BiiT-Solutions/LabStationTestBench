@@ -141,8 +141,8 @@ public class UserManagerIT extends AbstractTestNGSpringContextTests {
         //Appointment Center
         userManager.addRole("CADT", "Fill up the CADT test.");
         userManager.addRole("Credibility", "Credibility form access.");
-        userManager.addRole("Customer List", "Shows all the customers in the FactDashboard.");
-        userManager.addRole("Organization List", "Access to all the organizations in the FactDashboard.");
+        userManager.addRole("Customer List", "Shows all the customers in the FactsDashboard.");
+        userManager.addRole("Organization List", "Access to all the organizations in the FactsDashboard.");
         userManager.addRole("Happiness at Work", "HaW form.");
         userManager.addRole("NCA", "NCA form.");
         userManager.addRole("admin", "Other admins.");
@@ -241,7 +241,7 @@ public class UserManagerIT extends AbstractTestNGSpringContextTests {
         userManager.linkApplicationRoleWithServiceRole("FactsDashboard", "teamleader", "InfographicEngine", "viewer");
 
         userManager.addApplicationRole("FactsDashboard", "xls access");
-        userManager.linkApplicationRoleWithServiceRole("FactsDashboard", "teamleader", "FactManager", "viewer");
+        userManager.linkApplicationRoleWithServiceRole("FactsDashboard", "xls access", "FactManager", "viewer");
 
         userManager.addApplicationRole("InfographicEngine", "admin");
         userManager.linkApplicationRoleWithServiceRole("InfographicEngine", "admin", "InfographicEngine", "admin");
@@ -257,8 +257,8 @@ public class UserManagerIT extends AbstractTestNGSpringContextTests {
         userManager.linkApplicationRoleWithServiceRole("KafkaProxy", "admin", "KafkaProxy", "admin");
 
         userManager.addApplicationRole("KafkaProxy", "user");
-        userManager.linkApplicationRoleWithServiceRole("KafkaProxy", "admin", "KafkaProxy", "editor");
-        userManager.linkApplicationRoleWithServiceRole("KafkaProxy", "admin", "KafkaProxy", "viewer");
+        userManager.linkApplicationRoleWithServiceRole("KafkaProxy", "user", "KafkaProxy", "editor");
+        userManager.linkApplicationRoleWithServiceRole("KafkaProxy", "user", "KafkaProxy", "viewer");
 
         userManager.addApplicationRole("KnowledgeSystem", "admin");
         userManager.linkApplicationRoleWithServiceRole("KnowledgeSystem", "admin", "KnowledgeSystem", "admin");
@@ -316,6 +316,152 @@ public class UserManagerIT extends AbstractTestNGSpringContextTests {
         userManager.pressTableButton(TableId.ROLE_TABLE, "popup-application-roles-button-linkage");
         Assert.assertEquals(userManager.getTableContent(TableId.APPLICATION_ROLE_TABLE, 0, 1), "FactManager");
         Assert.assertEquals(userManager.getTableContent(TableId.APPLICATION_ROLE_TABLE, 1, 1), "InfographicEngine");
+    }
+
+
+    @Test(dependsOnMethods = "checkUserExists")
+    public void addGroups() {
+        userManager.addGroup("Admin", "Super Cow Powers.");
+        userManager.addGroup("CEO", "Powers without cows.");
+        userManager.addGroup("Editor", "Who can override data.");
+        userManager.addGroup("Employee", "Work will make you free.");
+        userManager.addGroup("HR", "Can fill up vacancies.");
+        userManager.addGroup("Organization Leader", "Works with organizations teams.");
+        userManager.addGroup("Practitioner", "Perform CADT tests.");
+        userManager.addGroup("Speakers", "Can present a workshop.");
+        userManager.addGroup("Team Leaders", "Captain of the ship.");
+        Assert.assertEquals(userManager.getTotalNumberOfItems(TableId.USERS_GROUP_TABLE), 9);
+    }
+
+    @Test(dependsOnMethods = {"addGroups", "addApplicationsRoles"})
+    public void assignRolesToGroups() {
+        userManager.addGroupRole("Admin", "AppointmentCenter", "admin");
+        userManager.addGroupRole("Admin", "BaseFormDroolsEngine", "admin");
+        userManager.addGroupRole("Admin", "BiitSurveys", "user");
+        userManager.addGroupRole("Admin", "CardGame", "user");
+        userManager.addGroupRole("Admin", "DataTide", "admin");
+        userManager.addGroupRole("Admin", "FactManager", "admin");
+        userManager.addGroupRole("Admin", "FactsDashboard", "teamleader");
+        userManager.addGroupRole("Admin", "FactsDashboard", "NCA");
+        userManager.addGroupRole("Admin", "FactsDashboard", "xls access");
+        userManager.addGroupRole("Admin", "FactsDashboard", "ceo");
+        userManager.addGroupRole("Admin", "FactsDashboard", "practitioner");
+        userManager.addGroupRole("Admin", "FactsDashboard", "Credibility");
+        userManager.addGroupRole("Admin", "FactsDashboard", "Happiness at Work");
+        userManager.addGroupRole("Admin", "FactsDashboard", "CADT");
+        userManager.addGroupRole("Admin", "InfographicEngine", "admin");
+        userManager.addGroupRole("Admin", "KafkaProxy", "admin");
+        userManager.addGroupRole("Admin", "KnowledgeSystem", "admin");
+        userManager.addGroupRole("Admin", "MetaViewerStructure", "admin");
+        userManager.addGroupRole("Admin", "ProfileMatcher", "admin");
+        userManager.addGroupRole("Admin", "UserManagerSystem", "admin");
+        userManager.addGroupRole("Admin", "XForms", "user");
+
+        Assert.assertEquals(userManager.getTotalRolesByGroup("Admin"), 21);
+
+        userManager.addGroupRole("CEO", "BaseFormDroolsEngine", "user");
+        userManager.addGroupRole("CEO", "FactManager", "user");
+        userManager.addGroupRole("CEO", "FactsDashboard", "xls access");
+        userManager.addGroupRole("CEO", "FactsDashboard", "ceo");
+        userManager.addGroupRole("CEO", "KafkaProxy", "user");
+        userManager.addGroupRole("CEO", "KnowledgeSystem", "user");
+        userManager.addGroupRole("CEO", "UserManagerSystem", "admin");
+        userManager.addGroupRole("CEO", "UserManagerSystem", "user");
+        userManager.addGroupRole("CEO", "XForms", "user");
+
+        Assert.assertEquals(userManager.getTotalRolesByGroup("CEO"), 9);
+
+        userManager.addGroupRole("Editor", "AppointmentCenter", "editor");
+        userManager.addGroupRole("Editor", "BaseFormDroolsEngine", "user");
+        userManager.addGroupRole("Editor", "BiitSurveys", "user");
+        userManager.addGroupRole("Editor", "CardGame", "user");
+        userManager.addGroupRole("Editor", "FactManager", "user");
+        userManager.addGroupRole("Editor", "FactsDashboard", "teamleader");
+        userManager.addGroupRole("Editor", "FactsDashboard", "practitioner");
+        userManager.addGroupRole("Editor", "FactsDashboard", "NCA");
+        userManager.addGroupRole("Editor", "FactsDashboard", "xls access");
+        userManager.addGroupRole("Editor", "FactsDashboard", "ceo");
+        userManager.addGroupRole("Editor", "FactsDashboard", "Credibility");
+        userManager.addGroupRole("Editor", "FactsDashboard", "CADT");
+        userManager.addGroupRole("Editor", "FactsDashboard", "Happiness at Work");
+        userManager.addGroupRole("Editor", "InfographicEngine", "user");
+        userManager.addGroupRole("Editor", "KafkaProxy", "user");
+        userManager.addGroupRole("Editor", "KnowledgeSystem", "user");
+        userManager.addGroupRole("Editor", "MetaViewerStructure", "user");
+        userManager.addGroupRole("Editor", "ProfileMatcher", "manager");
+        userManager.addGroupRole("Editor", "UserManagerSystem", "editor");
+        userManager.addGroupRole("Editor", "XForms", "user");
+
+        Assert.assertEquals(userManager.getTotalRolesByGroup("Editor"), 20);
+
+        userManager.addGroupRole("Employee", "AppointmentCenter", "user");
+        userManager.addGroupRole("Employee", "BaseFormDroolsEngine", "user");
+        userManager.addGroupRole("Employee", "BiitSurveys", "user");
+        userManager.addGroupRole("Employee", "CardGame", "user");
+        userManager.addGroupRole("Employee", "FactManager", "user");
+        userManager.addGroupRole("Employee", "InfographicEngine", "user");
+        userManager.addGroupRole("Employee", "KafkaProxy", "user");
+        userManager.addGroupRole("Employee", "KnowledgeSystem", "user");
+        userManager.addGroupRole("Employee", "MetaViewerStructure", "user");
+        userManager.addGroupRole("Employee", "UserManagerSystem", "user");
+        userManager.addGroupRole("Employee", "XForms", "user");
+
+        Assert.assertEquals(userManager.getTotalRolesByGroup("Employee"), 11);
+
+        userManager.addGroupRole("HR", "AppointmentCenter", "manager");
+        userManager.addGroupRole("HR", "BaseFormDroolsEngine", "user");
+        userManager.addGroupRole("HR", "FactManager", "user");
+        userManager.addGroupRole("HR", "FactsDashboard", "Organization List");
+        userManager.addGroupRole("HR", "FactsDashboard", "Credibility");
+        userManager.addGroupRole("HR", "FactsDashboard", "CADT");
+        userManager.addGroupRole("HR", "InfographicEngine", "user");
+        userManager.addGroupRole("HR", "KafkaProxy", "user");
+        userManager.addGroupRole("HR", "MetaViewerStructure", "admin");
+        userManager.addGroupRole("HR", "ProfileMatcher", "manager");
+        userManager.addGroupRole("HR", "UserManagerSystem", "user");
+        userManager.addGroupRole("HR", "FactsDashboard", "xls access");
+
+        Assert.assertEquals(userManager.getTotalRolesByGroup("HR"), 12);
+
+        userManager.addGroupRole("Organization Leader", "FactManager", "user");
+        userManager.addGroupRole("Organization Leader", "FactsDashboard", "ceo");
+        userManager.addGroupRole("Organization Leader", "InfographicEngine", "user");
+
+        Assert.assertEquals(userManager.getTotalRolesByGroup("HR"), 12);
+
+        userManager.addGroupRole("Practitioner", "AppointmentCenter", "manager");
+        userManager.addGroupRole("Practitioner", "FactsDashboard", "practitioner");
+        userManager.addGroupRole("Practitioner", "InfographicEngine", "practitioner");
+
+        Assert.assertEquals(userManager.getTotalRolesByGroup("Practitioner"), 3);
+
+        userManager.addGroupRole("Speakers", "AppointmentCenter", "speaker");
+        userManager.addGroupRole("Speakers", "UserManagerSystem", "user");
+
+        Assert.assertEquals(userManager.getTotalRolesByGroup("Speakers"), 2);
+
+        userManager.addGroupRole("Team Leaders", "FactManager", "user");
+        userManager.addGroupRole("Team Leaders", "FactsDashboard", "teamleader");
+        userManager.addGroupRole("Team Leaders", "FactsDashboard", "xls access");
+        userManager.addGroupRole("Team Leaders", "InfographicEngine", "user");
+        userManager.addGroupRole("Team Leaders", "MetaViewerStructure", "user");
+        userManager.addGroupRole("Team Leaders", "UserManagerSystem", "user");
+        userManager.addGroupRole("Team Leaders", "XForms", "user");
+
+        Assert.assertEquals(userManager.getTotalRolesByGroup("Team Leaders"), 7);
+    }
+
+    @Test(dependsOnMethods = "assignRolesToGroups")
+    public void assignUsersToGroups(){
+        userManager.addUserToGroup("", "Admin");
+    }
+
+
+    @Test(dependsOnMethods = "assignUsersToGroups")
+    public void createJwtUser() {
+        userManager.addUser("jwt", "token@test.com", "System", "Token", "asd123");
+        userManager.addUserRoles("jwt", "UserManagerSystem", "admin");
+        userManager.addUserRoles("jwt", "FactManager", "admin");
     }
 
 

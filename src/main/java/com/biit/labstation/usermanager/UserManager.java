@@ -6,6 +6,7 @@ import com.biit.labstation.components.Login;
 import com.biit.labstation.components.NavBar;
 import com.biit.labstation.components.Popup;
 import com.biit.labstation.components.PopupId;
+import com.biit.labstation.components.Tab;
 import com.biit.labstation.components.Table;
 import com.biit.labstation.components.TableId;
 import com.biit.labstation.logger.LabStationLogger;
@@ -15,13 +16,14 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class UserManager {
-    private static final int WAITING_TIME = 300;
+    private static final int WAITING_TIME = 250;
     private final CustomChromeDriver customChromeDriver;
     private final Login login;
     private final NavBar navBar;
     private final Table table;
     private final Popup popup;
     private final Dropdown dropdown;
+    private final Tab tab;
 
     @Value("${testing.server.domain}")
     private String serverDomain;
@@ -29,13 +31,14 @@ public class UserManager {
     @Value("${usermanager.context}")
     private String context;
 
-    public UserManager(CustomChromeDriver customChromeDriver, Login login, NavBar navBar, Table table, Popup popup, Dropdown dropdown) {
+    public UserManager(CustomChromeDriver customChromeDriver, Login login, NavBar navBar, Table table, Popup popup, Dropdown dropdown, Tab tab) {
         this.customChromeDriver = customChromeDriver;
         this.login = login;
         this.navBar = navBar;
         this.table = table;
         this.popup = popup;
         this.dropdown = dropdown;
+        this.tab = tab;
     }
 
     public void access() {
@@ -139,8 +142,8 @@ public class UserManager {
     }
 
     public void selectTableRow(TableId tableId, String label, int column) {
-        try{
-        table.selectRow(tableId, label, column);
+        try {
+            table.selectRow(tableId, label, column);
         } catch (Exception e) {
             //Already selected.
         }
@@ -294,6 +297,113 @@ public class UserManager {
         popup.findElement(PopupId.APPLICATION_ROLE_SERVICES, "assign-role-button").click();
         popup.close(PopupId.SERVICE_ROLE);
         popup.close(PopupId.ROLE);
+    }
+
+    public void addGroup(String name, String description) {
+        selectGroupsOnMenu();
+        pressTableButton(TableId.USERS_GROUP_TABLE, "button-plus");
+        popup.findElement(PopupId.USER_GROUP, "group-name").findElement(By.id("input")).sendKeys(name);
+        popup.findElement(PopupId.USER_GROUP, "group-description").findElement(By.id("input")).sendKeys(description);
+        popup.findElement(PopupId.USER_GROUP, "popup-group-save-button").click();
+    }
+
+    public void addGroupRole(String group, String application, String role) {
+        try {
+            selectGroupsOnMenu();
+        } catch (Exception e) {
+            //Already on this tab.
+        }
+        selectTableRow(TableId.USERS_GROUP_TABLE, group, 1);
+        pressTableButton(TableId.USERS_GROUP_TABLE, "button-linkage");
+        popup.findElement(PopupId.ROLE, "user-group-role-button-plus").click();
+        dropdown.selectItem(PopupId.APPLICATION_ROLE.getId(), "application-selector", application);
+        dropdown.selectItem(PopupId.APPLICATION_ROLE.getId(), "role-selector", role);
+        popup.findElement(PopupId.APPLICATION_ROLE, "popup-assign-button").click();
+        popup.close(PopupId.ROLE);
+        unselectTableRow(TableId.USERS_GROUP_TABLE, group, 1);
+    }
+
+    public void addUserToGroup(String user, String group) {
+        try {
+            selectGroupsOnMenu();
+        } catch (Exception e) {
+            //Already on this tab.
+        }
+        selectTableRow(TableId.USERS_GROUP_TABLE, group, 1);
+        pressTableButton(TableId.USERS_GROUP_TABLE, "button-group");
+        table.selectRow(TableId.USERS_TABLE, user, 1);
+        popup.findElement(PopupId.ASSIGN_USERS_TO_GROUP, "popup-assign-button").click();
+        popup.findElement(PopupId.CONFIRMATION, "assign-button").click();
+        popup.close(PopupId.ASSIGN_USERS_TO_GROUP);
+        unselectTableRow(TableId.USERS_GROUP_TABLE, group, 1);
+    }
+
+    public int getTotalRolesByGroup(String group) {
+        try {
+            selectGroupsOnMenu();
+        } catch (Exception e) {
+            //Already on this tab.
+        }
+        selectTableRow(TableId.USERS_GROUP_TABLE, group, 1);
+        pressTableButton(TableId.USERS_GROUP_TABLE, "button-linkage");
+
+        int elements = getTotalNumberOfItems(TableId.USERS_GROUP_ROLE_TABLE);
+        popup.close(PopupId.ROLE);
+        unselectTableRow(TableId.USERS_GROUP_TABLE, group, 1);
+        return elements;
+    }
+
+    public int getTotalNumberOfItems(TableId tableId) {
+        try {
+            Thread.sleep(WAITING_TIME);
+        } catch (InterruptedException e) {
+            //Ignore
+            Thread.currentThread().interrupt();
+        }
+        return Integer.parseInt(table.getTotalNumberOfItems(tableId));
+    }
+
+    public int getNumberOfItemsSelected(TableId tableId) {
+        try {
+            Thread.sleep(WAITING_TIME);
+        } catch (InterruptedException e) {
+            //Ignore
+            Thread.currentThread().interrupt();
+        }
+        return Integer.parseInt(table.getTotalNumberOfItems(tableId));
+    }
+
+    public void addUser(String user, String email, String name, String lastName, String password) {
+        try {
+            selectUserOnMenu();
+        } catch (Exception e) {
+            //Already on this tab.
+        }
+        pressTableButton(TableId.USERS_TABLE, "button-plus");
+        tab.selectTab("user-tabs", "account-tab");
+        popup.findElement(PopupId.USER, "username").findElement(By.id("input")).sendKeys(user);
+        popup.findElement(PopupId.USER, "email").findElement(By.id("input")).sendKeys(email);
+        popup.findElement(PopupId.USER, "name").findElement(By.id("input")).sendKeys(name);
+        popup.findElement(PopupId.USER, "lastname").findElement(By.id("input")).sendKeys(lastName);
+        popup.findElement(PopupId.USER, "password").findElement(By.id("input")).sendKeys(password);
+        popup.findElement(PopupId.USER, "repeat-password").findElement(By.id("input")).sendKeys(password);
+        popup.findElement(PopupId.USER, "popup-user-save-button").click();
+    }
+
+    public void addUserRoles(String user, String application, String role) {
+        try {
+            selectUserOnMenu();
+        } catch (Exception e) {
+            //Already on this tab.
+        }
+        selectTableRow(TableId.USERS_TABLE, user, 3);
+        pressTableButton(TableId.USERS_TABLE, "button-linkage");
+        popup.findElement(PopupId.ROLE, "user-role-button-plus").click();
+        dropdown.selectItem(PopupId.USER_ROLE.getId(), "application-selector", application);
+        dropdown.selectItem(PopupId.USER_ROLE.getId(), "role-selector", role);
+        popup.findElement(PopupId.USER_ROLE, "role-assign-button").click();
+        popup.close(PopupId.ROLE);
+        unselectTableRow(TableId.USERS_TABLE, user, 1);
     }
 
 }

@@ -148,4 +148,24 @@ public class Table {
             customChromeDriver.findElementWaiting(By.id(tableId.getId())).findElement(By.id("biit-table")).findElement(By.id("page-selector")).findElement(By.id("arrow-last")).click();
         }
     }
+
+    public String getTotalNumberOfItems(TableId tableId) {
+        if (tableId == null) {
+            return customChromeDriver.findElementWaiting(By.id("biit-table")).findElement(By.id("datatable-footer"))
+                    .findElement(By.id("total-number-of-items")).getText();
+        } else {
+            return customChromeDriver.findElementWaiting(By.id(tableId.getId())).findElement(By.id("biit-table")).findElement(By.className("datatable-footer"))
+                    .findElement(By.id("total-number-of-items")).getText();
+        }
+    }
+
+    public String getNumberOfItemsSelected(TableId tableId) {
+        if (tableId == null) {
+            return customChromeDriver.findElementWaiting(By.id("biit-table")).findElement(By.id("datatable-footer"))
+                    .findElement(By.id("number-of-items-selected")).getText();
+        } else {
+            return customChromeDriver.findElementWaiting(By.id(tableId.getId())).findElement(By.id("biit-table")).findElement(By.className("datatable-footer"))
+                    .findElement(By.id("number-of-items-selected")).getText();
+        }
+    }
 }

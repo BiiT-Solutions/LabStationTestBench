@@ -2,6 +2,8 @@ package com.biit.labstation.components;
 
 public enum TableId {
     USERS_TABLE("users-table"),
+    USERS_GROUP_TABLE("user-groups-table"),
+    USERS_GROUP_ROLE_TABLE("user-group-role-table"),
     APPLICATION_TABLE("application-table"),
     APPLICATION_ROLE_TABLE("application-role-table"),
     ROLE_TABLE("role-table"),
