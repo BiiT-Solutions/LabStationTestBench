@@ -323,6 +323,7 @@ public class UserManagerIT extends AbstractTestNGSpringContextTests {
         userManager.pressTableButton(TableId.ROLE_TABLE, "popup-application-roles-button-linkage");
         Assert.assertEquals(userManager.getTableContent(TableId.APPLICATION_ROLE_TABLE, 0, 1), "FactManager");
         Assert.assertEquals(userManager.getTableContent(TableId.APPLICATION_ROLE_TABLE, 1, 1), "InfographicEngine");
+        popup.close(PopupId.APPLICATION_ROLE_ASSIGN);
         popup.close(PopupId.APPLICATION_ROLE);
     }
 
