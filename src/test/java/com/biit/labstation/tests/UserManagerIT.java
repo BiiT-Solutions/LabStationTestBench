@@ -1,5 +1,7 @@
 package com.biit.labstation.tests;
 
+import com.biit.labstation.components.Popup;
+import com.biit.labstation.components.PopupId;
 import com.biit.labstation.components.SnackBar;
 import com.biit.labstation.components.TableId;
 import com.biit.labstation.usermanager.UserManager;
@@ -30,8 +32,13 @@ public class UserManagerIT extends AbstractTestNGSpringContextTests {
     @Autowired
     private SnackBar snackBar;
 
+    @Autowired
+    private Popup popup;
+
     @Value("${starts.from.clean.database}")
     private boolean startsFormCleanDatabase;
+
+
 
     @BeforeClass
     public void setup() throws InterruptedException {
@@ -316,6 +323,7 @@ public class UserManagerIT extends AbstractTestNGSpringContextTests {
         userManager.pressTableButton(TableId.ROLE_TABLE, "popup-application-roles-button-linkage");
         Assert.assertEquals(userManager.getTableContent(TableId.APPLICATION_ROLE_TABLE, 0, 1), "FactManager");
         Assert.assertEquals(userManager.getTableContent(TableId.APPLICATION_ROLE_TABLE, 1, 1), "InfographicEngine");
+        popup.close(PopupId.APPLICATION_ROLE);
     }
 
 
