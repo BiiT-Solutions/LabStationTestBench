@@ -1,9 +1,12 @@
 package com.biit.labstation.tests;
 
+import com.biit.labstation.CustomChromeDriver;
+import com.biit.labstation.ScreenShooter;
 import com.biit.labstation.components.Popup;
 import com.biit.labstation.components.PopupId;
 import com.biit.labstation.components.SnackBar;
 import com.biit.labstation.components.TableId;
+import com.biit.labstation.logger.TestListener;
 import com.biit.labstation.usermanager.UserManager;
 import org.awaitility.Awaitility;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,6 +16,7 @@ import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.testng.AbstractTestNGSpringContextTests;
 import org.testng.Assert;
 import org.testng.annotations.BeforeClass;
+import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
 
 import java.time.Duration;
@@ -23,11 +27,18 @@ import static com.biit.labstation.tests.LoginIT.ADMIN_USER_PASSWORD;
 
 @SpringBootTest
 @Test(groups = "userManager")
+@Listeners(TestListener.class)
 @DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_CLASS)
-public class UserManagerIT extends AbstractTestNGSpringContextTests {
+public class UserManagerIT extends AbstractTestNGSpringContextTests implements ITestWithWebDriver {
 
     @Autowired
     private UserManager userManager;
+
+    @Autowired
+    private CustomChromeDriver customChromeDriver;
+
+    @Autowired
+    private ScreenShooter screenShooter;
 
     @Autowired
     private SnackBar snackBar;
@@ -38,6 +49,15 @@ public class UserManagerIT extends AbstractTestNGSpringContextTests {
     @Value("${starts.from.clean.database}")
     private boolean startsFormCleanDatabase;
 
+    @Override
+    public CustomChromeDriver getDriver() {
+        return customChromeDriver;
+    }
+
+    @Override
+    public ScreenShooter getScreenShooter() {
+        return screenShooter;
+    }
 
 
     @BeforeClass
@@ -461,7 +481,7 @@ public class UserManagerIT extends AbstractTestNGSpringContextTests {
     }
 
     @Test(dependsOnMethods = "assignRolesToGroups")
-    public void assignUsersToGroups(){
+    public void assignUsersToGroups() {
         userManager.addUserToGroup("", "Admin");
     }
 
