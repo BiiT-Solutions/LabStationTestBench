@@ -1,10 +1,7 @@
 package com.biit.labstation.tests;
 
-import com.biit.labstation.CustomChromeDriver;
-import com.biit.labstation.ScreenShooter;
 import com.biit.labstation.components.Popup;
 import com.biit.labstation.components.PopupId;
-import com.biit.labstation.components.SnackBar;
 import com.biit.labstation.components.TableId;
 import com.biit.labstation.logger.TestListener;
 import com.biit.labstation.usermanager.UserManager;
@@ -13,7 +10,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.annotation.DirtiesContext;
-import org.springframework.test.context.testng.AbstractTestNGSpringContextTests;
 import org.testng.Assert;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Listeners;
@@ -29,35 +25,16 @@ import static com.biit.labstation.tests.LoginIT.ADMIN_USER_PASSWORD;
 @Test(groups = "userManager")
 @Listeners(TestListener.class)
 @DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_CLASS)
-public class UserManagerIT extends AbstractTestNGSpringContextTests implements ITestWithWebDriver {
+public class UserManagerIT extends BaseTest implements ITestWithWebDriver {
 
     @Autowired
     private UserManager userManager;
-
-    @Autowired
-    private CustomChromeDriver customChromeDriver;
-
-    @Autowired
-    private ScreenShooter screenShooter;
-
-    @Autowired
-    private SnackBar snackBar;
 
     @Autowired
     private Popup popup;
 
     @Value("${starts.from.clean.database}")
     private boolean startsFormCleanDatabase;
-
-    @Override
-    public CustomChromeDriver getDriver() {
-        return customChromeDriver;
-    }
-
-    @Override
-    public ScreenShooter getScreenShooter() {
-        return screenShooter;
-    }
 
 
     @BeforeClass
@@ -71,13 +48,6 @@ public class UserManagerIT extends AbstractTestNGSpringContextTests implements I
             userManager.login(ADMIN_USER_NAME, ADMIN_USER_PASSWORD);
         }
         userManager.logout();
-    }
-
-    @BeforeClass
-    public void configureAwait() {
-        Awaitility.setDefaultPollInterval(10, TimeUnit.MILLISECONDS);
-        Awaitility.setDefaultPollDelay(Duration.ZERO);
-        Awaitility.setDefaultTimeout(Duration.ofSeconds(3));
     }
 
     @Test
