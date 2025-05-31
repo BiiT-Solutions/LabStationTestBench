@@ -4,11 +4,9 @@ import com.biit.labstation.CustomChromeDriver;
 import com.biit.labstation.ScreenShooter;
 import org.awaitility.Awaitility;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.test.context.testng.AbstractTestNGSpringContextTests;
-import org.testng.Assert;
-import org.testng.annotations.AfterClass;
 import org.testng.annotations.AfterSuite;
-import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeSuite;
 
 import java.io.File;
@@ -20,7 +18,8 @@ import java.util.concurrent.TimeUnit;
 
 public abstract class BaseTest extends AbstractTestNGSpringContextTests implements ITestWithWebDriver {
 
-    protected static final String OUTPUT_FOLDER = System.getProperty("java.io.tmpdir") + File.separator + "SeleniumOutput";
+    @Value("${screenshots.folder:/tmp/SeleniumOutput}")
+    private String screenShotsFolder;
 
 
     @Autowired
@@ -52,7 +51,11 @@ public abstract class BaseTest extends AbstractTestNGSpringContextTests implemen
 
     @BeforeSuite
     public void prepareFolder() throws IOException {
-        Files.createDirectories(Paths.get(OUTPUT_FOLDER));
+        try {
+            Files.createDirectories(Paths.get(screenShotsFolder));
+        } catch (Exception e) {
+            //Already created.
+        }
     }
 
 
@@ -65,6 +68,6 @@ public abstract class BaseTest extends AbstractTestNGSpringContextTests implemen
 
     @AfterSuite
     public void removeFolder() {
-        Assert.assertTrue(deleteDirectory(new File(OUTPUT_FOLDER)));
+        //Assert.assertTrue(deleteDirectory(new File(screenShotsFolder)));
     }
 }

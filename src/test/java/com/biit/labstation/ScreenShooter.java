@@ -13,7 +13,7 @@ import java.io.IOException;
 @Component
 public class ScreenShooter {
 
-    @Value("${screenshots.folder:/tmp}")
+    @Value("${screenshots.folder:/tmp/SeleniumOutput}")
     private String screenShotsFolder;
 
     private final CustomChromeDriver customChromeDriver;
