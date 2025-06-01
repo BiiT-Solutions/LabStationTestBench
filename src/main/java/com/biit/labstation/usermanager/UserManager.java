@@ -18,6 +18,7 @@ import org.springframework.stereotype.Component;
 @Component
 public class UserManager extends ToolTest {
     private static final int WAITING_TIME = 250;
+    private static final int USERNAME_COLUMN = 3;
 
     private final CustomChromeDriver customChromeDriver;
     private final Login login;
@@ -349,7 +350,7 @@ public class UserManager extends ToolTest {
         selectTableRow(TableId.USERS_GROUP_TABLE, group, 1);
         pressTableButton(TableId.USERS_GROUP_TABLE, "button-linkage");
 
-        int elements = getTotalNumberOfItems(TableId.USERS_GROUP_ROLE_TABLE);
+        final int elements = getTotalNumberOfItems(TableId.USERS_GROUP_ROLE_TABLE);
         popup.close(PopupId.ROLE);
         unselectTableRow(TableId.USERS_GROUP_TABLE, group, 1);
         return elements;
@@ -398,7 +399,7 @@ public class UserManager extends ToolTest {
         } catch (Exception e) {
             //Already on this tab.
         }
-        selectTableRow(TableId.USERS_TABLE, user, 3);
+        selectTableRow(TableId.USERS_TABLE, user, USERNAME_COLUMN);
         pressTableButton(TableId.USERS_TABLE, "button-linkage");
         //Wait until a confirmation message is closed.
         waitAndExecute(() -> popup.findElement(PopupId.ROLE, "user-role-button-plus").click());

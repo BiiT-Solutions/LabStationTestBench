@@ -136,7 +136,8 @@ public class Table {
         if (tableId == null) {
             customChromeDriver.findElementWaiting(By.id("biit-table")).findElement(By.id("page-selector")).findElement(By.id("arrow-next")).click();
         } else {
-            customChromeDriver.findElementWaiting(By.id(tableId.getId())).findElement(By.id("biit-table")).findElement(By.id("page-selector")).findElement(By.id("arrow-next")).click();
+            customChromeDriver.findElementWaiting(By.id(tableId.getId())).findElement(By.id("biit-table"))
+                    .findElement(By.id("page-selector")).findElement(By.id("arrow-next")).click();
         }
 
     }
@@ -145,7 +146,8 @@ public class Table {
         if (tableId == null) {
             customChromeDriver.findElementWaiting(By.id("biit-table")).findElement(By.id("page-selector")).findElement(By.id("arrow-last")).click();
         } else {
-            customChromeDriver.findElementWaiting(By.id(tableId.getId())).findElement(By.id("biit-table")).findElement(By.id("page-selector")).findElement(By.id("arrow-last")).click();
+            customChromeDriver.findElementWaiting(By.id(tableId.getId())).findElement(By.id("biit-table"))
+                    .findElement(By.id("page-selector")).findElement(By.id("arrow-last")).click();
         }
     }
 
