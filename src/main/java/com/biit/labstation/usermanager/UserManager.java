@@ -1,6 +1,7 @@
 package com.biit.labstation.usermanager;
 
 import com.biit.labstation.CustomChromeDriver;
+import com.biit.labstation.ToolTest;
 import com.biit.labstation.components.Dropdown;
 import com.biit.labstation.components.Login;
 import com.biit.labstation.components.NavBar;
@@ -15,8 +16,9 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 @Component
-public class UserManager {
+public class UserManager extends ToolTest {
     private static final int WAITING_TIME = 250;
+
     private final CustomChromeDriver customChromeDriver;
     private final Login login;
     private final NavBar navBar;
@@ -398,7 +400,8 @@ public class UserManager {
         }
         selectTableRow(TableId.USERS_TABLE, user, 3);
         pressTableButton(TableId.USERS_TABLE, "button-linkage");
-        popup.findElement(PopupId.ROLE, "user-role-button-plus").click();
+        //Wait until a confirmation message is closed.
+        waitAndExecute(() -> popup.findElement(PopupId.ROLE, "user-role-button-plus").click());
         dropdown.selectItem(PopupId.USER_ROLE.getId(), "application-selector", application);
         dropdown.selectItem(PopupId.USER_ROLE.getId(), "role-selector", role);
         popup.findElement(PopupId.USER_ROLE, "role-assign-button").click();
