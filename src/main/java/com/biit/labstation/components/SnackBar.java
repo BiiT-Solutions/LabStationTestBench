@@ -1,7 +1,7 @@
 package com.biit.labstation.components;
 
 import com.biit.labstation.CustomChromeDriver;
-import com.biit.labstation.logger.LabStationLogger;
+import com.biit.labstation.logger.ComponentLogger;
 import org.openqa.selenium.By;
 import org.springframework.stereotype.Component;
 
@@ -24,7 +24,7 @@ public class SnackBar {
         final String attribute = customChromeDriver.findElementWaiting(By.id("snackbar-canvas")).findElement(By.id("biit-notification")).getAttribute("class");
         if (attribute != null) {
             final String type = attribute.replace("notification-canvas", "").trim();
-            LabStationLogger.debug(this.getClass().getName(), "SnackBar Type: '{}'.", type);
+            ComponentLogger.debug(this.getClass().getName(), "SnackBar Type: '{}'.", type);
             return type;
         }
         return null;
@@ -43,7 +43,7 @@ public class SnackBar {
         final String text = customChromeDriver.findElementWaiting(By.id("snackbar-canvas")).findElement(By.id("biit-notification"))
                 .findElement(By.id("message")).getText();
         if (text != null && !text.isBlank()) {
-            LabStationLogger.debug(this.getClass().getName(), "SnackBar Text: '{}'.", text);
+            ComponentLogger.debug(this.getClass().getName(), "SnackBar Text: '{}'.", text);
         }
         return text;
     }

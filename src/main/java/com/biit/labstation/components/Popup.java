@@ -1,7 +1,7 @@
 package com.biit.labstation.components;
 
 import com.biit.labstation.CustomChromeDriver;
-import com.biit.labstation.logger.LabStationLogger;
+import com.biit.labstation.logger.ComponentLogger;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.springframework.stereotype.Component;
@@ -34,10 +34,10 @@ public class Popup {
             } else {
                 customChromeDriver.findElementWaiting(By.id("biit-popup")).findElement(By.id("header")).findElement(By.id("popup-x-button")).click();
             }
-            LabStationLogger.debug(this.getClass().getName(), "Closing popup '{}'.", popupId);
+            ComponentLogger.debug(this.getClass().getName(), "Closing popup '{}'.", popupId);
         } catch (Exception e) {
             //Cannot close.
-            LabStationLogger.errorMessage(this.getClass(), e);
+            ComponentLogger.errorMessage(this.getClass(), e);
         }
     }
 

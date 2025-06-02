@@ -1,7 +1,7 @@
 package com.biit.labstation.components;
 
 import com.biit.labstation.CustomChromeDriver;
-import com.biit.labstation.logger.LabStationLogger;
+import com.biit.labstation.logger.ComponentLogger;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.springframework.stereotype.Component;
@@ -56,7 +56,7 @@ public class Table {
         try {
             getCell(tableId, row, 0).findElement(By.id("biit-checkbox")).findElement(By.id("unchecked"));
             getCell(tableId, row, 0).findElement(By.id("biit-checkbox")).click();
-            LabStationLogger.debug(this.getClass().getName(), "Selecting Table '{}'. Row '{}'.", tableId, row);
+            ComponentLogger.debug(this.getClass().getName(), "Selecting Table '{}'. Row '{}'.", tableId, row);
 
         } catch (Exception e) {
             //Already selected
@@ -68,7 +68,7 @@ public class Table {
             for (int i = 0; i < countRows(tableId); i++) {
                 if (Objects.equals(getContent(tableId, i, column), label)) {
                     selectRow(tableId, i);
-                    LabStationLogger.debug(this.getClass().getName(), "Selecting Table '{}'. Row '{}'. Column '{}'.", tableId, label, column);
+                    ComponentLogger.debug(this.getClass().getName(), "Selecting Table '{}'. Row '{}'. Column '{}'.", tableId, label, column);
                     return true;
                 }
             }
@@ -80,7 +80,7 @@ public class Table {
         try {
             getCell(tableId, row, 0).findElement(By.id("biit-checkbox")).findElement(By.id("checked"));
             getCell(tableId, row, 0).findElement(By.id("biit-checkbox")).click();
-            LabStationLogger.debug(this.getClass().getName(), "Unselecting Table '{}'. Row '{}'.", tableId, row);
+            ComponentLogger.debug(this.getClass().getName(), "Unselecting Table '{}'. Row '{}'.", tableId, row);
         } catch (Exception e) {
             //Already unselected
         }
@@ -91,7 +91,7 @@ public class Table {
             for (int i = 0; i < countRows(tableId); i++) {
                 if (Objects.equals(getContent(tableId, i, column), label)) {
                     unselectRow(tableId, i);
-                    LabStationLogger.debug(this.getClass().getName(), "Unselecting Table '{}'. Row '{}'. Column '{}'.", tableId, label, column);
+                    ComponentLogger.debug(this.getClass().getName(), "Unselecting Table '{}'. Row '{}'. Column '{}'.", tableId, label, column);
                     return true;
                 }
             }
@@ -109,7 +109,7 @@ public class Table {
         }
         final String text = customChromeDriver.findElementWaiting(By.id(tableId.getId())).findElement(By.id("biit-table")).findElement(By.id("page-selector"))
                 .findElement(By.id("current-page")).getText();
-        LabStationLogger.debug(this.getClass().getName(), "Table '{}'. Current Page '{}'", tableId, text);
+        ComponentLogger.debug(this.getClass().getName(), "Table '{}'. Current Page '{}'", tableId, text);
         return text;
     }
 
@@ -119,7 +119,7 @@ public class Table {
         }
         final String text = customChromeDriver.findElementWaiting(By.id(tableId.getId())).findElement(By.id("biit-table")).findElement(By.id("page-selector"))
                 .findElement(By.id("total-pages")).getText();
-        LabStationLogger.debug(this.getClass().getName(), "Table '{}'. Total Pages '{}'", tableId, text);
+        ComponentLogger.debug(this.getClass().getName(), "Table '{}'. Total Pages '{}'", tableId, text);
         return text;
     }
 
@@ -131,7 +131,7 @@ public class Table {
             customChromeDriver.findElementWaiting(By.id(tableId.getId())).findElement(By.id("biit-table")).findElement(By.id("page-selector"))
                     .findElement(By.id("arrow-first")).click();
         }
-        LabStationLogger.debug(this.getClass().getName(), "Table '{}' selects first page.", tableId);
+        ComponentLogger.debug(this.getClass().getName(), "Table '{}' selects first page.", tableId);
     }
 
     public void goPreviousPage(TableId tableId) {
@@ -141,7 +141,7 @@ public class Table {
             customChromeDriver.findElementWaiting(By.id(tableId.getId())).findElement(By.id("biit-table")).findElement(By.id("page-selector"))
                     .findElement(By.id("arrow-previous")).click();
         }
-        LabStationLogger.debug(this.getClass().getName(), "Table '{}' selects previous page.", tableId);
+        ComponentLogger.debug(this.getClass().getName(), "Table '{}' selects previous page.", tableId);
     }
 
     public void goNextPage(TableId tableId) {
@@ -151,7 +151,7 @@ public class Table {
             customChromeDriver.findElementWaiting(By.id(tableId.getId())).findElement(By.id("biit-table"))
                     .findElement(By.id("page-selector")).findElement(By.id("arrow-next")).click();
         }
-        LabStationLogger.debug(this.getClass().getName(), "Table '{}' selects next page.", tableId);
+        ComponentLogger.debug(this.getClass().getName(), "Table '{}' selects next page.", tableId);
     }
 
     public void goLastPage(TableId tableId) {
@@ -161,7 +161,7 @@ public class Table {
             customChromeDriver.findElementWaiting(By.id(tableId.getId())).findElement(By.id("biit-table"))
                     .findElement(By.id("page-selector")).findElement(By.id("arrow-last")).click();
         }
-        LabStationLogger.debug(this.getClass().getName(), "Table '{}' selects last page.", tableId);
+        ComponentLogger.debug(this.getClass().getName(), "Table '{}' selects last page.", tableId);
     }
 
     public String getTotalNumberOfItems(TableId tableId) {
@@ -173,7 +173,7 @@ public class Table {
             text = customChromeDriver.findElementWaiting(By.id(tableId.getId())).findElement(By.id("biit-table")).findElement(By.className("datatable-footer"))
                     .findElement(By.id("total-number-of-items")).getText();
         }
-        LabStationLogger.debug(this.getClass().getName(), "Table '{}'. Total number of items '{}'.", text);
+        ComponentLogger.debug(this.getClass().getName(), "Table '{}'. Total number of items '{}'.", text);
         return text;
     }
 
@@ -186,7 +186,7 @@ public class Table {
             text = customChromeDriver.findElementWaiting(By.id(tableId.getId())).findElement(By.id("biit-table")).findElement(By.className("datatable-footer"))
                     .findElement(By.id("number-of-items-selected")).getText();
         }
-        LabStationLogger.debug(this.getClass().getName(), "Table '{}'. Total items selected '{}'.", text);
+        ComponentLogger.debug(this.getClass().getName(), "Table '{}'. Total items selected '{}'.", text);
         return text;
     }
 }

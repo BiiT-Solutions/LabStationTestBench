@@ -1,7 +1,7 @@
 package com.biit.labstation.components;
 
 import com.biit.labstation.CustomChromeDriver;
-import com.biit.labstation.logger.LabStationLogger;
+import com.biit.labstation.logger.ComponentLogger;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.springframework.stereotype.Component;
@@ -16,7 +16,7 @@ public class Login {
     }
 
     public void logIn(String username, String password) {
-        LabStationLogger.debug(this.getClass().getName(), "Login in with user '{}' and password '{}'.", username, password);
+        ComponentLogger.debug(this.getClass().getName(), "Login in with user '{}' and password '{}'.", username, password);
         getUsernameOnLoginPage().sendKeys(username);
         getPasswordOnLoginPage().sendKeys(password);
         getLoginButton().click();
@@ -43,7 +43,7 @@ public class Login {
     }
 
     public void acceptCookies() {
-        LabStationLogger.debug(this.getClass().getName(), "Accepting cookies...");
+        ComponentLogger.debug(this.getClass().getName(), "Accepting cookies...");
         getCookiesButton().click();
         try {
             getLoginTab().click();

@@ -1,7 +1,7 @@
 package com.biit.labstation.components;
 
 import com.biit.labstation.CustomChromeDriver;
-import com.biit.labstation.logger.LabStationLogger;
+import com.biit.labstation.logger.ComponentLogger;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
@@ -17,7 +17,7 @@ public class Dropdown {
     }
 
     public void selectItem(String parent, String item) {
-        LabStationLogger.debug(this.getClass().getName(), "Selecting item '{}' on parent '{}'.", item, parent);
+        ComponentLogger.debug(this.getClass().getName(), "Selecting item '{}' on parent '{}'.", item, parent);
         customChromeDriver.findElementWaiting(By.id(parent)).findElement(By.id("input")).click();
         final WebElement element = customChromeDriver.findElementWaiting(By.id(parent)).findElement(By.id("dropdown"))
                 .findElement(By.xpath(".//div[@id='content']/a[contains(text(), '" + item + "')]"));
@@ -26,7 +26,7 @@ public class Dropdown {
     }
 
     public void selectItem(String parent, String selector, String item) {
-        LabStationLogger.debug(this.getClass().getName(), "Selecting item '{}' on dropdown '{}' in '{}'.", item, selector, parent);
+        ComponentLogger.debug(this.getClass().getName(), "Selecting item '{}' on dropdown '{}' in '{}'.", item, selector, parent);
         customChromeDriver.findElementWaiting(By.id(parent)).findElement(By.id(selector)).findElement(By.id("input")).click();
         final WebElement element = customChromeDriver.findElementWaiting(By.id(parent)).findElement(By.id(selector))
                 .findElement(By.id("dropdown")).findElement(By.xpath(".//div[@id='content']/a[contains(text(), '" + item + "')]"));
