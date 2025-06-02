@@ -379,7 +379,7 @@ public class UserManager extends ToolTest {
             //Ignore
             Thread.currentThread().interrupt();
         }
-        int items = Integer.parseInt(table.getTotalNumberOfItems(tableId));
+        final int items = Integer.parseInt(table.getTotalNumberOfItems(tableId));
         LabStationLogger.debug(this.getClass().getName(), "Total items in table '{}' are '{}'.", tableId, items);
         return items;
     }
@@ -391,7 +391,7 @@ public class UserManager extends ToolTest {
             //Ignore
             Thread.currentThread().interrupt();
         }
-        int selectedITems = Integer.parseInt(table.getTotalNumberOfItems(tableId));
+        final int selectedITems = Integer.parseInt(table.getTotalNumberOfItems(tableId));
         LabStationLogger.debug(this.getClass().getName(), "Total items selected in table '{}' are '{}'.", tableId, selectedITems);
         return selectedITems;
     }
