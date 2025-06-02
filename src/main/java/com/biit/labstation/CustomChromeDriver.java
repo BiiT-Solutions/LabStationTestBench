@@ -1,6 +1,7 @@
 package com.biit.labstation;
 
 
+import com.biit.labstation.logger.LabStationLogger;
 import io.github.bonigarcia.wdm.WebDriverManager;
 import jakarta.annotation.PostConstruct;
 import jakarta.annotation.PreDestroy;
@@ -57,6 +58,7 @@ public class CustomChromeDriver {
     @PostConstruct
     public WebDriver getDriver() {
         if (driver == null) {
+            LabStationLogger.debug(this.getClass().getName(), "Starting webdriver...");
             WebDriverManager.chromedriver().setup();
             driver = new ChromeDriver(getChromeOptions(isHeadless()));
             driver.manage().window().setPosition(new Point(0, 0));
@@ -68,6 +70,7 @@ public class CustomChromeDriver {
 
     @PreDestroy
     public void closeDriver() {
+        LabStationLogger.debug(this.getClass().getName(), "Closing webdriver...");
         if (DESTROY_DRIVER) {
             try {
                 getDriver().close();

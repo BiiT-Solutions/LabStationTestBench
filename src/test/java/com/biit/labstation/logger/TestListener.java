@@ -26,6 +26,7 @@ public class TestListener implements ITestListener {
         final ITestWithWebDriver currentClass = (ITestWithWebDriver) result.getInstance();
         final ScreenShooter screenShooter = currentClass.getScreenShooter();
         final String fileName = result.getMethod().getMethodName() + "_" + LocalDateTime.now().format(DateTimeFormatter.ISO_DATE_TIME);
+        LabStationLogger.debug(this.getClass().getName(), "Creating screenshot on '{}.png'.", fileName);
         screenShooter.takeScreenshot(fileName);
         TestLogging.errorMessage(this.getClass().getName(),
                 "### Test failed '" + result.getMethod().getMethodName() + "' from '" + result.getTestClass().getName() + "'. File generated:\n" + fileName);

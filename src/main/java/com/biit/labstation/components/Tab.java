@@ -1,6 +1,7 @@
 package com.biit.labstation.components;
 
 import com.biit.labstation.CustomChromeDriver;
+import com.biit.labstation.logger.LabStationLogger;
 import org.openqa.selenium.By;
 import org.springframework.stereotype.Component;
 
@@ -15,6 +16,8 @@ public class Tab {
     }
 
     public void selectTab(String tabId, String element) {
+        LabStationLogger.debug(this.getClass().getName(), "Selecting tab '{}' on '{}'.", element, tabId);
         customChromeDriver.findElementWaiting(By.id(tabId)).findElement(By.id(element)).click();
+
     }
 }

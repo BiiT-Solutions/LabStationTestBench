@@ -16,6 +16,8 @@ import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Objects;
 
 import static com.biit.labstation.tests.LoginIT.ADMIN_USER_NAME;
@@ -39,7 +41,7 @@ public class UserManagerIT extends BaseTest implements ITestWithWebDriver {
     @Value("${starts.from.clean.database}")
     private boolean startsFormCleanDatabase;
 
-    private void waitUntilReady() throws InterruptedException {
+    private void waitUntilReady() {
         userManager.login(ADMIN_USER_NAME, ADMIN_USER_PASSWORD);
         try {
             if (Objects.equals("Your request failed. Please, try again later.", snackBar.getMessage())) {
@@ -62,12 +64,13 @@ public class UserManagerIT extends BaseTest implements ITestWithWebDriver {
     public void setup() throws InterruptedException {
         userManager.access();
         //Creates admin user.
-        LabStationLogger.info(this.getClass(), "First access try!");
+        LabStationLogger.info(this.getClass(), "First access try...");
         waitUntilReady();
+        LabStationLogger.info(this.getClass(), "System is ready!");
         //After a complete wipe out of the database, the first login is for creating user, the second one for accessing it.
         if (startsFormCleanDatabase) {
             Thread.sleep(2000);
-            LabStationLogger.info(this.getClass(), "Second access try!");
+            LabStationLogger.info(this.getClass(), "Checking admin user!");
             userManager.login(ADMIN_USER_NAME, ADMIN_USER_PASSWORD);
             userManager.logout();
         }
@@ -77,7 +80,7 @@ public class UserManagerIT extends BaseTest implements ITestWithWebDriver {
     public void checkUserExists() {
         userManager.login(ADMIN_USER_NAME, ADMIN_USER_PASSWORD);
         Assert.assertEquals(userManager.getTableContent(TableId.USERS_TABLE, 0, 3), ADMIN_USER_NAME);
-        //Assert.assertEquals(userManager.getTableContent(0, 6), LocalDateTime.now().format(DateTimeFormatter.ofPattern("dd/MM/yyyy")));
+        Assert.assertEquals(userManager.getTableContent(TableId.USERS_TABLE, 0, 6), LocalDateTime.now().format(DateTimeFormatter.ofPattern("dd/MM/yyyy")));
     }
 
 

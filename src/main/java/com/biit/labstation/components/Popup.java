@@ -34,6 +34,7 @@ public class Popup {
             } else {
                 customChromeDriver.findElementWaiting(By.id("biit-popup")).findElement(By.id("header")).findElement(By.id("popup-x-button")).click();
             }
+            LabStationLogger.debug(this.getClass().getName(), "Closing popup '{}'.", popupId);
         } catch (Exception e) {
             //Cannot close.
             LabStationLogger.errorMessage(this.getClass(), e);

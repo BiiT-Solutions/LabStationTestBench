@@ -46,6 +46,7 @@ public class UserManager extends ToolTest {
 
     public void access() {
         try {
+            LabStationLogger.debug(this.getClass().getName(), "Accessing to URL '{}{}'.", serverDomain, context);
             customChromeDriver.getDriver().get(serverDomain + context);
         } catch (Exception e) {
             LabStationLogger.errorMessage(this.getClass(), e);
@@ -67,7 +68,7 @@ public class UserManager extends ToolTest {
     }
 
     public void selectUserOnMenu() {
-        navBar.getMenuItem("nav-item-Users").click();
+        navBar.goTo("nav-item-Users");
         try {
             Thread.sleep(WAITING_TIME);
         } catch (InterruptedException e) {
@@ -77,7 +78,7 @@ public class UserManager extends ToolTest {
     }
 
     public void selectGroupsOnMenu() {
-        navBar.getMenuItem("nav-item-Groups").click();
+        navBar.goTo("nav-item-Groups");
         try {
             Thread.sleep(WAITING_TIME);
         } catch (InterruptedException e) {
@@ -87,7 +88,7 @@ public class UserManager extends ToolTest {
     }
 
     public void selectRolesOnMenu() {
-        navBar.getMenuItem("nav-item-Roles").click();
+        navBar.goTo("nav-item-Roles");
         try {
             Thread.sleep(WAITING_TIME);
         } catch (InterruptedException e) {
@@ -97,7 +98,7 @@ public class UserManager extends ToolTest {
     }
 
     public void selectApplicationsOnMenu() {
-        navBar.getMenuItem("nav-item-Applications").click();
+        navBar.goTo("nav-item-Applications");
         try {
             Thread.sleep(WAITING_TIME);
         } catch (InterruptedException e) {
@@ -107,7 +108,7 @@ public class UserManager extends ToolTest {
     }
 
     public void selectServicesOnMenu() {
-        navBar.getMenuItem("nav-item-Services").click();
+        navBar.goTo("nav-item-Services");
         try {
             Thread.sleep(WAITING_TIME);
         } catch (InterruptedException e) {
@@ -117,7 +118,7 @@ public class UserManager extends ToolTest {
     }
 
     public void selectOrganizationsOnMenu() {
-        navBar.getMenuItem("nav-item-Organizations").click();
+        navBar.goTo("nav-item-Organizations");
         try {
             Thread.sleep(WAITING_TIME);
         } catch (InterruptedException e) {
@@ -127,6 +128,7 @@ public class UserManager extends ToolTest {
     }
 
     public void pressTableButton(TableId tableId, String id) {
+        LabStationLogger.debug(this.getClass().getName(), "Pressing '{}' button on table '{}'.", id, tableId);
         table.getMenuItem(tableId, id).click();
         try {
             Thread.sleep(WAITING_TIME);

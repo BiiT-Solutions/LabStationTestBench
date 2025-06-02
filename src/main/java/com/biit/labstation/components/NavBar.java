@@ -1,6 +1,7 @@
 package com.biit.labstation.components;
 
 import com.biit.labstation.CustomChromeDriver;
+import com.biit.labstation.logger.LabStationLogger;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.springframework.stereotype.Component;
@@ -13,6 +14,11 @@ public class NavBar {
 
     public NavBar(CustomChromeDriver customChromeDriver) {
         this.customChromeDriver = customChromeDriver;
+    }
+
+    public void goTo(String id) {
+        LabStationLogger.debug(this.getClass().getName(), "Pressing '{}' on navigation menu.", id);
+        customChromeDriver.findElementWaiting(By.id("nav-menu")).findElement(By.id(id)).click();
     }
 
     public WebElement getMenuItem(String id) {
