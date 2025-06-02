@@ -30,10 +30,10 @@
     </appender>
 
     <!-- Custom ones -->
-    <logger name="com.biit.labstation.logger.LabStationLogger" additivity="false" level="INFO">
+    <logger name="com.biit.labstation.logger.LabStationLogger" additivity="false" level="DEBUG">
         <appender-ref ref="CONSOLE"/>
     </logger>
-    <logger name="com.biit.labstation.logger.TestLogging" additivity="false" level="INFO">
+    <logger name="com.biit.labstation.logger.TestLogging" additivity="false" level="DEBUG">
         <appender-ref ref="CONSOLE"/>
     </logger>
     <logger name="com.biit.server.logger.RestServerExceptionLogger" additivity="false" level="INFO">
