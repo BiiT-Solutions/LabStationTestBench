@@ -7,8 +7,8 @@
     <test name="LabStation" enabled="true" preserve-order="true">
         <groups>
             <run>
+                <include name="userManagerDefaultData"/>
                 <include name="login"/>
-                <include name="userManager"/>
             </run>
         </groups>
         <classes>

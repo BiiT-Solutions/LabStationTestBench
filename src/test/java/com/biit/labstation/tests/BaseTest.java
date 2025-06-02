@@ -2,6 +2,9 @@ package com.biit.labstation.tests;
 
 import com.biit.labstation.CustomChromeDriver;
 import com.biit.labstation.ScreenShooter;
+import com.biit.labstation.components.SnackBar;
+import com.biit.labstation.logger.LabStationLogger;
+import com.biit.labstation.usermanager.UserManager;
 import org.awaitility.Awaitility;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -14,13 +17,16 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.time.Duration;
+import java.util.Objects;
 import java.util.concurrent.TimeUnit;
+
+import static com.biit.labstation.tests.LoginIT.ADMIN_USER_NAME;
+import static com.biit.labstation.tests.LoginIT.ADMIN_USER_PASSWORD;
 
 public abstract class BaseTest extends AbstractTestNGSpringContextTests implements ITestWithWebDriver {
 
     @Value("${screenshots.folder:/tmp/SeleniumOutput}")
     private String screenShotsFolder;
-
 
     @Autowired
     private CustomChromeDriver customChromeDriver;
@@ -28,6 +34,11 @@ public abstract class BaseTest extends AbstractTestNGSpringContextTests implemen
     @Autowired
     private ScreenShooter screenShooter;
 
+    @Autowired
+    private UserManager userManager;
+
+    @Autowired
+    private SnackBar snackBar;
 
     @Override
     public CustomChromeDriver getDriver() {
@@ -37,6 +48,24 @@ public abstract class BaseTest extends AbstractTestNGSpringContextTests implemen
     @Override
     public ScreenShooter getScreenShooter() {
         return screenShooter;
+    }
+
+    protected void waitUntilReady() {
+        userManager.login(ADMIN_USER_NAME, ADMIN_USER_PASSWORD);
+        try {
+            if (Objects.equals("Your request failed. Please, try again later.", snackBar.getMessage())) {
+                LabStationLogger.info(this.getClass(), "System is not ready yet! Waiting...");
+                Thread.sleep(2000);
+                waitUntilReady();
+            }
+        } catch (Exception e) {
+            //Ignore. Has logged in.
+        }
+        try {
+            userManager.logout();
+        } catch (Exception e) {
+            //Ignore. Has logged in.
+        }
     }
 
     protected boolean deleteDirectory(File directoryToBeDeleted) {

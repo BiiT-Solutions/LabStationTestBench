@@ -2,7 +2,6 @@ package com.biit.labstation.tests;
 
 import com.biit.labstation.components.Popup;
 import com.biit.labstation.components.PopupId;
-import com.biit.labstation.components.SnackBar;
 import com.biit.labstation.components.TableId;
 import com.biit.labstation.logger.LabStationLogger;
 import com.biit.labstation.logger.TestListener;
@@ -18,13 +17,12 @@ import org.testng.annotations.Test;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.Objects;
 
 import static com.biit.labstation.tests.LoginIT.ADMIN_USER_NAME;
 import static com.biit.labstation.tests.LoginIT.ADMIN_USER_PASSWORD;
 
 @SpringBootTest
-@Test(groups = "userManager")
+@Test(groups = "userManagerDefaultData")
 @Listeners(TestListener.class)
 @DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_CLASS)
 public class UserManagerIT extends BaseTest implements ITestWithWebDriver {
@@ -35,30 +33,8 @@ public class UserManagerIT extends BaseTest implements ITestWithWebDriver {
     @Autowired
     private Popup popup;
 
-    @Autowired
-    private SnackBar snackBar;
-
     @Value("${starts.from.clean.database}")
     private boolean startsFormCleanDatabase;
-
-    private void waitUntilReady() {
-        userManager.login(ADMIN_USER_NAME, ADMIN_USER_PASSWORD);
-        try {
-            if (Objects.equals("Your request failed. Please, try again later.", snackBar.getMessage())) {
-                LabStationLogger.info(this.getClass(), "System is not ready yet! Waiting...");
-                Thread.sleep(2000);
-                waitUntilReady();
-            }
-        } catch (Exception e) {
-            //Ignore. Has logged in.
-        }
-        try {
-            userManager.logout();
-        } catch (Exception e) {
-            //Ignore. Has logged in.
-        }
-    }
-
 
     @BeforeClass
     public void setup() throws InterruptedException {

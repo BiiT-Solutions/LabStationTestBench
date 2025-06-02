@@ -32,9 +32,7 @@ public class Table {
     }
 
     public String getContent(TableId tableId, int row, int column) {
-        final String text = getCell(tableId, row, column).findElement(By.xpath(".//span[contains(@class, 'ng-star-inserted')]")).getText();
-        LabStationLogger.debug(this.getClass().getName(), "Content from cell row '{}', column '{}' on table '{}' is '{}'.", row, column, tableId, text);
-        return text;
+        return getCell(tableId, row, column).findElement(By.xpath(".//span[contains(@class, 'ng-star-inserted')]")).getText();
     }
 
     public WebElement getCell(TableId tableId, int row, int column) {

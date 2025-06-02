@@ -171,6 +171,7 @@ public class UserManager extends ToolTest {
     }
 
     public void addService(String name, String description) {
+        LabStationLogger.debug(this.getClass().getName(), "@@ Adding service '{}'.", name);
         selectServicesOnMenu();
         pressTableButton(TableId.SERVICE_TABLE, "button-plus");
         popup.findElement(PopupId.SERVICE, "service-name").findElement(By.id("input")).sendKeys(name);
@@ -179,6 +180,7 @@ public class UserManager extends ToolTest {
     }
 
     public void addServiceRole(String service, String role) {
+        LabStationLogger.debug(this.getClass().getName(), "@@ Adding service '{}' role '{}'.", service, role);
         try {
             selectServicesOnMenu();
         } catch (Exception e) {
@@ -194,6 +196,7 @@ public class UserManager extends ToolTest {
     }
 
     public void addApplication(String name, String description) {
+        LabStationLogger.debug(this.getClass().getName(), "@@ Adding application '{}'.", name);
         selectApplicationsOnMenu();
         pressTableButton(TableId.APPLICATION_TABLE, "button-plus");
         popup.findElement(PopupId.APPLICATION, "application-name").findElement(By.id("input")).sendKeys(name);
@@ -202,6 +205,7 @@ public class UserManager extends ToolTest {
     }
 
     public void addApplicationRole(String application, String role) {
+        LabStationLogger.debug(this.getClass().getName(), "@@ Adding role '{}' to application '{}'.", role, application);
         try {
             selectApplicationsOnMenu();
         } catch (Exception e) {
@@ -222,6 +226,8 @@ public class UserManager extends ToolTest {
         } catch (Exception e) {
             //Already on this tab.
         }
+        LabStationLogger.debug(this.getClass().getName(), "@@ Linking role '{}' from application '{}' to service '{}' role '{}'.",
+                role, application, backendService, backendRole);
         selectTableRow(TableId.APPLICATION_TABLE, application, 1);
         pressTableButton(TableId.APPLICATION_TABLE, "button-linkage");
         popup.selectTableRow(TableId.ROLE_TABLE, role, 1);
@@ -262,6 +268,7 @@ public class UserManager extends ToolTest {
     }
 
     public void addRole(String name, String description) {
+        LabStationLogger.debug(this.getClass().getName(), "@@ Adding role '{}'.", name);
         selectRolesOnMenu();
         pressTableButton(TableId.ROLE_TABLE, "button-plus");
         popup.findElement(PopupId.ROLE, "role-name").findElement(By.id("input")).sendKeys(name);
@@ -272,6 +279,7 @@ public class UserManager extends ToolTest {
     }
 
     public void linkRoleWithApplication(String role, String application) {
+        LabStationLogger.debug(this.getClass().getName(), "@@ Linking role '{}' to application '{}'.", role, application);
         try {
             selectRolesOnMenu();
         } catch (Exception e) {
@@ -287,6 +295,8 @@ public class UserManager extends ToolTest {
     }
 
     public void linkRoleWithApplicationService(String role, String application, String service, String backendRole) {
+        LabStationLogger.debug(this.getClass().getName(), "@@ Linking application '{}' for role '{}' to service '{}' role '{}'.",
+                application, role, service, backendRole);
         try {
             selectRolesOnMenu();
         } catch (Exception e) {
@@ -305,6 +315,7 @@ public class UserManager extends ToolTest {
     }
 
     public void addGroup(String name, String description) {
+        LabStationLogger.debug(this.getClass().getName(), "@@ Adding group '{}'.", name);
         selectGroupsOnMenu();
         pressTableButton(TableId.USERS_GROUP_TABLE, "button-plus");
         popup.findElement(PopupId.USER_GROUP, "group-name").findElement(By.id("input")).sendKeys(name);
@@ -313,6 +324,7 @@ public class UserManager extends ToolTest {
     }
 
     public void addGroupRole(String group, String application, String role) {
+        LabStationLogger.debug(this.getClass().getName(), "@@ Adding group '{}' role '{}'.", group, role);
         try {
             selectGroupsOnMenu();
         } catch (Exception e) {
@@ -329,6 +341,7 @@ public class UserManager extends ToolTest {
     }
 
     public void addUserToGroup(String user, String group) {
+        LabStationLogger.debug(this.getClass().getName(), "@@ Adding user '{}' to group '{}'.", user, group);
         try {
             selectGroupsOnMenu();
         } catch (Exception e) {
@@ -355,6 +368,7 @@ public class UserManager extends ToolTest {
         final int elements = getTotalNumberOfItems(TableId.USERS_GROUP_ROLE_TABLE);
         popup.close(PopupId.ROLE);
         unselectTableRow(TableId.USERS_GROUP_TABLE, group, 1);
+        LabStationLogger.debug(this.getClass().getName(), "Total roles by group '{}' are '{}'.", group, elements);
         return elements;
     }
 
@@ -365,7 +379,9 @@ public class UserManager extends ToolTest {
             //Ignore
             Thread.currentThread().interrupt();
         }
-        return Integer.parseInt(table.getTotalNumberOfItems(tableId));
+        int items = Integer.parseInt(table.getTotalNumberOfItems(tableId));
+        LabStationLogger.debug(this.getClass().getName(), "Total items in table '{}' are '{}'.", tableId, items);
+        return items;
     }
 
     public int getNumberOfItemsSelected(TableId tableId) {
@@ -375,7 +391,9 @@ public class UserManager extends ToolTest {
             //Ignore
             Thread.currentThread().interrupt();
         }
-        return Integer.parseInt(table.getTotalNumberOfItems(tableId));
+        int selectedITems = Integer.parseInt(table.getTotalNumberOfItems(tableId));
+        LabStationLogger.debug(this.getClass().getName(), "Total items selected in table '{}' are '{}'.", tableId, selectedITems);
+        return selectedITems;
     }
 
     public void addUser(String user, String email, String name, String lastName, String password) {
@@ -384,6 +402,7 @@ public class UserManager extends ToolTest {
         } catch (Exception e) {
             //Already on this tab.
         }
+        LabStationLogger.debug(this.getClass().getName(), "@@ Creating user '{}'.", user);
         pressTableButton(TableId.USERS_TABLE, "button-plus");
         tab.selectTab("user-tabs", "account-tab");
         popup.findElement(PopupId.USER, "username").findElement(By.id("input")).sendKeys(user);
@@ -401,6 +420,7 @@ public class UserManager extends ToolTest {
         } catch (Exception e) {
             //Already on this tab.
         }
+        LabStationLogger.debug(this.getClass().getName(), "@@ Adding role '{}' to user '{}' on application.", role, user, application);
         selectTableRow(TableId.USERS_TABLE, user, USERNAME_COLUMN);
         pressTableButton(TableId.USERS_TABLE, "button-linkage");
         //Wait until a confirmation message is closed.

@@ -42,7 +42,9 @@ public class SnackBar {
         });
         final String text = customChromeDriver.findElementWaiting(By.id("snackbar-canvas")).findElement(By.id("biit-notification"))
                 .findElement(By.id("message")).getText();
-        LabStationLogger.debug(this.getClass().getName(), "SnackBar Text: '{}'.", text);
+        if (text != null && !text.isBlank()) {
+            LabStationLogger.debug(this.getClass().getName(), "SnackBar Text: '{}'.", text);
+        }
         return text;
     }
 }
