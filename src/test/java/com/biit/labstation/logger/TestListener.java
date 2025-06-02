@@ -23,7 +23,7 @@ public class TestListener implements ITestListener {
 
     @Override
     public void onTestFailure(ITestResult result) {
-        final ITestWithWebDriver currentClass = getCurrentClass(result);
+        final ITestWithWebDriver currentClass = (ITestWithWebDriver) result.getInstance();
         final ScreenShooter screenShooter = currentClass.getScreenShooter();
         final String fileName = result.getMethod().getMethodName() + "_" + LocalDateTime.now().format(DateTimeFormatter.ISO_DATE_TIME);
         screenShooter.takeScreenshot(fileName);
@@ -43,20 +43,11 @@ public class TestListener implements ITestListener {
 
     @Override
     public void onStart(ITestContext context) {
-        TestLogging.info(this.getClass().getName(), "##### Starting tests from '" + context.getName() + "'.");
+        TestLogging.info(this.getClass().getName(), "##### Starting tests from '" + context.getName() + "' #####.");
     }
 
     @Override
     public void onFinish(ITestContext context) {
-        TestLogging.info(this.getClass().getName(), "##### Tests finished from '" + context.getName() + "'.");
-    }
-
-//    private WebDriver getWebDriver(ITestResult result) {
-//
-//    }
-
-    private ITestWithWebDriver getCurrentClass(ITestResult result) {
-        final String testName = result.getMethod().getMethodName();
-        return (ITestWithWebDriver) result.getInstance();
+        TestLogging.info(this.getClass().getName(), "##### Tests finished from '" + context.getName() + "' #####.");
     }
 }
