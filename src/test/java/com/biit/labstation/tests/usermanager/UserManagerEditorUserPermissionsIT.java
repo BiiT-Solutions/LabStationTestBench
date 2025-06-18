@@ -3,12 +3,13 @@ package com.biit.labstation.tests.usermanager;
 import com.biit.labstation.components.Popup;
 import com.biit.labstation.components.SnackBar;
 import com.biit.labstation.components.Table;
+import com.biit.labstation.components.TableId;
 import com.biit.labstation.exceptions.ElementNotFoundAsExpectedException;
 import com.biit.labstation.logger.TestListener;
 import com.biit.labstation.tests.BaseTest;
 import com.biit.labstation.tests.ITestWithWebDriver;
 import com.biit.labstation.usermanager.UserManager;
-import org.openqa.selenium.ElementNotInteractableException;
+import org.openqa.selenium.NoSuchElementException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.annotation.DirtiesContext;
@@ -21,13 +22,14 @@ import static com.biit.labstation.tests.LoginIT.ADMIN_USER_NAME;
 import static com.biit.labstation.tests.LoginIT.ADMIN_USER_PASSWORD;
 
 @SpringBootTest
-//@Test(groups = "userManagerBasicUserPermissions", dependsOnGroups = "userManagerDefaultData")
-@Test(groups = "userManagerBasicUserPermissions")
+@Test(groups = "userManagerEditorUserPermissions", dependsOnGroups = "userManagerDefaultData")
+//@Test(groups = "userManagerEditorUserPermissions")
 @Listeners(TestListener.class)
 @DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_CLASS)
-public class UserManagerBasicUserPermissionsIT extends BaseTest implements ITestWithWebDriver {
+public class UserManagerEditorUserPermissionsIT extends BaseTest implements ITestWithWebDriver {
 
-    private static final String BASIC_USER_NAME = "basicuser";
+    private static final String EDITOR_USER_NAME = "editoruser";
+    private static final String DUMMYUSER_NAME = "dummyuser";
     private static final String USER_PASSWORD = "asd123";
 
     @Autowired
@@ -48,31 +50,58 @@ public class UserManagerBasicUserPermissionsIT extends BaseTest implements ITest
     }
 
     @Test()
-    public void createBasicUser() {
+    public void createEditorUser() {
         userManager.login(ADMIN_USER_NAME, ADMIN_USER_PASSWORD);
         try {
             userManager.selectUserOnMenu();
-            userManager.addUser(BASIC_USER_NAME, BASIC_USER_NAME + "@test.com", "Basic", "User", USER_PASSWORD);
+            userManager.addUser(EDITOR_USER_NAME, EDITOR_USER_NAME + "@test.com", "Editor", "User", USER_PASSWORD);
             snackBar.checkMessage("regular", "User has been created successfully.");
-            userManager.addUserToGroup(BASIC_USER_NAME, "Employee");
+            userManager.addUserToGroup(EDITOR_USER_NAME, "Editor");
         } finally {
             userManager.logout();
             snackBar.checkMessage("regular", "Your account was logged out successfully.");
         }
     }
 
-    @Test(dependsOnMethods = "createBasicUser", expectedExceptions = ElementNotFoundAsExpectedException.class)
-    public void checkBasicNoPermissions() {
-        userManager.login(BASIC_USER_NAME, USER_PASSWORD);
-        snackBar.checkMessage("error", "Access denied.");
+    @Test(dependsOnMethods = "createEditorUser")
+    public void checkEditorCanCreateUsers() {
+        userManager.login(EDITOR_USER_NAME, USER_PASSWORD);
+        userManager.selectUserOnMenu();
+        userManager.addUser(DUMMYUSER_NAME, DUMMYUSER_NAME + "@test.com", "Dummy", "User", USER_PASSWORD);
+        snackBar.checkMessage("regular", "User has been created successfully.");
+        userManager.logout();
+    }
+
+
+    @Test(dependsOnMethods = "createEditorUser", expectedExceptions = ElementNotFoundAsExpectedException.class)
+    public void checkEditorCannotChangeUserRoles() {
+        userManager.login(EDITOR_USER_NAME, USER_PASSWORD);
+        userManager.selectUserOnMenu();
+        userManager.selectTableRow(TableId.USERS_TABLE, 0);
         try {
-            userManager.selectOrganizationsOnMenu();
-        } catch (ElementNotInteractableException e) {
+            userManager.pressTableButton(TableId.USERS_TABLE, "button-linkage");
+        } catch (NoSuchElementException e) {
             throw new ElementNotFoundAsExpectedException();
         } finally {
             userManager.logout();
-            snackBar.checkMessage("regular", "Your account was logged out successfully.");
         }
+    }
+
+    @Test(dependsOnMethods = {"checkEditorCanCreateUsers"})
+    public void checkEditorCanDeleteBasicUsers() {
+        userManager.login(EDITOR_USER_NAME, USER_PASSWORD);
+        userManager.selectUserOnMenu();
+        userManager.deleteUser(DUMMYUSER_NAME);
+        userManager.logout();
+    }
+
+    @Test(dependsOnMethods = "createEditorUser")
+    public void checkEditorCannotDeleteAdminUsers() {
+        userManager.login(EDITOR_USER_NAME, USER_PASSWORD);
+        userManager.selectUserOnMenu();
+        userManager.deleteUser(ADMIN_USER_NAME);
+        snackBar.checkMessage("error", "This action is not allowed.");
+        userManager.logout();
     }
 
 
@@ -88,9 +117,10 @@ public class UserManagerBasicUserPermissionsIT extends BaseTest implements ITest
         } catch (Exception e) {
             //Ignore
         }
+
         try {
             userManager.login(ADMIN_USER_NAME, ADMIN_USER_PASSWORD);
-            userManager.deleteUser(BASIC_USER_NAME);
+            userManager.deleteUser(EDITOR_USER_NAME);
         } catch (Exception e) {
             //Ignore
         }
@@ -99,5 +129,6 @@ public class UserManagerBasicUserPermissionsIT extends BaseTest implements ITest
         } catch (Exception e) {
             //Ignore
         }
+
     }
 }

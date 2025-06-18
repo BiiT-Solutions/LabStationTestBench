@@ -5,6 +5,7 @@ import java.time.Duration;
 import static org.awaitility.Awaitility.await;
 
 public abstract class ToolTest {
+    public static final int WAITING_TIME = 250;
     protected static final int WAITING_TIME_SECONDS = 3;
 
     protected void waitAndExecute(Runnable operation) {
@@ -16,5 +17,18 @@ public abstract class ToolTest {
                 return false;
             }
         });
+    }
+
+    public static void waitComponent() {
+        waitComponent(WAITING_TIME);
+    }
+
+    public static void waitComponent(int milliseconds) {
+        try {
+            Thread.sleep(milliseconds);
+        } catch (InterruptedException e) {
+            //Ignore
+            Thread.currentThread().interrupt();
+        }
     }
 }

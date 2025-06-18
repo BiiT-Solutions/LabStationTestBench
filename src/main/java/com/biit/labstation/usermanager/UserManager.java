@@ -17,7 +17,6 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class UserManager extends ToolTest {
-    private static final int WAITING_TIME = 250;
     private static final int USERNAME_COLUMN = 3;
     private static final int USERNAME_GROUP_TABLE_COLUMN = 4;
     private static final int USERNAME_USER_TABLE_COLUMN = 3;
@@ -415,7 +414,7 @@ public class UserManager extends ToolTest {
         popup.findElement(PopupId.USER, "password").findElement(By.id("input")).sendKeys(password);
         popup.findElement(PopupId.USER, "repeat-password").findElement(By.id("input")).clear();
         popup.findElement(PopupId.USER, "repeat-password").findElement(By.id("input")).sendKeys(password);
-        popup.findElement(PopupId.USER, "popup-user-save-button").click();
+        waitAndExecute(() -> popup.findElement(PopupId.USER, "popup-user-save-button").click());
     }
 
 

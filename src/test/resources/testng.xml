@@ -9,6 +9,7 @@
             <run>
                 <include name="userManagerDefaultData"/>
                 <include name="userManagerBasicUserPermissions"/>
+                <include name="userManagerEditorUserPermissions"/>
                 <include name="userManagerDuplications"/>
                 <include name="login"/>
             </run>
@@ -17,6 +18,7 @@
             <class name="com.biit.labstation.tests.LoginIT"/>
             <class name="com.biit.labstation.tests.usermanager.UserManagerIT"/>
             <class name="com.biit.labstation.tests.usermanager.UserManagerBasicUserPermissionsIT"/>
+            <class name="com.biit.labstation.tests.usermanager.UserManagerEditorUserPermissionsIT"/>
             <class name="com.biit.labstation.tests.usermanager.UserManagerDuplicationsIT"/>
         </classes>
     </test>
