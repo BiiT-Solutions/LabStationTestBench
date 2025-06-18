@@ -8,12 +8,16 @@
         <groups>
             <run>
                 <include name="userManagerDefaultData"/>
+                <include name="userManagerBasicUserPermissions"/>
+                <include name="userManagerDuplications"/>
                 <include name="login"/>
             </run>
         </groups>
         <classes>
             <class name="com.biit.labstation.tests.LoginIT"/>
-            <class name="com.biit.labstation.tests.UserManagerIT"/>
+            <class name="com.biit.labstation.tests.usermanager.UserManagerIT"/>
+            <class name="com.biit.labstation.tests.usermanager.UserManagerBasicUserPermissionsIT"/>
+            <class name="com.biit.labstation.tests.usermanager.UserManagerDuplicationsIT"/>
         </classes>
     </test>
 </suite>

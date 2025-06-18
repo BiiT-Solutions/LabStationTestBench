@@ -86,7 +86,7 @@ public class CustomChromeDriver {
         return headlessMode;
     }
 
-    private WebDriverWait getWebDriverWait() {
+    public WebDriverWait getWebDriverWait() {
         return webDriverWait;
     }
 
@@ -95,6 +95,11 @@ public class CustomChromeDriver {
     }
 
     public WebElement findElementWaiting(By field) {
+        return getWebDriverWait().until(ExpectedConditions.visibilityOfElementLocated(field));
+    }
+
+    public WebElement findElementWaiting(By parent, By field) {
+        getWebDriverWait().until(ExpectedConditions.visibilityOfElementLocated(parent));
         return getWebDriverWait().until(ExpectedConditions.visibilityOfElementLocated(field));
     }
 }

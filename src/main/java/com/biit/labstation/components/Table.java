@@ -3,6 +3,7 @@ package com.biit.labstation.components;
 import com.biit.labstation.CustomChromeDriver;
 import com.biit.labstation.logger.ComponentLogger;
 import org.openqa.selenium.By;
+import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebElement;
 import org.springframework.stereotype.Component;
 
@@ -29,6 +30,11 @@ public class Table {
     public WebElement getSearchField(TableId tableId) {
         return customChromeDriver.findElementWaiting(By.id(tableId.getId())).findElement(By.id("biit-table"))
                 .findElement(By.id("options")).findElement(By.id("search")).findElement(By.id("input"));
+    }
+
+    public void search(TableId tableId, String text) {
+        getSearchField(tableId).sendKeys(text);
+        getSearchField(tableId).sendKeys(Keys.RETURN);
     }
 
     public String getContent(TableId tableId, int row, int column) {
@@ -64,6 +70,7 @@ public class Table {
     }
 
     public void selectRow(TableId tableId, String label, int column) {
+        search(tableId, label);
         await().atMost(Duration.ofSeconds(WAITING_TIME_SECONDS)).until(() -> {
             for (int i = 0; i < countRows(tableId); i++) {
                 if (Objects.equals(getContent(tableId, i, column), label)) {

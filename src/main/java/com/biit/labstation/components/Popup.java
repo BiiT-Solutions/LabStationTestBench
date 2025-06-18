@@ -36,8 +36,7 @@ public class Popup {
             }
             ComponentLogger.debug(this.getClass().getName(), "Closing popup '{}'.", popupId);
         } catch (Exception e) {
-            //Cannot close.
-            ComponentLogger.errorMessage(this.getClass(), e);
+            //Ignore
         }
     }
 

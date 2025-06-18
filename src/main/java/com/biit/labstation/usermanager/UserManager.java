@@ -19,6 +19,8 @@ import org.springframework.stereotype.Component;
 public class UserManager extends ToolTest {
     private static final int WAITING_TIME = 250;
     private static final int USERNAME_COLUMN = 3;
+    private static final int USERNAME_GROUP_TABLE_COLUMN = 4;
+    private static final int USERNAME_USER_TABLE_COLUMN = 3;
 
     private final CustomChromeDriver customChromeDriver;
     private final Login login;
@@ -340,8 +342,8 @@ public class UserManager extends ToolTest {
         unselectTableRow(TableId.USERS_GROUP_TABLE, group, 1);
     }
 
-    public void addUserToGroup(String user, String group) {
-        LabStationLogger.debug(this.getClass().getName(), "@@ Adding user '{}' to group '{}'.", user, group);
+    public void addUserToGroup(String username, String group) {
+        LabStationLogger.debug(this.getClass().getName(), "@@ Adding username '{}' to group '{}'.", username, group);
         try {
             selectGroupsOnMenu();
         } catch (Exception e) {
@@ -349,7 +351,7 @@ public class UserManager extends ToolTest {
         }
         selectTableRow(TableId.USERS_GROUP_TABLE, group, 1);
         pressTableButton(TableId.USERS_GROUP_TABLE, "button-group");
-        table.selectRow(TableId.USERS_TABLE, user, 1);
+        table.selectRow(TableId.USERS_TABLE, username, USERNAME_GROUP_TABLE_COLUMN);
         popup.findElement(PopupId.ASSIGN_USERS_TO_GROUP, "popup-assign-button").click();
         popup.findElement(PopupId.CONFIRMATION, "assign-button").click();
         popup.close(PopupId.ASSIGN_USERS_TO_GROUP);
@@ -409,9 +411,23 @@ public class UserManager extends ToolTest {
         popup.findElement(PopupId.USER, "email").findElement(By.id("input")).sendKeys(email);
         popup.findElement(PopupId.USER, "name").findElement(By.id("input")).sendKeys(name);
         popup.findElement(PopupId.USER, "lastname").findElement(By.id("input")).sendKeys(lastName);
+        popup.findElement(PopupId.USER, "password").findElement(By.id("input")).clear();
         popup.findElement(PopupId.USER, "password").findElement(By.id("input")).sendKeys(password);
+        popup.findElement(PopupId.USER, "repeat-password").findElement(By.id("input")).clear();
         popup.findElement(PopupId.USER, "repeat-password").findElement(By.id("input")).sendKeys(password);
         popup.findElement(PopupId.USER, "popup-user-save-button").click();
+    }
+
+
+    public void deleteUser(String username) {
+        try {
+            selectUserOnMenu();
+        } catch (Exception e) {
+            //Already on this tab.
+        }
+        selectTableRow(TableId.USERS_TABLE, username, USERNAME_USER_TABLE_COLUMN);
+        pressTableButton(TableId.USERS_TABLE, "button-minus");
+        popup.findElement(PopupId.CONFIRMATION_DELETE, "confirm-delete-button").click();
     }
 
     public void addUserRoles(String user, String application, String role) {

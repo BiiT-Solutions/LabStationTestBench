@@ -1,10 +1,12 @@
-package com.biit.labstation.tests;
+package com.biit.labstation.tests.usermanager;
 
 import com.biit.labstation.components.Popup;
 import com.biit.labstation.components.PopupId;
 import com.biit.labstation.components.TableId;
 import com.biit.labstation.logger.LabStationLogger;
 import com.biit.labstation.logger.TestListener;
+import com.biit.labstation.tests.BaseTest;
+import com.biit.labstation.tests.ITestWithWebDriver;
 import com.biit.labstation.usermanager.UserManager;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
