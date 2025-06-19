@@ -1,5 +1,7 @@
 package com.biit.labstation;
 
+import com.biit.labstation.logger.LabStationLogger;
+
 import java.time.Duration;
 
 import static org.awaitility.Awaitility.await;
@@ -7,6 +9,17 @@ import static org.awaitility.Awaitility.await;
 public abstract class ToolTest {
     private static final int WAITING_TIME = 250;
     protected static final int WAITING_TIME_SECONDS = 3;
+    private static final int WAITING_TO_ACCESS_BROWSER = 2000;
+
+    private final CustomChromeDriver customChromeDriver;
+
+    protected ToolTest(CustomChromeDriver customChromeDriver) {
+        this.customChromeDriver = customChromeDriver;
+    }
+
+    public CustomChromeDriver getCustomChromeDriver() {
+        return customChromeDriver;
+    }
 
     protected void waitAndExecute(Runnable operation) {
         await().atMost(Duration.ofSeconds(WAITING_TIME_SECONDS)).until(() -> {
@@ -29,6 +42,23 @@ public abstract class ToolTest {
         } catch (InterruptedException e) {
             //Ignore
             Thread.currentThread().interrupt();
+        }
+    }
+
+    public void access(String serverDomain, String context) {
+        try {
+            final String requestedUrl = serverDomain + context;
+            LabStationLogger.debug(this.getClass().getName(), "Accessing to URL '{}'.", requestedUrl);
+            customChromeDriver.getDriver().get(requestedUrl);
+            waitComponent(WAITING_TO_ACCESS_BROWSER);
+            final String currentUrl = customChromeDriver.getDriver().getCurrentUrl();
+            if (currentUrl == null || !currentUrl.startsWith(requestedUrl)) {
+                LabStationLogger.info(this.getClass(), "Browser is not ready yet! Current URL is '{}'. Requested is '{}'. Waiting...",
+                        currentUrl, requestedUrl);
+                access(serverDomain, context);
+            }
+        } catch (Exception e) {
+            LabStationLogger.errorMessage(this.getClass(), e);
         }
     }
 }

@@ -22,8 +22,8 @@ public class UserManager extends ToolTest {
     private static final int USERNAME_COLUMN = 3;
     private static final int USERNAME_GROUP_TABLE_COLUMN = 4;
     private static final int USERNAME_USER_TABLE_COLUMN = 3;
+    private static final int WAITING_TO_ACCESS = 500;
 
-    private final CustomChromeDriver customChromeDriver;
     private final Login login;
     private final NavBar navBar;
     private final Table table;
@@ -38,7 +38,7 @@ public class UserManager extends ToolTest {
     private String context;
 
     public UserManager(CustomChromeDriver customChromeDriver, Login login, NavBar navBar, Table table, Popup popup, Dropdown dropdown, Tab tab) {
-        this.customChromeDriver = customChromeDriver;
+        super(customChromeDriver);
         this.login = login;
         this.navBar = navBar;
         this.table = table;
@@ -48,12 +48,7 @@ public class UserManager extends ToolTest {
     }
 
     public void access() {
-        try {
-            LabStationLogger.debug(this.getClass().getName(), "Accessing to URL '{}{}'.", serverDomain, context);
-            customChromeDriver.getDriver().get(serverDomain + context);
-        } catch (Exception e) {
-            LabStationLogger.errorMessage(this.getClass(), e);
-        }
+        access(serverDomain, context);
     }
 
     public void login(String username, String password) {
@@ -66,8 +61,8 @@ public class UserManager extends ToolTest {
     }
 
     public void logout() {
-        customChromeDriver.findElementWaiting(By.id("usermanager-menu")).click();
-        customChromeDriver.findElementWaiting(By.id("usermanager-menu-logout")).click();
+        getCustomChromeDriver().findElementWaiting(By.id("usermanager-menu")).click();
+        getCustomChromeDriver().findElementWaiting(By.id("usermanager-menu-logout")).click();
     }
 
     public void selectUserOnMenu() {

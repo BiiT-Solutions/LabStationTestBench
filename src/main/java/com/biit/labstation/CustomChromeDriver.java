@@ -52,9 +52,9 @@ public class CustomChromeDriver {
             chromeOptions.addArguments("--headless=new");
         }
         chromeOptions.setAcceptInsecureCerts(true);
-        if (!headlessMode) {
-            chromeOptions.setExperimentalOption("detach", true);
-        }
+//        if (!headless) {
+//            chromeOptions.setExperimentalOption("detach", true);
+//        }
         return chromeOptions;
     }
 

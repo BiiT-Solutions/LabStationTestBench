@@ -3,6 +3,7 @@ package com.biit.labstation.tests.usermanager;
 import com.biit.labstation.components.Popup;
 import com.biit.labstation.components.PopupId;
 import com.biit.labstation.components.SnackBar;
+import com.biit.labstation.logger.ClassTestListener;
 import com.biit.labstation.logger.TestListener;
 import com.biit.labstation.tests.BaseTest;
 import com.biit.labstation.tests.ITestWithWebDriver;
@@ -19,8 +20,8 @@ import static com.biit.labstation.tests.LoginIT.ADMIN_USER_NAME;
 import static com.biit.labstation.tests.LoginIT.ADMIN_USER_PASSWORD;
 
 @SpringBootTest
-@Test(groups = "userManagerDuplications")
-@Listeners(TestListener.class)
+@Test(groups = "userManagerDuplications", dependsOnGroups = "userManagerDefaultData")
+@Listeners({TestListener.class, ClassTestListener.class})
 @DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_CLASS)
 public class UserManagerDuplicationsIT extends BaseTest implements ITestWithWebDriver {
 

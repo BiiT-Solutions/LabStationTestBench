@@ -2,6 +2,7 @@ package com.biit.labstation.tests;
 
 import com.biit.labstation.CustomChromeDriver;
 import com.biit.labstation.ScreenShooter;
+import com.biit.labstation.ToolTest;
 import com.biit.labstation.components.SnackBar;
 import com.biit.labstation.logger.LabStationLogger;
 import com.biit.labstation.usermanager.UserManager;
@@ -10,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.test.context.testng.AbstractTestNGSpringContextTests;
 import org.testng.annotations.AfterSuite;
+import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeSuite;
 
 import java.io.File;

@@ -44,11 +44,11 @@ public class TestListener implements ITestListener {
 
     @Override
     public void onStart(ITestContext context) {
-        TestLogging.info(this.getClass().getName(), "##### Starting tests from '" + context.getName() + "' #####.");
+        TestLogging.info(this.getClass().getName(), "######## Starting tests from '" + context.getName() + "' ########.");
     }
 
     @Override
     public void onFinish(ITestContext context) {
-        TestLogging.info(this.getClass().getName(), "##### Tests finished from '" + context.getName() + "' #####.");
+        TestLogging.info(this.getClass().getName(), "######## Tests finished from '" + context.getName() + "' ########.");
     }
 }

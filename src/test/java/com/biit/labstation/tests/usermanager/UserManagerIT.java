@@ -5,6 +5,7 @@ import com.biit.labstation.components.Popup;
 import com.biit.labstation.components.PopupId;
 import com.biit.labstation.components.SnackBar;
 import com.biit.labstation.components.TableId;
+import com.biit.labstation.logger.ClassTestListener;
 import com.biit.labstation.logger.LabStationLogger;
 import com.biit.labstation.logger.TestListener;
 import com.biit.labstation.tests.BaseTest;
@@ -26,8 +27,8 @@ import static com.biit.labstation.tests.LoginIT.ADMIN_USER_NAME;
 import static com.biit.labstation.tests.LoginIT.ADMIN_USER_PASSWORD;
 
 @SpringBootTest
-@Test(groups = "userManagerDefaultData")
-@Listeners(TestListener.class)
+@Test(groups = "userManagerDefaultData", priority = -1)
+@Listeners({TestListener.class, ClassTestListener.class})
 @DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_CLASS)
 public class UserManagerIT extends BaseTest implements ITestWithWebDriver {
 

@@ -1,9 +1,11 @@
 package com.biit.labstation.tests.usermanager;
 
+import com.biit.labstation.ToolTest;
 import com.biit.labstation.components.Popup;
 import com.biit.labstation.components.SnackBar;
 import com.biit.labstation.components.Table;
 import com.biit.labstation.exceptions.ElementNotFoundAsExpectedException;
+import com.biit.labstation.logger.ClassTestListener;
 import com.biit.labstation.logger.TestListener;
 import com.biit.labstation.tests.BaseTest;
 import com.biit.labstation.tests.ITestWithWebDriver;
@@ -21,8 +23,8 @@ import static com.biit.labstation.tests.LoginIT.ADMIN_USER_NAME;
 import static com.biit.labstation.tests.LoginIT.ADMIN_USER_PASSWORD;
 
 @SpringBootTest
-@Test(groups = "userManagerBasicUserPermissions")
-@Listeners(TestListener.class)
+@Test(groups = "userManagerBasicUserPermissions", dependsOnGroups = "userManagerDefaultData")
+@Listeners({TestListener.class, ClassTestListener.class})
 @DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_CLASS)
 public class UserManagerBasicUserPermissionsIT extends BaseTest implements ITestWithWebDriver {
 
