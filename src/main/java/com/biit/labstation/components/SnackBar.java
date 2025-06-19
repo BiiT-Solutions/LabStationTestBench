@@ -1,6 +1,7 @@
 package com.biit.labstation.components;
 
 import com.biit.labstation.CustomChromeDriver;
+import com.biit.labstation.ToolTest;
 import com.biit.labstation.logger.ComponentLogger;
 import org.openqa.selenium.By;
 import org.springframework.stereotype.Component;
@@ -22,7 +23,7 @@ public class SnackBar {
     public static final String EMAIL_IN_USE = "The email is already in use.";
     public static final String REQUEST_FAILED = "Your request failed. Please, try again later.";
 
-    protected static final int WAITING_TIME_SECONDS = 4;
+    protected static final int WAITING_TIME_SECONDS = 5;
 
     private final CustomChromeDriver customChromeDriver;
 
@@ -61,7 +62,7 @@ public class SnackBar {
     }
 
     public void checkMessage(String type, String message) {
-        await().atMost(Duration.ofSeconds(WAITING_TIME_SECONDS)).and().with().pollDelay(1, TimeUnit.SECONDS).until(() -> {
+        await().atMost(Duration.ofSeconds(WAITING_TIME_SECONDS)).and().with().pollDelay(ToolTest.WAITING_TIME, TimeUnit.MILLISECONDS).until(() -> {
             try {
                 return Objects.equals(getMessageType(), type) && Objects.equals(getMessage(), message);
             } catch (Exception e) {

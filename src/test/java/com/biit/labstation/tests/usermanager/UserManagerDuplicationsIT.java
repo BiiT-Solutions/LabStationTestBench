@@ -44,28 +44,22 @@ public class UserManagerDuplicationsIT extends BaseTest implements ITestWithWebD
     @Test()
     public void createExistingUser() {
         userManager.login(ADMIN_USER_NAME, ADMIN_USER_PASSWORD);
-        try {
-            userManager.selectUserOnMenu();
-            userManager.addUser(BASIC_USER_NAME, BASIC_USER_NAME + "@test.com", "New", "User", USER_PASSWORD);
-            userManager.addUser(BASIC_USER_NAME, BASIC_USER_NAME + "@test.com", "New", "User", USER_PASSWORD);
-            snackBar.checkMessage("error", SnackBar.USER_ALREADY_EXISTS);
-        } finally {
-            popup.close(PopupId.USER);
-            userManager.logout();
-        }
+        userManager.selectUserOnMenu();
+        userManager.addUser(BASIC_USER_NAME, BASIC_USER_NAME + "@test.com", "New", "User", USER_PASSWORD);
+        userManager.addUser(BASIC_USER_NAME, BASIC_USER_NAME + "@test.com", "New", "User", USER_PASSWORD);
+        snackBar.checkMessage("error", SnackBar.USER_ALREADY_EXISTS);
+        popup.close(PopupId.USER);
+        userManager.logout();
     }
 
     @Test(dependsOnMethods = "createExistingUser")
     public void createExistingEmail() {
         userManager.login(ADMIN_USER_NAME, ADMIN_USER_PASSWORD);
-        try {
-            userManager.selectUserOnMenu();
-            userManager.addUser(BASIC_USER_NAME + "_2", BASIC_USER_NAME + "@test.com", "New", "User", USER_PASSWORD);
-            snackBar.checkMessage("error", SnackBar.EMAIL_IN_USE);
-        } finally {
-            popup.close(PopupId.USER);
-            userManager.logout();
-        }
+        userManager.selectUserOnMenu();
+        userManager.addUser(BASIC_USER_NAME + "_2", BASIC_USER_NAME + "@test.com", "New", "User", USER_PASSWORD);
+        snackBar.checkMessage("error", SnackBar.EMAIL_IN_USE);
+        popup.close(PopupId.USER);
+        userManager.logout();
     }
 
     @AfterClass
