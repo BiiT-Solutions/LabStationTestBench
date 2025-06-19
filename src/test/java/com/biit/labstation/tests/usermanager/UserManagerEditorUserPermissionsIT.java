@@ -22,8 +22,7 @@ import static com.biit.labstation.tests.LoginIT.ADMIN_USER_NAME;
 import static com.biit.labstation.tests.LoginIT.ADMIN_USER_PASSWORD;
 
 @SpringBootTest
-@Test(groups = "userManagerEditorUserPermissions", dependsOnGroups = "userManagerDefaultData")
-//@Test(groups = "userManagerEditorUserPermissions")
+@Test(groups = "userManagerEditorUserPermissions")
 @Listeners(TestListener.class)
 @DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_CLASS)
 public class UserManagerEditorUserPermissionsIT extends BaseTest implements ITestWithWebDriver {
@@ -55,11 +54,11 @@ public class UserManagerEditorUserPermissionsIT extends BaseTest implements ITes
         try {
             userManager.selectUserOnMenu();
             userManager.addUser(EDITOR_USER_NAME, EDITOR_USER_NAME + "@test.com", "Editor", "User", USER_PASSWORD);
-            snackBar.checkMessage("regular", "User has been created successfully.");
+            snackBar.checkMessage("regular", SnackBar.USER_CREATED);
             userManager.addUserToGroup(EDITOR_USER_NAME, "Editor");
         } finally {
             userManager.logout();
-            snackBar.checkMessage("regular", "Your account was logged out successfully.");
+            snackBar.checkMessage("regular", SnackBar.LOGGED_OUT);
         }
     }
 
@@ -68,7 +67,7 @@ public class UserManagerEditorUserPermissionsIT extends BaseTest implements ITes
         userManager.login(EDITOR_USER_NAME, USER_PASSWORD);
         userManager.selectUserOnMenu();
         userManager.addUser(DUMMYUSER_NAME, DUMMYUSER_NAME + "@test.com", "Dummy", "User", USER_PASSWORD);
-        snackBar.checkMessage("regular", "User has been created successfully.");
+        snackBar.checkMessage("regular", SnackBar.USER_CREATED);
         userManager.logout();
     }
 
@@ -100,7 +99,7 @@ public class UserManagerEditorUserPermissionsIT extends BaseTest implements ITes
         userManager.login(EDITOR_USER_NAME, USER_PASSWORD);
         userManager.selectUserOnMenu();
         userManager.deleteUser(ADMIN_USER_NAME);
-        snackBar.checkMessage("error", "This action is not allowed.");
+        snackBar.checkMessage("error", SnackBar.ACTION_NOT_ALLOWED);
         userManager.logout();
     }
 

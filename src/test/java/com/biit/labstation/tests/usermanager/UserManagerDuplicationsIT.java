@@ -19,7 +19,6 @@ import static com.biit.labstation.tests.LoginIT.ADMIN_USER_NAME;
 import static com.biit.labstation.tests.LoginIT.ADMIN_USER_PASSWORD;
 
 @SpringBootTest
-//@Test(groups = "userManagerDuplications", dependsOnGroups = "userManagerDefaultData")
 @Test(groups = "userManagerDuplications")
 @Listeners(TestListener.class)
 @DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_CLASS)
@@ -47,9 +46,9 @@ public class UserManagerDuplicationsIT extends BaseTest implements ITestWithWebD
         try {
             userManager.selectUserOnMenu();
             userManager.addUser(BASIC_USER_NAME, BASIC_USER_NAME + "@test.com", "New", "User", USER_PASSWORD);
-            snackBar.checkMessage("regular", "User has been created successfully.");
+            snackBar.checkMessage("regular", SnackBar.USER_CREATED);
             userManager.addUser(BASIC_USER_NAME, BASIC_USER_NAME + "@test.com", "New", "User", USER_PASSWORD);
-            snackBar.checkMessage("error", "The user already exists.");
+            snackBar.checkMessage("error", SnackBar.USER_ALREADY_EXISTS);
         } finally {
             popup.close(PopupId.USER);
             userManager.logout();
@@ -62,7 +61,7 @@ public class UserManagerDuplicationsIT extends BaseTest implements ITestWithWebD
         try {
             userManager.selectUserOnMenu();
             userManager.addUser(BASIC_USER_NAME + "_2", BASIC_USER_NAME + "@test.com", "New", "User", USER_PASSWORD);
-            snackBar.checkMessage("error", "The email is already in use.");
+            snackBar.checkMessage("error", SnackBar.EMAIL_IN_USE);
         } finally {
             popup.close(PopupId.USER);
             userManager.logout();

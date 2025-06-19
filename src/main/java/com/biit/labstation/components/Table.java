@@ -33,6 +33,7 @@ public class Table {
     }
 
     public void search(TableId tableId, String text) {
+        getSearchField(tableId).clear();
         getSearchField(tableId).sendKeys(text);
         getSearchField(tableId).sendKeys(Keys.RETURN);
     }

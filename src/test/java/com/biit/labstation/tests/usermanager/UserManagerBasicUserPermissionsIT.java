@@ -21,7 +21,6 @@ import static com.biit.labstation.tests.LoginIT.ADMIN_USER_NAME;
 import static com.biit.labstation.tests.LoginIT.ADMIN_USER_PASSWORD;
 
 @SpringBootTest
-//@Test(groups = "userManagerBasicUserPermissions", dependsOnGroups = "userManagerDefaultData")
 @Test(groups = "userManagerBasicUserPermissions")
 @Listeners(TestListener.class)
 @DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_CLASS)
@@ -53,25 +52,25 @@ public class UserManagerBasicUserPermissionsIT extends BaseTest implements ITest
         try {
             userManager.selectUserOnMenu();
             userManager.addUser(BASIC_USER_NAME, BASIC_USER_NAME + "@test.com", "Basic", "User", USER_PASSWORD);
-            snackBar.checkMessage("regular", "User has been created successfully.");
+            snackBar.checkMessage("regular", SnackBar.USER_CREATED);
             userManager.addUserToGroup(BASIC_USER_NAME, "Employee");
         } finally {
             userManager.logout();
-            snackBar.checkMessage("regular", "Your account was logged out successfully.");
+            snackBar.checkMessage("regular", SnackBar.LOGGED_OUT);
         }
     }
 
     @Test(dependsOnMethods = "createBasicUser", expectedExceptions = ElementNotFoundAsExpectedException.class)
     public void checkBasicNoPermissions() {
         userManager.login(BASIC_USER_NAME, USER_PASSWORD);
-        snackBar.checkMessage("error", "Access denied.");
+        snackBar.checkMessage("error", SnackBar.ACCESS_DENIED);
         try {
             userManager.selectOrganizationsOnMenu();
         } catch (ElementNotInteractableException e) {
             throw new ElementNotFoundAsExpectedException();
         } finally {
             userManager.logout();
-            snackBar.checkMessage("regular", "Your account was logged out successfully.");
+            snackBar.checkMessage("regular", SnackBar.LOGGED_OUT);
         }
     }
 

@@ -13,8 +13,16 @@ import static org.awaitility.Awaitility.await;
 
 @Component
 public class SnackBar {
+    public static final String REQUEST_SUCCESSFUL = "Your request has been completed successfully.";
+    public static final String USER_CREATED = "User has been created successfully.";
+    public static final String LOGGED_OUT = "Your account was logged out successfully.";
+    public static final String ACTION_NOT_ALLOWED = "This action is not allowed.";
+    public static final String ACCESS_DENIED = "Access denied.";
+    public static final String USER_ALREADY_EXISTS = "The user already exists.";
+    public static final String EMAIL_IN_USE = "The email is already in use.";
+    public static final String REQUEST_FAILED = "Your request failed. Please, try again later.";
+
     protected static final int WAITING_TIME_SECONDS = 4;
-    private static final int WAITING_TIME = 500;
 
     private final CustomChromeDriver customChromeDriver;
 
@@ -48,13 +56,18 @@ public class SnackBar {
         return text;
     }
 
-    public void close() {
+    private void close() {
         customChromeDriver.findElement(By.id("snackbar-canvas")).findElement(By.id("biit-notification")).click();
     }
 
     public void checkMessage(String type, String message) {
-        await().atMost(Duration.ofSeconds(WAITING_TIME_SECONDS)).and().with().pollDelay(1, TimeUnit.SECONDS).until(() ->
-                Objects.equals(getMessageType(), type) && Objects.equals(getMessage(), message)
-        );
+        await().atMost(Duration.ofSeconds(WAITING_TIME_SECONDS)).and().with().pollDelay(1, TimeUnit.SECONDS).until(() -> {
+            try {
+                return Objects.equals(getMessageType(), type) && Objects.equals(getMessage(), message);
+            } catch (Exception e) {
+                return false;
+            }
+        });
+        close();
     }
 }

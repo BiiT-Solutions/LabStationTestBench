@@ -12,6 +12,8 @@ import com.biit.labstation.components.Table;
 import com.biit.labstation.components.TableId;
 import com.biit.labstation.logger.LabStationLogger;
 import org.openqa.selenium.By;
+import org.openqa.selenium.Keys;
+import org.openqa.selenium.WebElement;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
@@ -70,73 +72,38 @@ public class UserManager extends ToolTest {
 
     public void selectUserOnMenu() {
         navBar.goTo("nav-item-Users");
-        try {
-            Thread.sleep(WAITING_TIME);
-        } catch (InterruptedException e) {
-            //Ignore
-            Thread.currentThread().interrupt();
-        }
+        ToolTest.waitComponent();
     }
 
     public void selectGroupsOnMenu() {
         navBar.goTo("nav-item-Groups");
-        try {
-            Thread.sleep(WAITING_TIME);
-        } catch (InterruptedException e) {
-            //Ignore
-            Thread.currentThread().interrupt();
-        }
+        ToolTest.waitComponent();
     }
 
     public void selectRolesOnMenu() {
         navBar.goTo("nav-item-Roles");
-        try {
-            Thread.sleep(WAITING_TIME);
-        } catch (InterruptedException e) {
-            //Ignore
-            Thread.currentThread().interrupt();
-        }
+        ToolTest.waitComponent();
     }
 
     public void selectApplicationsOnMenu() {
         navBar.goTo("nav-item-Applications");
-        try {
-            Thread.sleep(WAITING_TIME);
-        } catch (InterruptedException e) {
-            //Ignore
-            Thread.currentThread().interrupt();
-        }
+        ToolTest.waitComponent();
     }
 
     public void selectServicesOnMenu() {
         navBar.goTo("nav-item-Services");
-        try {
-            Thread.sleep(WAITING_TIME);
-        } catch (InterruptedException e) {
-            //Ignore
-            Thread.currentThread().interrupt();
-        }
+        ToolTest.waitComponent();
     }
 
     public void selectOrganizationsOnMenu() {
         navBar.goTo("nav-item-Organizations");
-        try {
-            Thread.sleep(WAITING_TIME);
-        } catch (InterruptedException e) {
-            //Ignore
-            Thread.currentThread().interrupt();
-        }
+        ToolTest.waitComponent();
     }
 
     public void pressTableButton(TableId tableId, String id) {
         LabStationLogger.debug(this.getClass().getName(), "Pressing '{}' button on table '{}'.", id, tableId);
         table.getMenuItem(tableId, id).click();
-        try {
-            Thread.sleep(WAITING_TIME);
-        } catch (InterruptedException e) {
-            //Ignore
-            Thread.currentThread().interrupt();
-        }
+        ToolTest.waitComponent();
     }
 
     public String getTableContent(TableId tableId, int row, int column) {
@@ -374,24 +341,14 @@ public class UserManager extends ToolTest {
     }
 
     public int getTotalNumberOfItems(TableId tableId) {
-        try {
-            Thread.sleep(WAITING_TIME);
-        } catch (InterruptedException e) {
-            //Ignore
-            Thread.currentThread().interrupt();
-        }
+        ToolTest.waitComponent();
         final int items = Integer.parseInt(table.getTotalNumberOfItems(tableId));
         LabStationLogger.debug(this.getClass().getName(), "Total items in table '{}' are '{}'.", tableId, items);
         return items;
     }
 
     public int getNumberOfItemsSelected(TableId tableId) {
-        try {
-            Thread.sleep(WAITING_TIME);
-        } catch (InterruptedException e) {
-            //Ignore
-            Thread.currentThread().interrupt();
-        }
+        ToolTest.waitComponent();
         final int selectedITems = Integer.parseInt(table.getTotalNumberOfItems(tableId));
         LabStationLogger.debug(this.getClass().getName(), "Total items selected in table '{}' are '{}'.", tableId, selectedITems);
         return selectedITems;
@@ -445,6 +402,15 @@ public class UserManager extends ToolTest {
         popup.findElement(PopupId.USER_ROLE, "role-assign-button").click();
         popup.close(PopupId.ROLE);
         unselectTableRow(TableId.USERS_TABLE, user, 1);
+    }
+
+    public WebElement getSearchField(TableId tableId) {
+        return table.getSearchField(tableId);
+    }
+
+    public void clearSearchField(TableId tableId) {
+        getSearchField(tableId).clear();
+        getSearchField(tableId).sendKeys(Keys.ENTER);
     }
 
 }

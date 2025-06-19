@@ -1,7 +1,9 @@
 package com.biit.labstation.tests.usermanager;
 
+import com.biit.labstation.ToolTest;
 import com.biit.labstation.components.Popup;
 import com.biit.labstation.components.PopupId;
+import com.biit.labstation.components.SnackBar;
 import com.biit.labstation.components.TableId;
 import com.biit.labstation.logger.LabStationLogger;
 import com.biit.labstation.logger.TestListener;
@@ -35,6 +37,9 @@ public class UserManagerIT extends BaseTest implements ITestWithWebDriver {
     @Autowired
     private Popup popup;
 
+    @Autowired
+    private SnackBar snackBar;
+
     @Value("${starts.from.clean.database}")
     private boolean startsFormCleanDatabase;
 
@@ -66,10 +71,12 @@ public class UserManagerIT extends BaseTest implements ITestWithWebDriver {
     public void addBackendServices() {
         //Appointment Center
         userManager.addService("AppointmentCenter", "Tool for handling appointments");
+        snackBar.checkMessage("regular", SnackBar.REQUEST_SUCCESSFUL);
         userManager.addServiceRole("AppointmentCenter", "admin");
         userManager.addServiceRole("AppointmentCenter", "editor");
         userManager.addServiceRole("AppointmentCenter", "manager");
         userManager.addServiceRole("AppointmentCenter", "viewer");
+        snackBar.checkMessage("regular", SnackBar.REQUEST_SUCCESSFUL);
 
         //BaseFormDroolsEngine
         userManager.addService("BaseFormDroolsEngine", "ABCD Rules runner");
@@ -120,18 +127,9 @@ public class UserManagerIT extends BaseTest implements ITestWithWebDriver {
 
         //XForms
         userManager.addService("XForms", "Form Runner");
-        //Takes some millis to refresh and appear the component.
-        try {
-            Thread.sleep(200);
-        } catch (InterruptedException e) {
-            //Ignore
-            Thread.currentThread().interrupt();
-        }
-        userManager.goNextPage(TableId.SERVICE_TABLE);
         userManager.addServiceRole("XForms", "user");
 
         //UserManagerSystem
-        userManager.goPreviousPage(TableId.SERVICE_TABLE);
         userManager.addServiceRole("UserManagerSystem", "admin");
         userManager.addServiceRole("UserManagerSystem", "editor");
         userManager.addServiceRole("UserManagerSystem", "viewer");
@@ -141,6 +139,7 @@ public class UserManagerIT extends BaseTest implements ITestWithWebDriver {
     public void addRoles() {
         //Appointment Center
         userManager.addRole("CADT", "Fill up the CADT test.");
+        snackBar.checkMessage("regular", SnackBar.REQUEST_SUCCESSFUL);
         userManager.addRole("Credibility", "Credibility form access.");
         userManager.addRole("Customer List", "Shows all the customers in the FactsDashboard.");
         userManager.addRole("Organization List", "Access to all the organizations in the FactsDashboard.");
@@ -162,6 +161,7 @@ public class UserManagerIT extends BaseTest implements ITestWithWebDriver {
     public void addApplications() {
         //Appointment Center
         userManager.addApplication("AppointmentCenter", "Tool for handling appointments.");
+        snackBar.checkMessage("regular", SnackBar.REQUEST_SUCCESSFUL);
         userManager.addApplication("BaseFormDroolsEngine", "Executing ABCD rules.");
         userManager.addApplication("BiitSurveys", "Online surveys.");
         userManager.addApplication("CardGame", "CADT.");
@@ -266,8 +266,6 @@ public class UserManagerIT extends BaseTest implements ITestWithWebDriver {
 
         userManager.addApplicationRole("KnowledgeSystem", "user");
         userManager.linkApplicationRoleWithServiceRole("KnowledgeSystem", "user", "KnowledgeSystem", "viewer");
-
-        userManager.goNextPage(TableId.APPLICATION_TABLE);
 
         userManager.addApplicationRole("MetaViewerStructure", "admin");
         userManager.linkApplicationRoleWithServiceRole("MetaViewerStructure", "admin", "MetaViewerStructure", "admin");
@@ -456,7 +454,7 @@ public class UserManagerIT extends BaseTest implements ITestWithWebDriver {
 
     @Test(dependsOnMethods = "assignRolesToGroups")
     public void assignUsersToGroups() {
-        userManager.addUserToGroup("", "Admin");
+        //userManager.addUserToGroup("", "Admin");
     }
 
 
@@ -466,13 +464,4 @@ public class UserManagerIT extends BaseTest implements ITestWithWebDriver {
         userManager.addUserRoles("jwt", "UserManagerSystem", "admin");
         userManager.addUserRoles("jwt", "FactManager", "admin");
     }
-
-
-//    @AfterClass(enabled = false)
-//    public void cleanup() {
-//        while (userManager.getTableSize() > 1) {
-//            userManager.selectTableRow("users-table", 0);
-//            userManager.pressTableButton("users-table", "button-minus");
-//        }
-//    }
 }

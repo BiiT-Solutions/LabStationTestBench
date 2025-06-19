@@ -1,5 +1,5 @@
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
-<suite thread-count="1" verbose="1" name="LabStation">
+<suite thread-count="1" verbose="1" name="LabStation" preserve-order="true">
     <listeners>
         <listener class-name="com.biit.labstation.logger.TestListener"/>
     </listeners>
@@ -15,11 +15,11 @@
             </run>
         </groups>
         <classes>
-            <class name="com.biit.labstation.tests.LoginIT"/>
             <class name="com.biit.labstation.tests.usermanager.UserManagerIT"/>
             <class name="com.biit.labstation.tests.usermanager.UserManagerBasicUserPermissionsIT"/>
             <class name="com.biit.labstation.tests.usermanager.UserManagerEditorUserPermissionsIT"/>
             <class name="com.biit.labstation.tests.usermanager.UserManagerDuplicationsIT"/>
+            <class name="com.biit.labstation.tests.LoginIT"/>
         </classes>
     </test>
 </suite>

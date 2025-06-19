@@ -5,7 +5,7 @@ import java.time.Duration;
 import static org.awaitility.Awaitility.await;
 
 public abstract class ToolTest {
-    public static final int WAITING_TIME = 250;
+    private static final int WAITING_TIME = 250;
     protected static final int WAITING_TIME_SECONDS = 3;
 
     protected void waitAndExecute(Runnable operation) {

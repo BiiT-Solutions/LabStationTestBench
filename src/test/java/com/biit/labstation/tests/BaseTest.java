@@ -53,7 +53,7 @@ public abstract class BaseTest extends AbstractTestNGSpringContextTests implemen
     protected void waitUntilReady() {
         userManager.login(ADMIN_USER_NAME, ADMIN_USER_PASSWORD);
         try {
-            if (Objects.equals("Your request failed. Please, try again later.", snackBar.getMessage())) {
+            if (Objects.equals(SnackBar.REQUEST_FAILED, snackBar.getMessage())) {
                 LabStationLogger.info(this.getClass(), "System is not ready yet! Waiting...");
                 Thread.sleep(2000);
                 waitUntilReady();
