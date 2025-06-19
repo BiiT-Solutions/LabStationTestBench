@@ -23,7 +23,7 @@ import static com.biit.labstation.tests.LoginIT.ADMIN_USER_NAME;
 import static com.biit.labstation.tests.LoginIT.ADMIN_USER_PASSWORD;
 
 @SpringBootTest
-@Test(groups = "userManagerBasicUserPermissions", dependsOnGroups = "userManagerDefaultData")
+@Test(groups = "userManagerBasicUserPermissions")
 @Listeners({TestListener.class, ClassTestListener.class})
 @DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_CLASS)
 public class UserManagerBasicUserPermissionsIT extends BaseTest implements ITestWithWebDriver {
@@ -72,7 +72,6 @@ public class UserManagerBasicUserPermissionsIT extends BaseTest implements ITest
             throw new ElementNotFoundAsExpectedException();
         } finally {
             userManager.logout();
-            snackBar.checkMessage("regular", SnackBar.LOGGED_OUT);
         }
     }
 

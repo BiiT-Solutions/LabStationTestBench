@@ -73,12 +73,15 @@ public class CustomChromeDriver {
 
     @PreDestroy
     public void closeDriver() {
-        LabStationLogger.debug(this.getClass().getName(), "Closing webdriver...");
+
         if (DESTROY_DRIVER) {
             try {
-                getDriver().close();
-                getDriver().quit();
-                driver = null;
+                if (driver != null) {
+                    LabStationLogger.debug(this.getClass().getName(), "Closing webdriver...");
+                    getDriver().close();
+                    getDriver().quit();
+                    driver = null;
+                }
             } catch (NullPointerException npe) {
                 // Already destroyed.
             }

@@ -15,7 +15,7 @@ import java.time.Duration;
 import static org.awaitility.Awaitility.await;
 
 @SpringBootTest
-@Test(groups = "login", dependsOnGroups = "userManagerDefaultData")
+@Test(groups = "login")
 @DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_CLASS)
 public class LoginIT extends AbstractTestNGSpringContextTests {
     public static final String ADMIN_USER_NAME = "admin@test.com";

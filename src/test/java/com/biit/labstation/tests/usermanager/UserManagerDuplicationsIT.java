@@ -20,7 +20,7 @@ import static com.biit.labstation.tests.LoginIT.ADMIN_USER_NAME;
 import static com.biit.labstation.tests.LoginIT.ADMIN_USER_PASSWORD;
 
 @SpringBootTest
-@Test(groups = "userManagerDuplications", dependsOnGroups = "userManagerDefaultData")
+@Test(groups = "userManagerDuplications")
 @Listeners({TestListener.class, ClassTestListener.class})
 @DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_CLASS)
 public class UserManagerDuplicationsIT extends BaseTest implements ITestWithWebDriver {
