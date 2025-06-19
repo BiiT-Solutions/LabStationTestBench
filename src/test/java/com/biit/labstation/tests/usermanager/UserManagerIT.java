@@ -1,6 +1,5 @@
 package com.biit.labstation.tests.usermanager;
 
-import com.biit.labstation.ToolTest;
 import com.biit.labstation.components.Popup;
 import com.biit.labstation.components.PopupId;
 import com.biit.labstation.components.SnackBar;
@@ -16,6 +15,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.annotation.DirtiesContext;
 import org.testng.Assert;
+import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
@@ -399,12 +399,15 @@ public class UserManagerIT extends BaseTest implements ITestWithWebDriver {
         userManager.addGroupRole("Employee", "AppointmentCenter", "user");
         userManager.addGroupRole("Employee", "BaseFormDroolsEngine", "user");
         userManager.addGroupRole("Employee", "BiitSurveys", "user");
+        snackBar.checkMessage("regular", SnackBar.REQUEST_SUCCESSFUL);
         userManager.addGroupRole("Employee", "CardGame", "user");
         userManager.addGroupRole("Employee", "FactManager", "user");
         userManager.addGroupRole("Employee", "InfographicEngine", "user");
+        snackBar.checkMessage("regular", SnackBar.REQUEST_SUCCESSFUL);
         userManager.addGroupRole("Employee", "KafkaProxy", "user");
         userManager.addGroupRole("Employee", "KnowledgeSystem", "user");
         userManager.addGroupRole("Employee", "MetaViewerStructure", "user");
+        snackBar.checkMessage("regular", SnackBar.REQUEST_SUCCESSFUL);
         userManager.addGroupRole("Employee", "UserManagerSystem", "user");
         userManager.addGroupRole("Employee", "XForms", "user");
 
@@ -413,12 +416,15 @@ public class UserManagerIT extends BaseTest implements ITestWithWebDriver {
         userManager.addGroupRole("HR", "AppointmentCenter", "manager");
         userManager.addGroupRole("HR", "BaseFormDroolsEngine", "user");
         userManager.addGroupRole("HR", "FactManager", "user");
+        snackBar.checkMessage("regular", SnackBar.REQUEST_SUCCESSFUL);
         userManager.addGroupRole("HR", "FactsDashboard", "Organization List");
         userManager.addGroupRole("HR", "FactsDashboard", "Credibility");
         userManager.addGroupRole("HR", "FactsDashboard", "CADT");
+        snackBar.checkMessage("regular", SnackBar.REQUEST_SUCCESSFUL);
         userManager.addGroupRole("HR", "InfographicEngine", "user");
         userManager.addGroupRole("HR", "KafkaProxy", "user");
         userManager.addGroupRole("HR", "MetaViewerStructure", "admin");
+        snackBar.checkMessage("regular", SnackBar.REQUEST_SUCCESSFUL);
         userManager.addGroupRole("HR", "ProfileMatcher", "manager");
         userManager.addGroupRole("HR", "UserManagerSystem", "user");
         userManager.addGroupRole("HR", "FactsDashboard", "xls access");
@@ -428,12 +434,14 @@ public class UserManagerIT extends BaseTest implements ITestWithWebDriver {
         userManager.addGroupRole("Organization Leader", "FactManager", "user");
         userManager.addGroupRole("Organization Leader", "FactsDashboard", "ceo");
         userManager.addGroupRole("Organization Leader", "InfographicEngine", "user");
+        snackBar.checkMessage("regular", SnackBar.REQUEST_SUCCESSFUL);
 
         Assert.assertEquals(userManager.getTotalRolesByGroup("HR"), 12);
 
         userManager.addGroupRole("Practitioner", "AppointmentCenter", "manager");
         userManager.addGroupRole("Practitioner", "FactsDashboard", "practitioner");
         userManager.addGroupRole("Practitioner", "InfographicEngine", "practitioner");
+        snackBar.checkMessage("regular", SnackBar.REQUEST_SUCCESSFUL);
 
         Assert.assertEquals(userManager.getTotalRolesByGroup("Practitioner"), 3);
 
@@ -445,9 +453,11 @@ public class UserManagerIT extends BaseTest implements ITestWithWebDriver {
         userManager.addGroupRole("Team Leaders", "FactManager", "user");
         userManager.addGroupRole("Team Leaders", "FactsDashboard", "teamleader");
         userManager.addGroupRole("Team Leaders", "FactsDashboard", "xls access");
+        snackBar.checkMessage("regular", SnackBar.REQUEST_SUCCESSFUL);
         userManager.addGroupRole("Team Leaders", "InfographicEngine", "user");
         userManager.addGroupRole("Team Leaders", "MetaViewerStructure", "user");
         userManager.addGroupRole("Team Leaders", "UserManagerSystem", "user");
+        snackBar.checkMessage("regular", SnackBar.REQUEST_SUCCESSFUL);
         userManager.addGroupRole("Team Leaders", "XForms", "user");
 
         Assert.assertEquals(userManager.getTotalRolesByGroup("Team Leaders"), 7);
@@ -464,5 +474,10 @@ public class UserManagerIT extends BaseTest implements ITestWithWebDriver {
         userManager.addUser("jwt", "token@test.com", "System", "Token", "asd123");
         userManager.addUserRoles("jwt", "UserManagerSystem", "admin");
         userManager.addUserRoles("jwt", "FactManager", "admin");
+    }
+
+    @AfterClass
+    public void closeDriver() {
+        userManager.getCustomChromeDriver().closeDriver();
     }
 }

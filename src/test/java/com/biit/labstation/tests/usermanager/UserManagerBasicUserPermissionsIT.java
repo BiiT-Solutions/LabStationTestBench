@@ -101,4 +101,9 @@ public class UserManagerBasicUserPermissionsIT extends BaseTest implements ITest
             //Ignore
         }
     }
+
+    @AfterClass(dependsOnMethods = "cleanup")
+    public void closeDriver() {
+        userManager.getCustomChromeDriver().closeDriver();
+    }
 }

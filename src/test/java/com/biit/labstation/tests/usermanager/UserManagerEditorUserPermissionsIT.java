@@ -129,6 +129,10 @@ public class UserManagerEditorUserPermissionsIT extends BaseTest implements ITes
         } catch (Exception e) {
             //Ignore
         }
+    }
 
+    @AfterClass(dependsOnMethods = "cleanup")
+    public void closeDriver() {
+        userManager.getCustomChromeDriver().closeDriver();
     }
 }

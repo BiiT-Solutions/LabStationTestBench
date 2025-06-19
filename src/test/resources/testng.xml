@@ -4,7 +4,7 @@
         <listener class-name="com.biit.labstation.logger.TestListener"/>
     </listeners>
 
-    <test name="LabStation" enabled="true" thread-count="1">
+    <test name="LabStation" enabled="true" parallel="none" thread-count="1">
         <groups>
             <run>
                 <include name="userManagerDefaultData"/>

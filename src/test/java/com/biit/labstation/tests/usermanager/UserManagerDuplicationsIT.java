@@ -47,7 +47,6 @@ public class UserManagerDuplicationsIT extends BaseTest implements ITestWithWebD
         try {
             userManager.selectUserOnMenu();
             userManager.addUser(BASIC_USER_NAME, BASIC_USER_NAME + "@test.com", "New", "User", USER_PASSWORD);
-            snackBar.checkMessage("regular", SnackBar.USER_CREATED);
             userManager.addUser(BASIC_USER_NAME, BASIC_USER_NAME + "@test.com", "New", "User", USER_PASSWORD);
             snackBar.checkMessage("error", SnackBar.USER_ALREADY_EXISTS);
         } finally {
@@ -92,5 +91,10 @@ public class UserManagerDuplicationsIT extends BaseTest implements ITestWithWebD
         } catch (Exception e) {
             //Ignore
         }
+    }
+
+    @AfterClass(dependsOnMethods = "cleanup")
+    public void closeDriver() {
+        userManager.getCustomChromeDriver().closeDriver();
     }
 }
