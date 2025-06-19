@@ -57,7 +57,7 @@ public abstract class ToolTest {
                         currentUrl, requestedUrl);
                 access(serverDomain, context);
             }
-            LabStationLogger.info(this.getClass(), "Accessing to '{}'.", currentUrl);
+            LabStationLogger.info(this.getClass(), "Opened '{}'.", currentUrl);
         } catch (Exception e) {
             LabStationLogger.errorMessage(this.getClass(), e);
         }

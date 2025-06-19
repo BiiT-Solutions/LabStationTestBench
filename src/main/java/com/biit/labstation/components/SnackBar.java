@@ -68,5 +68,6 @@ public class SnackBar {
                 return false;
             }
         });
+        close();
     }
 }
