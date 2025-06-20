@@ -1,6 +1,7 @@
 package com.biit.labstation.components;
 
 import com.biit.labstation.CustomChromeDriver;
+import com.biit.labstation.ToolTest;
 import com.biit.labstation.logger.ComponentLogger;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
@@ -28,6 +29,7 @@ public class Dropdown {
     public void selectItem(String parent, String selector, String item) {
         ComponentLogger.debug(this.getClass().getName(), "Selecting item '{}' on dropdown '{}' in '{}'.", item, selector, parent);
         customChromeDriver.findElementWaiting(By.id(parent)).findElement(By.id(selector)).findElement(By.id("input")).click();
+        ToolTest.waitComponent();
         final WebElement element = customChromeDriver.findElementWaiting(By.id(parent)).findElement(By.id(selector))
                 .findElement(By.id("dropdown")).findElement(By.xpath(".//div[@id='content']/a[contains(text(), '" + item + "')]"));
         new Actions(customChromeDriver.getDriver()).scrollToElement(element).perform();

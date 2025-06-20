@@ -1,6 +1,7 @@
 package com.biit.labstation;
 
 import com.biit.labstation.logger.LabStationLogger;
+import jakarta.annotation.PostConstruct;
 import org.apache.commons.io.FileUtils;
 import org.openqa.selenium.OutputType;
 import org.openqa.selenium.TakesScreenshot;
@@ -20,6 +21,15 @@ public class ScreenShooter {
 
     public ScreenShooter(CustomChromeDriver customChromeDriver) {
         this.customChromeDriver = customChromeDriver;
+    }
+
+    @PostConstruct
+    public void cleanFolder() {
+        final File folder = new File(screenShotsFolder);
+        folder.mkdirs();
+        for (File file : folder.listFiles()) {
+            file.delete();
+        }
     }
 
     public void takeScreenshot(String screenshotName) {

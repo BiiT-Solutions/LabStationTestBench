@@ -1,5 +1,6 @@
 package com.biit.labstation.tests.usermanager;
 
+import com.biit.labstation.ScreenShooter;
 import com.biit.labstation.components.Popup;
 import com.biit.labstation.components.PopupId;
 import com.biit.labstation.components.SnackBar;
@@ -35,6 +36,8 @@ public class UserManagerDuplicationsIT extends BaseTest implements ITestWithWebD
     private SnackBar snackBar;
     @Autowired
     private Popup popup;
+    @Autowired
+    private ScreenShooter screenShooter;
 
     @BeforeClass
     public void setup() {
@@ -57,7 +60,9 @@ public class UserManagerDuplicationsIT extends BaseTest implements ITestWithWebD
         userManager.login(ADMIN_USER_NAME, ADMIN_USER_PASSWORD);
         userManager.selectUserOnMenu();
         userManager.addUser(BASIC_USER_NAME + "_2", BASIC_USER_NAME + "@test.com", "New", "User", USER_PASSWORD);
+        screenShooter.takeScreenshot("createExistingEmail_before_error");
         snackBar.checkMessage("error", SnackBar.EMAIL_IN_USE);
+        screenShooter.takeScreenshot("createExistingEmail_after_error");
         popup.close(PopupId.USER);
         userManager.logout();
     }

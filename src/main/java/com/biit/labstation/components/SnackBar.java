@@ -3,10 +3,13 @@ package com.biit.labstation.components;
 import com.biit.labstation.CustomChromeDriver;
 import com.biit.labstation.ToolTest;
 import com.biit.labstation.logger.ComponentLogger;
+import com.biit.labstation.logger.LabStationLogger;
 import org.openqa.selenium.By;
+import org.openqa.selenium.WebElement;
 import org.springframework.stereotype.Component;
 
 import java.time.Duration;
+import java.util.List;
 import java.util.Objects;
 import java.util.concurrent.TimeUnit;
 
@@ -24,6 +27,7 @@ public class SnackBar {
     public static final String REQUEST_FAILED = "Your request failed. Please, try again later.";
 
     protected static final int WAITING_TIME_SECONDS = 5;
+    protected static final int SNACKBAR_WAITING_TIME = 250;
 
     private final CustomChromeDriver customChromeDriver;
 
@@ -57,18 +61,25 @@ public class SnackBar {
         return text;
     }
 
-    private void close() {
-        customChromeDriver.findElement(By.id("snackbar-canvas")).findElement(By.id("biit-notification")).click();
+    public void closeLatest() {
+        final List<WebElement> notifications = customChromeDriver.findElement(By.id("snackbar-canvas")).findElements(By.id("biit-notification"));
+        if (notifications.size() > 1) {
+            LabStationLogger.info(this.getClass().getName(), "Notifications found: '{}'.", notifications.size());
+        }
+        notifications.get(notifications.size() - 1).click();
     }
 
     public void checkMessage(String type, String message) {
-        await().atMost(Duration.ofSeconds(WAITING_TIME_SECONDS)).and().with().pollDelay(ToolTest.WAITING_TIME, TimeUnit.MILLISECONDS).until(() -> {
+        await().atMost(Duration.ofSeconds(WAITING_TIME_SECONDS)).and().with().pollDelay(SNACKBAR_WAITING_TIME, TimeUnit.MILLISECONDS).until(() -> {
             try {
-                return Objects.equals(getMessageType(), type) && Objects.equals(getMessage(), message);
+                if (Objects.equals(getMessageType(), type) && Objects.equals(getMessage(), message)) {
+                    closeLatest();
+                    return true;
+                }
             } catch (Exception e) {
-                return false;
+                //Not present yet.
             }
+            return false;
         });
-        close();
     }
 }
