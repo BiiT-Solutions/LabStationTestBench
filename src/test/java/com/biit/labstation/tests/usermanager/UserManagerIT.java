@@ -717,7 +717,7 @@ public class UserManagerIT extends BaseTest implements ITestWithWebDriver {
 
     @Test(dependsOnMethods = "assignRolesToGroups")
     public void assignUsersToGroups() {
-        //userManager.addUserToGroup("", "Admin");
+        userManager.addUserToGroup(ADMIN_USER_NAME, "Admin");
     }
 
 
