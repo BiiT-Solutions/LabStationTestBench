@@ -1,7 +1,6 @@
 package com.biit.labstation.components;
 
 import com.biit.labstation.CustomChromeDriver;
-import com.biit.labstation.ToolTest;
 import com.biit.labstation.logger.ComponentLogger;
 import com.biit.labstation.logger.LabStationLogger;
 import org.openqa.selenium.By;
