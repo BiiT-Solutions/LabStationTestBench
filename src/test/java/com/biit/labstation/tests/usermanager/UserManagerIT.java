@@ -1,5 +1,6 @@
 package com.biit.labstation.tests.usermanager;
 
+import com.biit.labstation.ToolTest;
 import com.biit.labstation.components.Popup;
 import com.biit.labstation.components.PopupId;
 import com.biit.labstation.components.SnackBar;
@@ -31,6 +32,9 @@ import static com.biit.labstation.tests.LoginIT.ADMIN_USER_PASSWORD;
 @Listeners({TestListener.class, ClassTestListener.class})
 @DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_CLASS)
 public class UserManagerIT extends BaseTest implements ITestWithWebDriver {
+
+    private static final String ADMIN_NAME = "Angus";
+    private static final String ADMIN_LASTNAME = "MacGyver";
 
     @Autowired
     private UserManager userManager;
@@ -64,6 +68,18 @@ public class UserManagerIT extends BaseTest implements ITestWithWebDriver {
     public void checkUserExists() {
         userManager.login(ADMIN_USER_NAME, ADMIN_USER_PASSWORD);
         Assert.assertEquals(userManager.getTableContent(TableId.USERS_TABLE, 0, 3), ADMIN_USER_NAME);
+        Assert.assertEquals(userManager.getTableContent(TableId.USERS_TABLE, 0, 6), LocalDateTime.now().format(DateTimeFormatter.ofPattern("dd/MM/yyyy")));
+    }
+
+    @Test(dependsOnMethods = "checkUserExists", priority = -1)
+    public void editUser() {
+        userManager.editUser(ADMIN_USER_NAME, ADMIN_USER_NAME, ADMIN_NAME, ADMIN_LASTNAME);
+        userManager.getSearchField(TableId.USERS_TABLE).sendKeys(ADMIN_USER_NAME);
+        ToolTest.waitComponent(1000);
+        Assert.assertEquals(userManager.getTableContent(TableId.USERS_TABLE, 0, 1), ADMIN_NAME);
+        Assert.assertEquals(userManager.getTableContent(TableId.USERS_TABLE, 0, 2), ADMIN_LASTNAME);
+        Assert.assertEquals(userManager.getTableContent(TableId.USERS_TABLE, 0, 3), ADMIN_USER_NAME);
+        Assert.assertEquals(userManager.getTableContent(TableId.USERS_TABLE, 0, 4), ADMIN_USER_NAME);
         Assert.assertEquals(userManager.getTableContent(TableId.USERS_TABLE, 0, 6), LocalDateTime.now().format(DateTimeFormatter.ofPattern("dd/MM/yyyy")));
     }
 

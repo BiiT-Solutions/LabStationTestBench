@@ -369,6 +369,25 @@ public class UserManager extends ToolTest {
         waitAndExecute(() -> popup.findElement(PopupId.USER, "popup-user-save-button").click());
     }
 
+    public void editUser(String user, String email, String name, String lastName) {
+        try {
+            selectUserOnMenu();
+        } catch (Exception e) {
+            //Already on this tab.
+        }
+        selectTableRow(TableId.USERS_TABLE, user, USERNAME_USER_TABLE_COLUMN);
+        LabStationLogger.debug(this.getClass().getName(), "@@ Editing user '{}'.", user);
+        pressTableButton(TableId.USERS_TABLE, "button-edit");
+        tab.selectTab("user-tabs", "account-tab");
+        popup.findElement(PopupId.USER, "email").findElement(By.id("input")).clear();
+        popup.findElement(PopupId.USER, "email").findElement(By.id("input")).sendKeys(email);
+        popup.findElement(PopupId.USER, "name").findElement(By.id("input")).clear();
+        popup.findElement(PopupId.USER, "name").findElement(By.id("input")).sendKeys(name);
+        popup.findElement(PopupId.USER, "lastname").findElement(By.id("input")).clear();
+        popup.findElement(PopupId.USER, "lastname").findElement(By.id("input")).sendKeys(lastName);
+        waitAndExecute(() -> popup.findElement(PopupId.USER, "popup-user-save-button").click());
+    }
+
 
     public void deleteUser(String username) {
         try {
