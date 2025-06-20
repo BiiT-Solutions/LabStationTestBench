@@ -15,9 +15,9 @@ public class Tab {
         this.customChromeDriver = customChromeDriver;
     }
 
-    public void selectTab(String tabId, String element) {
+    public void selectTab(TabId tabId, String element) {
         ComponentLogger.debug(this.getClass().getName(), "Selecting tab '{}' on '{}'.", element, tabId);
-        customChromeDriver.findElementWaiting(By.id(tabId)).findElement(By.id(element)).click();
+        customChromeDriver.findElementWaiting(By.id(tabId.getId())).findElement(By.id(element)).click();
 
     }
 }

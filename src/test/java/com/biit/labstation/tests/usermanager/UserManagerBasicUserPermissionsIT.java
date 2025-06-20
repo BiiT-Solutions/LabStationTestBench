@@ -2,7 +2,6 @@ package com.biit.labstation.tests.usermanager;
 
 import com.biit.labstation.components.Popup;
 import com.biit.labstation.components.SnackBar;
-import com.biit.labstation.components.Table;
 import com.biit.labstation.exceptions.ElementNotFoundAsExpectedException;
 import com.biit.labstation.logger.ClassTestListener;
 import com.biit.labstation.logger.TestListener;

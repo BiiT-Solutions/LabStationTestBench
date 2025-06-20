@@ -45,6 +45,12 @@ public abstract class ToolTest {
         }
     }
 
+    public abstract void access();
+
+    public abstract void login(String username, String password);
+
+    public abstract void logout();
+
     public void access(String serverDomain, String context) {
         try {
             final String requestedUrl = serverDomain + context;

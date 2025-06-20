@@ -1,7 +1,10 @@
 package com.biit.labstation.components;
 
 import com.biit.labstation.CustomChromeDriver;
+import com.biit.labstation.ToolTest;
+import com.biit.labstation.exceptions.ElementNotFoundAsExpectedException;
 import com.biit.labstation.logger.ComponentLogger;
+import com.biit.labstation.logger.LabStationLogger;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebElement;
@@ -35,7 +38,18 @@ public class Table {
     public void search(TableId tableId, String text) {
         getSearchField(tableId).clear();
         getSearchField(tableId).sendKeys(text);
-        getSearchField(tableId).sendKeys(Keys.RETURN);
+        getSearchField(tableId).sendKeys(Keys.ENTER);
+    }
+
+    public void clearSearch(TableId tableId) {
+        final String content = getSearchField(tableId).getAttribute("value");
+        if (content != null) {
+            for (int i = 0; i < content.length(); i++) {
+                getSearchField(tableId).sendKeys(Keys.BACK_SPACE);
+                ToolTest.waitComponent();
+            }
+        }
+        getSearchField(tableId).sendKeys(Keys.ENTER);
     }
 
     public String getContent(TableId tableId, int row, int column) {
@@ -95,16 +109,20 @@ public class Table {
     }
 
     public void unselectRow(TableId tableId, String label, int column) {
-        await().atMost(Duration.ofSeconds(WAITING_TIME_SECONDS)).until(() -> {
-            for (int i = 0; i < countRows(tableId); i++) {
-                if (Objects.equals(getContent(tableId, i, column), label)) {
-                    unselectRow(tableId, i);
-                    ComponentLogger.debug(this.getClass().getName(), "Unselecting Table '{}'. Row '{}'. Column '{}'.", tableId, label, column);
-                    return true;
+        try {
+            await().atMost(Duration.ofSeconds(WAITING_TIME_SECONDS)).until(() -> {
+                for (int i = 0; i < countRows(tableId); i++) {
+                    if (Objects.equals(getContent(tableId, i, column), label)) {
+                        unselectRow(tableId, i);
+                        ComponentLogger.debug(this.getClass().getName(), "Unselecting Table '{}'. Row '{}'. Column '{}'.", tableId, label, column);
+                        return true;
+                    }
                 }
-            }
-            return false;
-        });
+                return false;
+            });
+        } catch (Exception e) {
+            //Already unselected.
+        }
     }
 
     public void selectLastRow(TableId tableId) {
@@ -172,7 +190,8 @@ public class Table {
         ComponentLogger.debug(this.getClass().getName(), "Table '{}' selects last page.", tableId);
     }
 
-    public String getTotalNumberOfItems(TableId tableId) {
+    public int getTotalNumberOfItems(TableId tableId) {
+        ToolTest.waitComponent();
         final String text;
         if (tableId == null) {
             text = customChromeDriver.findElementWaiting(By.id("biit-table")).findElement(By.id("datatable-footer"))
@@ -182,10 +201,11 @@ public class Table {
                     .findElement(By.id("total-number-of-items")).getText();
         }
         ComponentLogger.debug(this.getClass().getName(), "Table '{}'. Total number of items '{}'.", text);
-        return text;
+        return Integer.parseInt(text);
     }
 
-    public String getNumberOfItemsSelected(TableId tableId) {
+    public int getNumberOfItemsSelected(TableId tableId) {
+        ToolTest.waitComponent();
         final String text;
         if (tableId == null) {
             text = customChromeDriver.findElementWaiting(By.id("biit-table")).findElement(By.id("datatable-footer"))
@@ -195,6 +215,35 @@ public class Table {
                     .findElement(By.id("number-of-items-selected")).getText();
         }
         ComponentLogger.debug(this.getClass().getName(), "Table '{}'. Total items selected '{}'.", text);
-        return text;
+        return Integer.parseInt(text);
+    }
+
+    /**
+     * Basic testes for a table.
+     *
+     * @param tableId
+     */
+    public void completeTestTable(TableId tableId) {
+        LabStationLogger.debug(this.getClass().getName(), "@@ Testing table '{}'.", tableId);
+        if (getTotalNumberOfItems(tableId) > 1) {
+            //Seelct second row
+            final String itemToSearch = getContent(tableId, 1, 1);
+            search(tableId, itemToSearch);
+            //After filtering, the element must be on the first row.
+            if (!Objects.equals(itemToSearch, getContent(tableId, 0, 1))) {
+                throw new ElementNotFoundAsExpectedException();
+            }
+            //Again on the second row.
+            clearSearch(tableId);
+            if (!Objects.equals(itemToSearch, getContent(tableId, 1, 1))) {
+                throw new ElementNotFoundAsExpectedException();
+            }
+        }
+    }
+
+    public void pressButton(TableId tableId, String id) {
+        LabStationLogger.debug(this.getClass().getName(), "Pressing '{}' button on table '{}'.", id, tableId);
+        getMenuItem(tableId, id).click();
+        ToolTest.waitComponent();
     }
 }

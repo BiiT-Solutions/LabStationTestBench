@@ -4,6 +4,7 @@ import com.biit.labstation.ToolTest;
 import com.biit.labstation.components.Popup;
 import com.biit.labstation.components.PopupId;
 import com.biit.labstation.components.SnackBar;
+import com.biit.labstation.components.Table;
 import com.biit.labstation.components.TableId;
 import com.biit.labstation.logger.ClassTestListener;
 import com.biit.labstation.logger.LabStationLogger;
@@ -45,6 +46,9 @@ public class UserManagerIT extends BaseTest implements ITestWithWebDriver {
     @Autowired
     private SnackBar snackBar;
 
+    @Autowired
+    private Table table;
+
     @Value("${starts.from.clean.database}")
     private boolean startsFormCleanDatabase;
 
@@ -67,20 +71,20 @@ public class UserManagerIT extends BaseTest implements ITestWithWebDriver {
     @Test
     public void checkUserExists() {
         userManager.login(ADMIN_USER_NAME, ADMIN_USER_PASSWORD);
-        Assert.assertEquals(userManager.getTableContent(TableId.USERS_TABLE, 0, 3), ADMIN_USER_NAME);
-        Assert.assertEquals(userManager.getTableContent(TableId.USERS_TABLE, 0, 6), LocalDateTime.now().format(DateTimeFormatter.ofPattern("dd/MM/yyyy")));
+        Assert.assertEquals(table.getContent(TableId.USERS_TABLE, 0, 3), ADMIN_USER_NAME);
+        Assert.assertEquals(table.getContent(TableId.USERS_TABLE, 0, 6), LocalDateTime.now().format(DateTimeFormatter.ofPattern("dd/MM/yyyy")));
     }
 
     @Test(dependsOnMethods = "checkUserExists", priority = -1)
     public void editUser() {
         userManager.editUser(ADMIN_USER_NAME, ADMIN_USER_NAME, ADMIN_NAME, ADMIN_LASTNAME);
-        userManager.getSearchField(TableId.USERS_TABLE).sendKeys(ADMIN_USER_NAME);
+        table.search(TableId.USERS_TABLE, ADMIN_USER_NAME);
         ToolTest.waitComponent(1000);
-        Assert.assertEquals(userManager.getTableContent(TableId.USERS_TABLE, 0, 1), ADMIN_NAME);
-        Assert.assertEquals(userManager.getTableContent(TableId.USERS_TABLE, 0, 2), ADMIN_LASTNAME);
-        Assert.assertEquals(userManager.getTableContent(TableId.USERS_TABLE, 0, 3), ADMIN_USER_NAME);
-        Assert.assertEquals(userManager.getTableContent(TableId.USERS_TABLE, 0, 4), ADMIN_USER_NAME);
-        Assert.assertEquals(userManager.getTableContent(TableId.USERS_TABLE, 0, 6), LocalDateTime.now().format(DateTimeFormatter.ofPattern("dd/MM/yyyy")));
+        Assert.assertEquals(table.getContent(TableId.USERS_TABLE, 0, 1), ADMIN_NAME);
+        Assert.assertEquals(table.getContent(TableId.USERS_TABLE, 0, 2), ADMIN_LASTNAME);
+        Assert.assertEquals(table.getContent(TableId.USERS_TABLE, 0, 3), ADMIN_USER_NAME);
+        Assert.assertEquals(table.getContent(TableId.USERS_TABLE, 0, 4), ADMIN_USER_NAME);
+        Assert.assertEquals(table.getContent(TableId.USERS_TABLE, 0, 6), LocalDateTime.now().format(DateTimeFormatter.ofPattern("dd/MM/yyyy")));
     }
 
 
@@ -188,6 +192,8 @@ public class UserManagerIT extends BaseTest implements ITestWithWebDriver {
         snackBar.checkMessage("regular", SnackBar.REQUEST_SUCCESSFUL);
         userManager.addServiceRole("UserManagerSystem", "viewer");
         snackBar.checkMessage("regular", SnackBar.REQUEST_SUCCESSFUL);
+
+        table.completeTestTable(TableId.SERVICE_TABLE);
     }
 
     @Test(dependsOnMethods = "checkUserExists")
@@ -223,6 +229,8 @@ public class UserManagerIT extends BaseTest implements ITestWithWebDriver {
         snackBar.checkMessage("regular", SnackBar.REQUEST_SUCCESSFUL);
         userManager.addRole("xls access", "Can download data as XLS");
         snackBar.checkMessage("regular", SnackBar.REQUEST_SUCCESSFUL);
+
+        table.completeTestTable(TableId.ROLE_TABLE);
     }
 
 
@@ -255,6 +263,8 @@ public class UserManagerIT extends BaseTest implements ITestWithWebDriver {
         snackBar.checkMessage("regular", SnackBar.REQUEST_SUCCESSFUL);
         userManager.addApplication("XForms", "Online form runner.");
         snackBar.checkMessage("regular", SnackBar.REQUEST_SUCCESSFUL);
+
+        table.completeTestTable(TableId.APPLICATION_TABLE);
     }
 
 
@@ -475,13 +485,13 @@ public class UserManagerIT extends BaseTest implements ITestWithWebDriver {
 
         //Check that role is inserted on the application.
         userManager.selectApplicationsOnMenu();
-        userManager.selectTableRow(TableId.APPLICATION_TABLE, "FactsDashboard", 1);
-        userManager.pressTableButton(TableId.APPLICATION_TABLE, "button-linkage");
+        table.selectRow(TableId.APPLICATION_TABLE, "FactsDashboard", 1);
+        table.pressButton(TableId.APPLICATION_TABLE, "button-linkage");
         //No exception must be there.
-        userManager.selectTableRow(TableId.ROLE_TABLE, "CADT", 1);
-        userManager.pressTableButton(TableId.ROLE_TABLE, "popup-application-roles-button-linkage");
-        Assert.assertEquals(userManager.getTableContent(TableId.APPLICATION_ROLE_TABLE, 0, 1), "FactManager");
-        Assert.assertEquals(userManager.getTableContent(TableId.APPLICATION_ROLE_TABLE, 1, 1), "InfographicEngine");
+        table.selectRow(TableId.ROLE_TABLE, "CADT", 1);
+        table.pressButton(TableId.ROLE_TABLE, "popup-application-roles-button-linkage");
+        Assert.assertEquals(table.getContent(TableId.APPLICATION_ROLE_TABLE, 0, 1), "FactManager");
+        Assert.assertEquals(table.getContent(TableId.APPLICATION_ROLE_TABLE, 1, 1), "InfographicEngine");
         popup.close(PopupId.APPLICATION_ROLE_ASSIGN);
         popup.close(PopupId.APPLICATION_ROLE);
     }
@@ -507,7 +517,9 @@ public class UserManagerIT extends BaseTest implements ITestWithWebDriver {
         snackBar.checkMessage("regular", SnackBar.REQUEST_SUCCESSFUL);
         userManager.addGroup("Team Leaders", "Captain of the ship.");
         snackBar.checkMessage("regular", SnackBar.REQUEST_SUCCESSFUL);
-        Assert.assertEquals(userManager.getTotalNumberOfItems(TableId.USERS_GROUP_TABLE), 9);
+        Assert.assertEquals(table.getTotalNumberOfItems(TableId.USERS_GROUP_TABLE), 9);
+
+        table.completeTestTable(TableId.USERS_GROUP_TABLE);
     }
 
     @Test(dependsOnMethods = {"addGroups", "addApplicationsRoles", "linkRoles"})

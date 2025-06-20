@@ -39,17 +39,4 @@ public class Popup {
             //Ignore
         }
     }
-
-    public void selectTableRow(TableId tableId, String label, int column) {
-        table.selectRow(tableId, label, column);
-    }
-
-
-    public void selectTableLastRow(TableId tableId) {
-        table.selectLastRow(tableId);
-    }
-
-    public void selectTableRow(TableId tableId, int rowIndex) {
-        table.selectRow(tableId, rowIndex);
-    }
 }

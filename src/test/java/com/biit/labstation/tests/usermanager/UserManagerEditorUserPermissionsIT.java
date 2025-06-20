@@ -77,9 +77,9 @@ public class UserManagerEditorUserPermissionsIT extends BaseTest implements ITes
     public void checkEditorCannotChangeUserRoles() {
         userManager.login(EDITOR_USER_NAME, USER_PASSWORD);
         userManager.selectUserOnMenu();
-        userManager.selectTableRow(TableId.USERS_TABLE, 0);
+        table.selectRow(TableId.USERS_TABLE, 0);
         try {
-            userManager.pressTableButton(TableId.USERS_TABLE, "button-linkage");
+            table.pressButton(TableId.USERS_TABLE, "button-linkage");
         } catch (NoSuchElementException e) {
             throw new ElementNotFoundAsExpectedException();
         } finally {

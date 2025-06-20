@@ -8,12 +8,11 @@ import com.biit.labstation.components.NavBar;
 import com.biit.labstation.components.Popup;
 import com.biit.labstation.components.PopupId;
 import com.biit.labstation.components.Tab;
+import com.biit.labstation.components.TabId;
 import com.biit.labstation.components.Table;
 import com.biit.labstation.components.TableId;
 import com.biit.labstation.logger.LabStationLogger;
 import org.openqa.selenium.By;
-import org.openqa.selenium.Keys;
-import org.openqa.selenium.WebElement;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
@@ -22,7 +21,6 @@ public class UserManager extends ToolTest {
     private static final int USERNAME_COLUMN = 3;
     private static final int USERNAME_GROUP_TABLE_COLUMN = 4;
     private static final int USERNAME_USER_TABLE_COLUMN = 3;
-    private static final int WAITING_TO_ACCESS = 500;
 
     private final Login login;
     private final NavBar navBar;
@@ -47,10 +45,12 @@ public class UserManager extends ToolTest {
         this.tab = tab;
     }
 
+    @Override
     public void access() {
         access(serverDomain, context);
     }
 
+    @Override
     public void login(String username, String password) {
         try {
             login.acceptCookies();
@@ -60,6 +60,7 @@ public class UserManager extends ToolTest {
         login.logIn(username, password);
     }
 
+    @Override
     public void logout() {
         getCustomChromeDriver().findElementWaiting(By.id("usermanager-menu")).click();
         getCustomChromeDriver().findElementWaiting(By.id("usermanager-menu-logout")).click();
@@ -95,48 +96,11 @@ public class UserManager extends ToolTest {
         ToolTest.waitComponent();
     }
 
-    public void pressTableButton(TableId tableId, String id) {
-        LabStationLogger.debug(this.getClass().getName(), "Pressing '{}' button on table '{}'.", id, tableId);
-        table.getMenuItem(tableId, id).click();
-        ToolTest.waitComponent();
-    }
-
-    public String getTableContent(TableId tableId, int row, int column) {
-        return table.getContent(tableId, row, column);
-    }
-
-    public void selectTableRow(TableId tableId, int row) {
-        table.selectRow(tableId, row);
-    }
-
-    public void selectTableRow(TableId tableId, String label, int column) {
-        try {
-            table.selectRow(tableId, label, column);
-        } catch (Exception e) {
-            //Already selected.
-        }
-    }
-
-    public int getTableSize(TableId tableId) {
-        return table.countRows(tableId);
-    }
-
-    public void unselectTableRow(TableId tableId, int row) {
-        table.unselectRow(tableId, row);
-    }
-
-    public void unselectTableRow(TableId tableId, String label, int column) {
-        try {
-            table.unselectRow(tableId, label, column);
-        } catch (Exception e) {
-            //Already unselected.
-        }
-    }
 
     public void addService(String name, String description) {
         LabStationLogger.debug(this.getClass().getName(), "@@ Adding service '{}'.", name);
         selectServicesOnMenu();
-        pressTableButton(TableId.SERVICE_TABLE, "button-plus");
+        table.pressButton(TableId.SERVICE_TABLE, "button-plus");
         popup.findElement(PopupId.SERVICE, "service-name").findElement(By.id("input")).sendKeys(name);
         popup.findElement(PopupId.SERVICE, "service-description").findElement(By.id("input")).sendKeys(description);
         popup.findElement(PopupId.SERVICE, "popup-service-save-button").click();
@@ -149,19 +113,19 @@ public class UserManager extends ToolTest {
         } catch (Exception e) {
             //Already on this tab.
         }
-        selectTableRow(TableId.SERVICE_TABLE, service, 1);
-        pressTableButton(TableId.SERVICE_TABLE, "button-linkage");
+        table.selectRow(TableId.SERVICE_TABLE, service, 1);
+        table.pressButton(TableId.SERVICE_TABLE, "button-linkage");
         popup.findElement(PopupId.ROLE, "popup-service-button-plus").click();
         popup.findElement(PopupId.ROLE, "create-service-role").findElement(By.id("input")).sendKeys(role);
         popup.findElement(PopupId.ROLE, "popup-save-button").click();
         popup.close(PopupId.ROLE);
-        unselectTableRow(TableId.SERVICE_TABLE, service, 1);
+        table.unselectRow(TableId.SERVICE_TABLE, service, 1);
     }
 
     public void addApplication(String name, String description) {
         LabStationLogger.debug(this.getClass().getName(), "@@ Adding application '{}'.", name);
         selectApplicationsOnMenu();
-        pressTableButton(TableId.APPLICATION_TABLE, "button-plus");
+        table.pressButton(TableId.APPLICATION_TABLE, "button-plus");
         popup.findElement(PopupId.APPLICATION, "application-name").findElement(By.id("input")).sendKeys(name);
         popup.findElement(PopupId.APPLICATION, "application-description").findElement(By.id("input")).sendKeys(description);
         popup.findElement(PopupId.APPLICATION, "popup-save-button").click();
@@ -174,13 +138,13 @@ public class UserManager extends ToolTest {
         } catch (Exception e) {
             //Already on this tab.
         }
-        selectTableRow(TableId.APPLICATION_TABLE, application, 1);
-        pressTableButton(TableId.APPLICATION_TABLE, "button-linkage");
+        table.selectRow(TableId.APPLICATION_TABLE, application, 1);
+        table.pressButton(TableId.APPLICATION_TABLE, "button-linkage");
         popup.findElement(PopupId.APPLICATION_ROLE, "popup-application-roles-button-plus").click();
         dropdown.selectItem(PopupId.APPLICATION_ROLE_SELECTOR.getId(), role);
         popup.findElement(PopupId.APPLICATION_ROLE, "assign-button").click();
         popup.close(PopupId.APPLICATION_ROLE);
-        unselectTableRow(TableId.APPLICATION_TABLE, application, 1);
+        table.unselectRow(TableId.APPLICATION_TABLE, application, 1);
     }
 
     public void linkApplicationRoleWithServiceRole(String application, String role, String backendService, String backendRole) {
@@ -191,9 +155,9 @@ public class UserManager extends ToolTest {
         }
         LabStationLogger.debug(this.getClass().getName(), "@@ Linking role '{}' from application '{}' to service '{}' role '{}'.",
                 role, application, backendService, backendRole);
-        selectTableRow(TableId.APPLICATION_TABLE, application, 1);
-        pressTableButton(TableId.APPLICATION_TABLE, "button-linkage");
-        popup.selectTableRow(TableId.ROLE_TABLE, role, 1);
+        table.selectRow(TableId.APPLICATION_TABLE, application, 1);
+        table.pressButton(TableId.APPLICATION_TABLE, "button-linkage");
+        table.selectRow(TableId.ROLE_TABLE, role, 1);
         popup.findElement(PopupId.APPLICATION_ROLE, "popup-application-roles-button-linkage").click();
         popup.findElement(PopupId.APPLICATION_ROLE_ASSIGN, "popup-button-plus").click();
         dropdown.selectItem("service-selector", backendService);
@@ -202,38 +166,13 @@ public class UserManager extends ToolTest {
         popup.close(PopupId.APPLICATION_ROLE_ASSIGN);
         //One close for the role assigner, the second for the role list.
         popup.close(PopupId.APPLICATION_ROLE);
-        unselectTableRow(TableId.APPLICATION_TABLE, application, 1);
-    }
-
-    public String getCurrentPage(TableId tableId) {
-        return table.getCurrentPage(tableId);
-    }
-
-    public String getTotalPages(TableId tableId) {
-        return table.getTotalPages(tableId);
-    }
-
-
-    public void goFirstPage(TableId tableId) {
-        table.goFirstPage(tableId);
-    }
-
-    public void goPreviousPage(TableId tableId) {
-        table.goPreviousPage(tableId);
-    }
-
-    public void goNextPage(TableId tableId) {
-        table.goNextPage(tableId);
-    }
-
-    public void goLastPage(TableId tableId) {
-        table.goLastPage(tableId);
+        table.unselectRow(TableId.APPLICATION_TABLE, application, 1);
     }
 
     public void addRole(String name, String description) {
         LabStationLogger.debug(this.getClass().getName(), "@@ Adding role '{}'.", name);
         selectRolesOnMenu();
-        pressTableButton(TableId.ROLE_TABLE, "button-plus");
+        table.pressButton(TableId.ROLE_TABLE, "button-plus");
         popup.findElement(PopupId.ROLE, "role-name").findElement(By.id("input")).sendKeys(name);
         if (description != null) {
             popup.findElement(PopupId.ROLE, "role-description").findElement(By.id("input")).sendKeys(description);
@@ -248,8 +187,8 @@ public class UserManager extends ToolTest {
         } catch (Exception e) {
             //Already on this tab.
         }
-        selectTableRow(TableId.ROLE_TABLE, role, 1);
-        pressTableButton(TableId.ROLE_TABLE, "button-linkage");
+        table.selectRow(TableId.ROLE_TABLE, role, 1);
+        table.pressButton(TableId.ROLE_TABLE, "button-linkage");
         popup.findElement(PopupId.ROLE, "application-button-plus").click();
         dropdown.selectItem(PopupId.ASSIGN_APPLICATION_SELECTOR.getId(), application);
 
@@ -265,9 +204,9 @@ public class UserManager extends ToolTest {
         } catch (Exception e) {
             //Already on this tab.
         }
-        selectTableRow(TableId.ROLE_TABLE, role, 1);
-        pressTableButton(TableId.ROLE_TABLE, "button-linkage");
-        popup.selectTableRow(TableId.APPLICATION_ROLE_TABLE, application, 1);
+        table.selectRow(TableId.ROLE_TABLE, role, 1);
+        table.pressButton(TableId.ROLE_TABLE, "button-linkage");
+        table.selectRow(TableId.APPLICATION_ROLE_TABLE, application, 1);
         popup.findElement(PopupId.ROLE, "application-button-linkage").click();
         popup.findElement(PopupId.SERVICE_ROLE, "popup-button-plus").click();
         dropdown.selectItem(PopupId.APPLICATION_ROLE_SERVICES.getId(), "service-selector", service);
@@ -280,7 +219,7 @@ public class UserManager extends ToolTest {
     public void addGroup(String name, String description) {
         LabStationLogger.debug(this.getClass().getName(), "@@ Adding group '{}'.", name);
         selectGroupsOnMenu();
-        pressTableButton(TableId.USERS_GROUP_TABLE, "button-plus");
+        table.pressButton(TableId.USERS_GROUP_TABLE, "button-plus");
         popup.findElement(PopupId.USER_GROUP, "group-name").findElement(By.id("input")).sendKeys(name);
         popup.findElement(PopupId.USER_GROUP, "group-description").findElement(By.id("input")).sendKeys(description);
         popup.findElement(PopupId.USER_GROUP, "popup-group-save-button").click();
@@ -293,14 +232,14 @@ public class UserManager extends ToolTest {
         } catch (Exception e) {
             //Already on this tab.
         }
-        selectTableRow(TableId.USERS_GROUP_TABLE, group, 1);
-        pressTableButton(TableId.USERS_GROUP_TABLE, "button-linkage");
+        table.selectRow(TableId.USERS_GROUP_TABLE, group, 1);
+        table.pressButton(TableId.USERS_GROUP_TABLE, "button-linkage");
         popup.findElement(PopupId.ROLE, "user-group-role-button-plus").click();
         dropdown.selectItem(PopupId.APPLICATION_ROLE.getId(), "application-selector", application);
         dropdown.selectItem(PopupId.APPLICATION_ROLE.getId(), "role-selector", role);
         popup.findElement(PopupId.APPLICATION_ROLE, "popup-assign-button").click();
         popup.close(PopupId.ROLE);
-        unselectTableRow(TableId.USERS_GROUP_TABLE, group, 1);
+        table.unselectRow(TableId.USERS_GROUP_TABLE, group, 1);
     }
 
     public void addUserToGroup(String username, String group) {
@@ -310,13 +249,13 @@ public class UserManager extends ToolTest {
         } catch (Exception e) {
             //Already on this tab.
         }
-        selectTableRow(TableId.USERS_GROUP_TABLE, group, 1);
-        pressTableButton(TableId.USERS_GROUP_TABLE, "button-group");
+        table.selectRow(TableId.USERS_GROUP_TABLE, group, 1);
+        table.pressButton(TableId.USERS_GROUP_TABLE, "button-group");
         table.selectRow(TableId.USERS_TABLE, username, USERNAME_GROUP_TABLE_COLUMN);
         popup.findElement(PopupId.ASSIGN_USERS_TO_GROUP, "popup-assign-button").click();
         popup.findElement(PopupId.CONFIRMATION, "assign-button").click();
         popup.close(PopupId.ASSIGN_USERS_TO_GROUP);
-        unselectTableRow(TableId.USERS_GROUP_TABLE, group, 1);
+        table.unselectRow(TableId.USERS_GROUP_TABLE, group, 1);
     }
 
     public void removeUserFromGroup(String username, String group) {
@@ -326,13 +265,13 @@ public class UserManager extends ToolTest {
         } catch (Exception e) {
             //Already on this tab.
         }
-        selectTableRow(TableId.USERS_GROUP_TABLE, group, 1);
-        pressTableButton(TableId.USERS_GROUP_TABLE, "button-group");
+        table.selectRow(TableId.USERS_GROUP_TABLE, group, 1);
+        table.pressButton(TableId.USERS_GROUP_TABLE, "button-group");
         table.selectRow(TableId.USERS_TABLE, username, USERNAME_GROUP_TABLE_COLUMN);
         popup.findElement(PopupId.ASSIGN_USERS_TO_GROUP, "popup-unassign-button").click();
         popup.findElement(PopupId.CONFIRMATION_DELETE, "unassign-button").click();
         popup.close(PopupId.ASSIGN_USERS_TO_GROUP);
-        unselectTableRow(TableId.USERS_GROUP_TABLE, group, 1);
+        table.unselectRow(TableId.USERS_GROUP_TABLE, group, 1);
     }
 
     public int getTotalRolesByGroup(String group) {
@@ -341,29 +280,16 @@ public class UserManager extends ToolTest {
         } catch (Exception e) {
             //Already on this tab.
         }
-        selectTableRow(TableId.USERS_GROUP_TABLE, group, 1);
-        pressTableButton(TableId.USERS_GROUP_TABLE, "button-linkage");
+        table.selectRow(TableId.USERS_GROUP_TABLE, group, 1);
+        table.pressButton(TableId.USERS_GROUP_TABLE, "button-linkage");
 
-        final int elements = getTotalNumberOfItems(TableId.USERS_GROUP_ROLE_TABLE);
+        final int elements = table.getTotalNumberOfItems(TableId.USERS_GROUP_ROLE_TABLE);
         popup.close(PopupId.ROLE);
-        unselectTableRow(TableId.USERS_GROUP_TABLE, group, 1);
+        table.unselectRow(TableId.USERS_GROUP_TABLE, group, 1);
         LabStationLogger.debug(this.getClass().getName(), "Total roles by group '{}' are '{}'.", group, elements);
         return elements;
     }
 
-    public int getTotalNumberOfItems(TableId tableId) {
-        ToolTest.waitComponent();
-        final int items = Integer.parseInt(table.getTotalNumberOfItems(tableId));
-        LabStationLogger.debug(this.getClass().getName(), "Total items in table '{}' are '{}'.", tableId, items);
-        return items;
-    }
-
-    public int getNumberOfItemsSelected(TableId tableId) {
-        ToolTest.waitComponent();
-        final int selectedITems = Integer.parseInt(table.getTotalNumberOfItems(tableId));
-        LabStationLogger.debug(this.getClass().getName(), "Total items selected in table '{}' are '{}'.", tableId, selectedITems);
-        return selectedITems;
-    }
 
     public void addUser(String user, String email, String name, String lastName, String password) {
         try {
@@ -372,8 +298,8 @@ public class UserManager extends ToolTest {
             //Already on this tab.
         }
         LabStationLogger.debug(this.getClass().getName(), "@@ Creating user '{}'.", user);
-        pressTableButton(TableId.USERS_TABLE, "button-plus");
-        tab.selectTab("user-tabs", "account-tab");
+        table.pressButton(TableId.USERS_TABLE, "button-plus");
+        tab.selectTab(TabId.USERS, "account-tab");
         popup.findElement(PopupId.USER, "username").findElement(By.id("input")).sendKeys(user);
         popup.findElement(PopupId.USER, "email").findElement(By.id("input")).sendKeys(email);
         popup.findElement(PopupId.USER, "name").findElement(By.id("input")).sendKeys(name);
@@ -385,16 +311,17 @@ public class UserManager extends ToolTest {
         waitAndExecute(() -> popup.findElement(PopupId.USER, "popup-user-save-button").click());
     }
 
+
     public void editUser(String user, String email, String name, String lastName) {
         try {
             selectUserOnMenu();
         } catch (Exception e) {
             //Already on this tab.
         }
-        selectTableRow(TableId.USERS_TABLE, user, USERNAME_USER_TABLE_COLUMN);
+        table.selectRow(TableId.USERS_TABLE, user, USERNAME_USER_TABLE_COLUMN);
         LabStationLogger.debug(this.getClass().getName(), "@@ Editing user '{}'.", user);
-        pressTableButton(TableId.USERS_TABLE, "button-edit");
-        tab.selectTab("user-tabs", "account-tab");
+        table.pressButton(TableId.USERS_TABLE, "button-edit");
+        tab.selectTab(TabId.USERS, "account-tab");
         popup.findElement(PopupId.USER, "email").findElement(By.id("input")).clear();
         popup.findElement(PopupId.USER, "email").findElement(By.id("input")).sendKeys(email);
         popup.findElement(PopupId.USER, "name").findElement(By.id("input")).clear();
@@ -411,10 +338,11 @@ public class UserManager extends ToolTest {
         } catch (Exception e) {
             //Already on this tab.
         }
-        selectTableRow(TableId.USERS_TABLE, username, USERNAME_USER_TABLE_COLUMN);
-        pressTableButton(TableId.USERS_TABLE, "button-minus");
+        table.selectRow(TableId.USERS_TABLE, username, USERNAME_USER_TABLE_COLUMN);
+        table.pressButton(TableId.USERS_TABLE, "button-minus");
         popup.findElement(PopupId.CONFIRMATION_DELETE, "confirm-delete-button").click();
     }
+
 
     public void addUserRoles(String user, String application, String role) {
         try {
@@ -423,24 +351,16 @@ public class UserManager extends ToolTest {
             //Already on this tab.
         }
         LabStationLogger.debug(this.getClass().getName(), "@@ Adding role '{}' to user '{}' on application.", role, user, application);
-        selectTableRow(TableId.USERS_TABLE, user, USERNAME_COLUMN);
-        pressTableButton(TableId.USERS_TABLE, "button-linkage");
+        table.selectRow(TableId.USERS_TABLE, user, USERNAME_COLUMN);
+        table.pressButton(TableId.USERS_TABLE, "button-linkage");
         //Wait until a confirmation message is closed.
         waitAndExecute(() -> popup.findElement(PopupId.ROLE, "user-role-button-plus").click());
         dropdown.selectItem(PopupId.USER_ROLE.getId(), "application-selector", application);
         dropdown.selectItem(PopupId.USER_ROLE.getId(), "role-selector", role);
         popup.findElement(PopupId.USER_ROLE, "role-assign-button").click();
         popup.close(PopupId.ROLE);
-        unselectTableRow(TableId.USERS_TABLE, user, 1);
+        table.unselectRow(TableId.USERS_TABLE, user, 1);
     }
 
-    public WebElement getSearchField(TableId tableId) {
-        return table.getSearchField(tableId);
-    }
-
-    public void clearSearchField(TableId tableId) {
-        getSearchField(tableId).clear();
-        getSearchField(tableId).sendKeys(Keys.ENTER);
-    }
 
 }
