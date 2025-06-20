@@ -1,6 +1,5 @@
 package com.biit.labstation.tests.usermanager;
 
-import com.biit.labstation.ToolTest;
 import com.biit.labstation.components.Popup;
 import com.biit.labstation.components.SnackBar;
 import com.biit.labstation.components.Table;
@@ -40,9 +39,6 @@ public class UserManagerBasicUserPermissionsIT extends BaseTest implements ITest
     @Autowired
     private SnackBar snackBar;
 
-    @Autowired
-    private Table table;
-
     @BeforeClass
     public void setup() {
         userManager.access();
@@ -64,6 +60,40 @@ public class UserManagerBasicUserPermissionsIT extends BaseTest implements ITest
 
     @Test(dependsOnMethods = "createBasicUser", expectedExceptions = ElementNotFoundAsExpectedException.class)
     public void checkBasicNoPermissions() {
+        userManager.login(BASIC_USER_NAME, USER_PASSWORD);
+        snackBar.checkMessage("error", SnackBar.ACCESS_DENIED);
+        try {
+            userManager.selectOrganizationsOnMenu();
+        } catch (ElementNotInteractableException e) {
+            throw new ElementNotFoundAsExpectedException();
+        } finally {
+            userManager.logout();
+        }
+    }
+
+    @Test(dependsOnMethods = "checkBasicNoPermissions")
+    public void addUserToGroup() {
+        userManager.login(ADMIN_USER_NAME, USER_PASSWORD);
+        userManager.addUserToGroup(BASIC_USER_NAME, "Admin");
+        userManager.logout();
+    }
+
+    @Test(dependsOnMethods = "addUserToGroup")
+    public void checkUserNowHasPermissions() {
+        userManager.login(BASIC_USER_NAME, USER_PASSWORD);
+        userManager.selectOrganizationsOnMenu();
+        userManager.logout();
+    }
+
+    @Test(dependsOnMethods = "checkUserNowHasPermissions")
+    public void removeUserFromGroup() {
+        userManager.login(ADMIN_USER_NAME, USER_PASSWORD);
+        userManager.removeUserFromGroup(BASIC_USER_NAME, "Admin");
+        userManager.logout();
+    }
+
+    @Test(dependsOnMethods = "removeUserFromGroup", expectedExceptions = ElementNotFoundAsExpectedException.class)
+    public void checkBasicNoPermissionsAgain() {
         userManager.login(BASIC_USER_NAME, USER_PASSWORD);
         snackBar.checkMessage("error", SnackBar.ACCESS_DENIED);
         try {

@@ -319,6 +319,22 @@ public class UserManager extends ToolTest {
         unselectTableRow(TableId.USERS_GROUP_TABLE, group, 1);
     }
 
+    public void removeUserFromGroup(String username, String group) {
+        LabStationLogger.debug(this.getClass().getName(), "@@ Removing username '{}' to group '{}'.", username, group);
+        try {
+            selectGroupsOnMenu();
+        } catch (Exception e) {
+            //Already on this tab.
+        }
+        selectTableRow(TableId.USERS_GROUP_TABLE, group, 1);
+        pressTableButton(TableId.USERS_GROUP_TABLE, "button-group");
+        table.selectRow(TableId.USERS_TABLE, username, USERNAME_GROUP_TABLE_COLUMN);
+        popup.findElement(PopupId.ASSIGN_USERS_TO_GROUP, "popup-unassign-button").click();
+        popup.findElement(PopupId.CONFIRMATION_DELETE, "unassign-button").click();
+        popup.close(PopupId.ASSIGN_USERS_TO_GROUP);
+        unselectTableRow(TableId.USERS_GROUP_TABLE, group, 1);
+    }
+
     public int getTotalRolesByGroup(String group) {
         try {
             selectGroupsOnMenu();
