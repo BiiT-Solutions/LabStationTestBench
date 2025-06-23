@@ -12,6 +12,7 @@
                 <include name="userManagerEditorUserPermissions"/>
                 <include name="userManagerDuplications"/>
                 <include name="login"/>
+                <include name="profiles"/>
             </run>
         </groups>
         <classes>
@@ -20,6 +21,7 @@
             <class name="com.biit.labstation.tests.usermanager.UserManagerEditorUserPermissionsIT"/>
             <class name="com.biit.labstation.tests.usermanager.UserManagerDuplicationsIT"/>
             <class name="com.biit.labstation.tests.LoginIT"/>
+            <class name="com.biit.labstation.tests.profilematcher.ProfileMatcherIT"/>
         </classes>
     </test>
 </suite>

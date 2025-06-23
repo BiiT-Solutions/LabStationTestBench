@@ -19,6 +19,8 @@ import static org.awaitility.Awaitility.await;
 @Component
 public class Table {
     private static final int WAITING_TIME_SECONDS = 3;
+    public static final int CLEAR_WAIT = 30;
+    private static final int SEARCH_WAIT = 1000;
 
     private final CustomChromeDriver customChromeDriver;
 
@@ -39,6 +41,7 @@ public class Table {
         getSearchField(tableId).clear();
         getSearchField(tableId).sendKeys(text);
         getSearchField(tableId).sendKeys(Keys.ENTER);
+        ToolTest.waitComponent(SEARCH_WAIT);
     }
 
     public void clearSearch(TableId tableId) {
@@ -46,7 +49,7 @@ public class Table {
         if (content != null) {
             for (int i = 0; i < content.length(); i++) {
                 getSearchField(tableId).sendKeys(Keys.BACK_SPACE);
-                ToolTest.waitComponent();
+                ToolTest.waitComponent(CLEAR_WAIT);
             }
         }
         getSearchField(tableId).sendKeys(Keys.ENTER);

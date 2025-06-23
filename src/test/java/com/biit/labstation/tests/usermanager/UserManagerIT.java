@@ -79,7 +79,6 @@ public class UserManagerIT extends BaseTest implements ITestWithWebDriver {
     public void editUser() {
         userManager.editUser(ADMIN_USER_NAME, ADMIN_USER_NAME, ADMIN_NAME, ADMIN_LASTNAME);
         table.search(TableId.USERS_TABLE, ADMIN_USER_NAME);
-        ToolTest.waitComponent(1000);
         Assert.assertEquals(table.getContent(TableId.USERS_TABLE, 0, 1), ADMIN_NAME);
         Assert.assertEquals(table.getContent(TableId.USERS_TABLE, 0, 2), ADMIN_LASTNAME);
         Assert.assertEquals(table.getContent(TableId.USERS_TABLE, 0, 3), ADMIN_USER_NAME);

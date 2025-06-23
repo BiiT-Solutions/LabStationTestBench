@@ -101,8 +101,12 @@ public class UserManager extends ToolTest {
         LabStationLogger.debug(this.getClass().getName(), "@@ Adding service '{}'.", name);
         selectServicesOnMenu();
         table.pressButton(TableId.SERVICE_TABLE, "button-plus");
-        popup.findElement(PopupId.SERVICE, "service-name").findElement(By.id("input")).sendKeys(name);
-        popup.findElement(PopupId.SERVICE, "service-description").findElement(By.id("input")).sendKeys(description);
+        if (name != null) {
+            popup.findElement(PopupId.SERVICE, "service-name").findElement(By.id("input")).sendKeys(name);
+        }
+        if (description != null) {
+            popup.findElement(PopupId.SERVICE, "service-description").findElement(By.id("input")).sendKeys(description);
+        }
         popup.findElement(PopupId.SERVICE, "popup-service-save-button").click();
     }
 
@@ -333,6 +337,7 @@ public class UserManager extends ToolTest {
 
 
     public void deleteUser(String username) {
+        LabStationLogger.debug(this.getClass().getName(), "@@ Delegting user '{}'.", username);
         try {
             selectUserOnMenu();
         } catch (Exception e) {
