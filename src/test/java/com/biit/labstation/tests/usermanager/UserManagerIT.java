@@ -1,6 +1,5 @@
 package com.biit.labstation.tests.usermanager;
 
-import com.biit.labstation.ToolTest;
 import com.biit.labstation.components.Popup;
 import com.biit.labstation.components.PopupId;
 import com.biit.labstation.components.SnackBar;

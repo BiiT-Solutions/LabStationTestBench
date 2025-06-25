@@ -23,7 +23,7 @@ import org.testng.annotations.Test;
 import static com.biit.labstation.tests.LoginIT.ADMIN_USER_NAME;
 import static com.biit.labstation.tests.LoginIT.ADMIN_USER_PASSWORD;
 
-@SpringBootTest
+//@SpringBootTest
 @Test(groups = "profiles")
 @Listeners({TestListener.class, ClassTestListener.class})
 @DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_CLASS)
@@ -32,13 +32,13 @@ public class ProfileMatcherIT extends BaseTest implements ITestWithWebDriver {
     private static final String OLD_PROFILE_NAME = "OldProfile";
     private static final String NEW_PROFILE_NAME = "NewProfile";
 
-    @Autowired
+    //@Autowired
     private ProfileMatcher profileMatcher;
 
-    @Autowired
+    //@Autowired
     private Table table;
 
-    @Autowired
+    //@Autowired
     private SnackBar snackBar;
 
     @BeforeClass
