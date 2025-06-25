@@ -92,7 +92,7 @@ public class ProfileMatcher extends ToolTest {
             //Already on this tab.
         }
         table.pressButton(TableId.PROFILES_TABLE, "button-plus");
-        tab.selectTab(TabId.PROFILES, "description-tab");
+        tab.selectTab(TabId.PROFILES, "tab-General");
         if (name != null) {
             popup.findElement(PopupId.PROFILE, "profile-name").findElement(By.id("input")).sendKeys(name);
         }
@@ -138,7 +138,7 @@ public class ProfileMatcher extends ToolTest {
         }
         table.selectRow(TableId.PROFILES_TABLE, oldName, NAME_PROFILE_TABLE_COLUMN);
         table.pressButton(TableId.PROFILES_TABLE, "button-edit");
-        tab.selectTab(TabId.PROFILES, "description-tab");
+        tab.selectTab(TabId.PROFILES, "tab-General");
         if (newName != null) {
             popup.findElement(PopupId.PROFILE, "profile-name").findElement(By.id("input")).clear();
             popup.findElement(PopupId.PROFILE, "profile-name").findElement(By.id("input")).sendKeys(newName);
@@ -163,5 +163,32 @@ public class ProfileMatcher extends ToolTest {
             tab.selectTab(TabId.PROFILES, "tab-General");
         }
         waitAndExecute(() -> popup.findElement(PopupId.PROFILE, "popup-profile-save-button").click());
+    }
+
+    public void openProfileForMatching(String profile) {
+        LabStationLogger.debug(this.getClass().getName(), "@@ Selecting profile '{}' for matching.", profile);
+        try {
+            selectMatchingsOnMenu();
+        } catch (Exception e) {
+            //Already on this tab.
+        }
+        table.selectRow(TableId.PROFILES_TABLE, profile, 1);
+        table.pressButton(TableId.PROFILES_TABLE, "open-profile");
+        getCustomChromeDriver().findElement(By.id("profile-details")).findElement(By.id("compare-button")).click();
+    }
+
+
+    public void assignCandidate(String profile, String username) {
+        LabStationLogger.debug(this.getClass().getName(), "@@ Assigning candidate '{}' to profile '{}'.", username, profile);
+        try {
+            selectMatchingsOnMenu();
+        } catch (Exception e) {
+            //Already on this tab.
+        }
+        table.selectRow(TableId.PROFILES_TABLE, profile, 1);
+        table.selectColumnOption(TableId.CANDIDATES_TABLE, "Username");
+        table.selectRow(TableId.CANDIDATES_TABLE, username, 1);
+        table.pressButton(TableId.CANDIDATES_TABLE, "button-assign");
+        popup.findElement(PopupId.ASSIGN_USER_POPUP, "assign-cancel-button").click();
     }
 }

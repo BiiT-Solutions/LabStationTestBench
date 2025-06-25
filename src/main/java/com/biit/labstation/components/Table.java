@@ -249,4 +249,34 @@ public class Table {
         getMenuItem(tableId, id).click();
         ToolTest.waitComponent();
     }
+
+
+    public void selectColumnOption(TableId tableId, String column) {
+        customChromeDriver.findElementWaiting(By.id(tableId.getId())).findElement(By.className("column-selector")).click();
+
+        try {
+            customChromeDriver.findElementWaiting(By.id(tableId.getId())).findElement(By.className("options"))
+                    .findElement(By.className("option-" + column)).findElement(By.id("unchecked"));
+            customChromeDriver.findElementWaiting(By.id(tableId.getId())).findElement(By.className("options"))
+                    .findElement(By.className("option-" + column)).click();
+            ComponentLogger.debug(this.getClass().getName(), "Selecting Column '{}'.", column);
+        } catch (Exception e) {
+            //Already selected
+        }
+    }
+
+
+    public void unselectColumnOption(TableId tableId, String column) {
+        customChromeDriver.findElementWaiting(By.id(tableId.getId())).findElement(By.className("column-selector")).click();
+
+        try {
+            customChromeDriver.findElementWaiting(By.id(tableId.getId())).findElement(By.className("options"))
+                    .findElement(By.className("option-" + column)).findElement(By.id("checked"));
+            customChromeDriver.findElementWaiting(By.id(tableId.getId())).findElement(By.className("options"))
+                    .findElement(By.className("option-" + column)).click();
+            ComponentLogger.debug(this.getClass().getName(), "Selecting Column '{}'.", column);
+        } catch (Exception e) {
+            //Already unselected
+        }
+    }
 }

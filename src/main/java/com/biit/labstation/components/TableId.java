@@ -9,7 +9,8 @@ public enum TableId {
     ROLE_TABLE("role-table"),
     SERVICE_TABLE("service-table"),
     SERVICE_ROLE_TABLE("service-role-table"),
-    PROFILES_TABLE("profiles-table");
+    PROFILES_TABLE("profiles-table"),
+    CANDIDATES_TABLE("candidates-table");
 
     private final String id;
 

@@ -1,6 +1,7 @@
 package com.biit.labstation.tests.profilematcher;
 
 import com.biit.labstation.ToolTest;
+import com.biit.labstation.components.SnackBar;
 import com.biit.labstation.components.Table;
 import com.biit.labstation.components.TableId;
 import com.biit.labstation.exceptions.ElementNotFoundAsExpectedException;
@@ -37,6 +38,9 @@ public class ProfileMatcherIT extends BaseTest implements ITestWithWebDriver {
     @Autowired
     private Table table;
 
+    @Autowired
+    private SnackBar snackBar;
+
     @BeforeClass
     public void setup() {
         profileMatcher.access();
@@ -70,8 +74,34 @@ public class ProfileMatcherIT extends BaseTest implements ITestWithWebDriver {
         }
     }
 
-    @Test(dependsOnMethods = "editProfile", alwaysRun = true)
+    @Test(dependsOnMethods = "editProfile")
+    public void nothingToCompare() {
+        profileMatcher.openProfileForMatching(NEW_PROFILE_NAME);
+        snackBar.checkMessage("error", SnackBar.NO_ASSIGNED_PROFILES);
+    }
+
+
+    @Test(dependsOnMethods = "nothingToCompare")
+    public void assignProfile() {
+        profileMatcher.assignCandidate(NEW_PROFILE_NAME, ADMIN_USER_NAME);
+    }
+
+    @Test(dependsOnMethods = "assignProfile")
+    public void canCompare() {
+        profileMatcher.openProfileForMatching(NEW_PROFILE_NAME);
+        snackBar.checkMessage("error", SnackBar.NO_ASSIGNED_PROFILES);
+    }
+
+
+    @Test(dependsOnMethods = "canCompare", alwaysRun = true, expectedExceptions = ElementNotFoundAsExpectedException.class)
     public void deleteProfile() {
         profileMatcher.deleteProfile(NEW_PROFILE_NAME);
+        try {
+            table.selectRow(TableId.PROFILES_TABLE, NEW_PROFILE_NAME, 1);
+        } catch (ConditionTimeoutException e) {
+            throw new ElementNotFoundAsExpectedException();
+        } finally {
+            table.clearSearch(TableId.PROFILES_TABLE);
+        }
     }
 }

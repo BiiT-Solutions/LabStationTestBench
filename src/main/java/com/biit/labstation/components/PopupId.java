@@ -21,7 +21,8 @@ public enum PopupId {
     CONFIRMATION_ASSIGN("confirmation-assign-popup"),
     CONFIRMATION_UNASSIGN("confirmation-unassign-popup"),
     CONFIRMATION_DELETE("confirmation-delete-popup"),
-    PROFILE("profile-popup");
+    PROFILE("profile-popup"),
+    ASSIGN_USER_POPUP("assign-user-popup");
 
     private final String id;
 

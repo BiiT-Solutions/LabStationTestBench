@@ -24,6 +24,7 @@ public class SnackBar {
     public static final String USER_ALREADY_EXISTS = "The user already exists.";
     public static final String EMAIL_IN_USE = "The email is already in use.";
     public static final String REQUEST_FAILED = "Your request failed. Please, try again later.";
+    public static final String NO_ASSIGNED_PROFILES = "";
 
     protected static final int WAITING_TIME_SECONDS = 5;
     protected static final int SNACKBAR_WAITING_TIME = 250;

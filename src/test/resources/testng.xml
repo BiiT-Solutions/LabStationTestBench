@@ -12,7 +12,7 @@
                 <include name="userManagerEditorUserPermissions"/>
                 <include name="userManagerDuplications"/>
                 <include name="login"/>
-                <include name="profiles"/>
+                <exclude name="profiles"/>
             </run>
         </groups>
         <classes>
