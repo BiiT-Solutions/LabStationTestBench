@@ -24,7 +24,7 @@ public class SnackBar {
     public static final String USER_ALREADY_EXISTS = "The user already exists.";
     public static final String EMAIL_IN_USE = "The email is already in use.";
     public static final String REQUEST_FAILED = "Your request failed. Please, try again later.";
-    public static final String NO_ASSIGNED_PROFILES = "";
+    public static final String NO_ASSIGNED_PROFILES = "Oops! It seems there are no assigned candidates for this profile.";
 
     protected static final int WAITING_TIME_SECONDS = 5;
     protected static final int SNACKBAR_WAITING_TIME = 250;
@@ -72,6 +72,8 @@ public class SnackBar {
     public void checkMessage(String type, String message) {
         await().atMost(Duration.ofSeconds(WAITING_TIME_SECONDS)).and().with().pollDelay(SNACKBAR_WAITING_TIME, TimeUnit.MILLISECONDS).until(() -> {
             try {
+                LabStationLogger.debug(this.getClass().getName(), "Comparing messages: '{}' ({}) with '{}' ({}).",
+                        message, type, getMessage(), getMessageType());
                 if (Objects.equals(getMessageType(), type) && Objects.equals(getMessage(), message)) {
                     closeLatest();
                     return true;

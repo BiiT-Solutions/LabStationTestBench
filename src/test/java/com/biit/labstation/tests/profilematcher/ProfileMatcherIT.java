@@ -1,6 +1,8 @@
 package com.biit.labstation.tests.profilematcher;
 
 import com.biit.labstation.ToolTest;
+import com.biit.labstation.components.Popup;
+import com.biit.labstation.components.PopupId;
 import com.biit.labstation.components.SnackBar;
 import com.biit.labstation.components.Table;
 import com.biit.labstation.components.TableId;
@@ -12,6 +14,7 @@ import com.biit.labstation.profilematcher.ProfileMatcher;
 import com.biit.labstation.tests.BaseTest;
 import com.biit.labstation.tests.ITestWithWebDriver;
 import org.awaitility.core.ConditionTimeoutException;
+import org.openqa.selenium.By;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.annotation.DirtiesContext;
@@ -23,7 +26,7 @@ import org.testng.annotations.Test;
 import static com.biit.labstation.tests.LoginIT.ADMIN_USER_NAME;
 import static com.biit.labstation.tests.LoginIT.ADMIN_USER_PASSWORD;
 
-//@SpringBootTest
+@SpringBootTest
 @Test(groups = "profiles")
 @Listeners({TestListener.class, ClassTestListener.class})
 @DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_CLASS)
@@ -32,14 +35,17 @@ public class ProfileMatcherIT extends BaseTest implements ITestWithWebDriver {
     private static final String OLD_PROFILE_NAME = "OldProfile";
     private static final String NEW_PROFILE_NAME = "NewProfile";
 
-    //@Autowired
+    @Autowired
     private ProfileMatcher profileMatcher;
 
-    //@Autowired
+    @Autowired
     private Table table;
 
-    //@Autowired
+    @Autowired
     private SnackBar snackBar;
+
+    @Autowired
+    private Popup popup;
 
     @BeforeClass
     public void setup() {
@@ -59,7 +65,7 @@ public class ProfileMatcherIT extends BaseTest implements ITestWithWebDriver {
 
     @Test(dependsOnMethods = "createProfile", expectedExceptions = ElementNotFoundAsExpectedException.class)
     public void editProfile() {
-        profileMatcher.editProfile(OLD_PROFILE_NAME, NEW_PROFILE_NAME, null, null, null, CadtOptions.RECEPTIVE);
+        profileMatcher.editProfile(OLD_PROFILE_NAME, NEW_PROFILE_NAME, null, null, null, CadtOptions.BANKER);
         ToolTest.waitComponent(1000);
         table.search(TableId.PROFILES_TABLE, NEW_PROFILE_NAME);
         Assert.assertEquals(table.getContent(TableId.PROFILES_TABLE, 0, 1), NEW_PROFILE_NAME);
@@ -77,7 +83,8 @@ public class ProfileMatcherIT extends BaseTest implements ITestWithWebDriver {
     @Test(dependsOnMethods = "editProfile")
     public void nothingToCompare() {
         profileMatcher.openProfileForMatching(NEW_PROFILE_NAME);
-        snackBar.checkMessage("error", SnackBar.NO_ASSIGNED_PROFILES);
+        snackBar.checkMessage("warning", SnackBar.NO_ASSIGNED_PROFILES);
+        profileMatcher.getCustomChromeDriver().findElement(By.id("profile-details")).findElement(By.id("cancel-button")).click();
     }
 
 
@@ -86,10 +93,16 @@ public class ProfileMatcherIT extends BaseTest implements ITestWithWebDriver {
         profileMatcher.assignCandidate(NEW_PROFILE_NAME, ADMIN_USER_NAME);
     }
 
-    @Test(dependsOnMethods = "assignProfile")
+    @Test(dependsOnMethods = "assignProfile", expectedExceptions = ElementNotFoundAsExpectedException.class)
     public void canCompare() {
         profileMatcher.openProfileForMatching(NEW_PROFILE_NAME);
-        snackBar.checkMessage("error", SnackBar.NO_ASSIGNED_PROFILES);
+        try {
+            snackBar.checkMessage("warning", SnackBar.NO_ASSIGNED_PROFILES);
+        } catch (ConditionTimeoutException e) {
+            throw new ElementNotFoundAsExpectedException();
+        } finally {
+            popup.close(PopupId.CANDIDATES_POPUP);
+        }
     }
 
 

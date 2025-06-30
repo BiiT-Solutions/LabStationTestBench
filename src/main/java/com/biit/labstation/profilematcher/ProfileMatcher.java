@@ -20,6 +20,7 @@ import org.springframework.stereotype.Component;
 public class ProfileMatcher extends ToolTest {
 
     private static final int NAME_PROFILE_TABLE_COLUMN = 1;
+    private static final int USERNAME_USER_TABLE_COLUMN = 4;
 
 
     private final Login login;
@@ -172,8 +173,10 @@ public class ProfileMatcher extends ToolTest {
         } catch (Exception e) {
             //Already on this tab.
         }
-        table.selectRow(TableId.PROFILES_TABLE, profile, 1);
+        //This table has no checkbox. Sow the standard
+        table.selectRowWithoutCheckbox(TableId.PROFILES_TABLE, profile, 0);
         table.pressButton(TableId.PROFILES_TABLE, "open-profile");
+        ToolTest.waitComponent();
         getCustomChromeDriver().findElement(By.id("profile-details")).findElement(By.id("compare-button")).click();
     }
 
@@ -185,10 +188,10 @@ public class ProfileMatcher extends ToolTest {
         } catch (Exception e) {
             //Already on this tab.
         }
-        table.selectRow(TableId.PROFILES_TABLE, profile, 1);
+        table.selectRowWithoutCheckbox(TableId.PROFILES_TABLE, profile, 0);
         table.selectColumnOption(TableId.CANDIDATES_TABLE, "Username");
-        table.selectRow(TableId.CANDIDATES_TABLE, username, 1);
+        table.selectRow(TableId.CANDIDATES_TABLE, username, USERNAME_USER_TABLE_COLUMN);
         table.pressButton(TableId.CANDIDATES_TABLE, "button-assign");
-        popup.findElement(PopupId.ASSIGN_USER_POPUP, "assign-cancel-button").click();
+        popup.findElement(PopupId.ASSIGN_USER_POPUP, "assign-user-button").click();
     }
 }

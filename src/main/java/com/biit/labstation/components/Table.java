@@ -19,7 +19,7 @@ import static org.awaitility.Awaitility.await;
 @Component
 public class Table {
     private static final int WAITING_TIME_SECONDS = 3;
-    public static final int CLEAR_WAIT = 30;
+    public static final int CLEAR_WAIT = 20;
     private static final int SEARCH_WAIT = 1000;
 
     private final CustomChromeDriver customChromeDriver;
@@ -76,6 +76,10 @@ public class Table {
         return table.findElements(By.className("datatable-body-row"));
     }
 
+    public void clickRow(TableId tableId, int row) {
+        getCell(tableId, row, 0).click();
+    }
+
     public void selectRow(TableId tableId, int row) {
         try {
             getCell(tableId, row, 0).findElement(By.id("biit-checkbox")).findElement(By.id("unchecked"));
@@ -93,6 +97,20 @@ public class Table {
             for (int i = 0; i < countRows(tableId); i++) {
                 if (Objects.equals(getContent(tableId, i, column), label)) {
                     selectRow(tableId, i);
+                    ComponentLogger.debug(this.getClass().getName(), "Selecting Table '{}'. Row '{}'. Column '{}'.", tableId, label, column);
+                    return true;
+                }
+            }
+            return false;
+        });
+    }
+
+    public void selectRowWithoutCheckbox(TableId tableId, String label, int column) {
+        search(tableId, label);
+        await().atMost(Duration.ofSeconds(WAITING_TIME_SECONDS)).until(() -> {
+            for (int i = 0; i < countRows(tableId); i++) {
+                if (Objects.equals(getContent(tableId, i, column), label)) {
+                    clickRow(tableId, i);
                     ComponentLogger.debug(this.getClass().getName(), "Selecting Table '{}'. Row '{}'. Column '{}'.", tableId, label, column);
                     return true;
                 }
@@ -252,17 +270,18 @@ public class Table {
 
 
     public void selectColumnOption(TableId tableId, String column) {
-        customChromeDriver.findElementWaiting(By.id(tableId.getId())).findElement(By.className("column-selector")).click();
+        customChromeDriver.findElementWaiting(By.id(tableId.getId())).findElement(By.id("column-selector")).click();
 
         try {
-            customChromeDriver.findElementWaiting(By.id(tableId.getId())).findElement(By.className("options"))
-                    .findElement(By.className("option-" + column)).findElement(By.id("unchecked"));
-            customChromeDriver.findElementWaiting(By.id(tableId.getId())).findElement(By.className("options"))
-                    .findElement(By.className("option-" + column)).click();
+            customChromeDriver.findElementWaiting(By.id(tableId.getId())).findElement(By.id("options"))
+                    .findElement(By.id("option-" + column)).findElement(By.id("unchecked"));
+            customChromeDriver.findElementWaiting(By.id(tableId.getId())).findElement(By.id("options"))
+                    .findElement(By.id("option-" + column)).click();
             ComponentLogger.debug(this.getClass().getName(), "Selecting Column '{}'.", column);
         } catch (Exception e) {
             //Already selected
         }
+        customChromeDriver.findElementWaiting(By.id(tableId.getId())).findElement(By.id("column-selector")).click();
     }
 
 

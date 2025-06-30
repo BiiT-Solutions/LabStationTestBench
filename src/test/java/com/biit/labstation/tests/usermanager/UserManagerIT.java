@@ -497,7 +497,7 @@ public class UserManagerIT extends BaseTest implements ITestWithWebDriver {
 
     @Test(dependsOnMethods = "checkUserExists")
     public void addGroups() {
-        userManager.addGroup("Admin", "Super Cow Powers.");
+        userManager.addGroup("Admin", "With great power comes great responsibility");
         snackBar.checkMessage("regular", SnackBar.REQUEST_SUCCESSFUL);
         userManager.addGroup("CEO", "Powers without cows.");
         snackBar.checkMessage("regular", SnackBar.REQUEST_SUCCESSFUL);
