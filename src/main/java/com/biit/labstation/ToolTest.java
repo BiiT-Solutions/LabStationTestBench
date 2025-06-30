@@ -1,6 +1,8 @@
 package com.biit.labstation;
 
+import com.biit.labstation.components.Login;
 import com.biit.labstation.logger.LabStationLogger;
+import org.openqa.selenium.By;
 
 import java.time.Duration;
 
@@ -12,9 +14,11 @@ public abstract class ToolTest {
     private static final int WAITING_TO_ACCESS_BROWSER = 2000;
 
     private final CustomChromeDriver customChromeDriver;
+    private final Login login;
 
-    protected ToolTest(CustomChromeDriver customChromeDriver) {
+    protected ToolTest(CustomChromeDriver customChromeDriver, Login login) {
         this.customChromeDriver = customChromeDriver;
+        this.login = login;
     }
 
     public CustomChromeDriver getCustomChromeDriver() {
@@ -47,9 +51,19 @@ public abstract class ToolTest {
 
     public abstract void access();
 
-    public abstract void login(String username, String password);
+    public void login(String username, String password) {
+        try {
+            login.acceptCookies();
+        } catch (Exception e) {
+            //Ignored.
+        }
+        login.logIn(username, password);
+    }
 
-    public abstract void logout();
+    public void logout() {
+        getCustomChromeDriver().findElementWaiting(By.id("usermanager-menu")).click();
+        getCustomChromeDriver().findElementWaiting(By.id("usermanager-menu-logout")).click();
+    }
 
     public void access(String serverDomain, String context) {
         try {

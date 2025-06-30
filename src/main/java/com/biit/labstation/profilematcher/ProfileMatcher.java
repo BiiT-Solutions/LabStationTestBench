@@ -23,7 +23,6 @@ public class ProfileMatcher extends ToolTest {
     private static final int USERNAME_USER_TABLE_COLUMN = 4;
 
 
-    private final Login login;
     private final NavBar navBar;
     private final Table table;
     private final Popup popup;
@@ -39,8 +38,7 @@ public class ProfileMatcher extends ToolTest {
 
     public ProfileMatcher(CustomChromeDriver customChromeDriver, Login login, NavBar navBar, Table table, Popup popup, Tab tab,
                           Toggle toggle) {
-        super(customChromeDriver);
-        this.login = login;
+        super(customChromeDriver, login);
         this.navBar = navBar;
         this.table = table;
         this.popup = popup;
@@ -51,22 +49,6 @@ public class ProfileMatcher extends ToolTest {
     @Override
     public void access() {
         access(serverDomain, context);
-    }
-
-    @Override
-    public void login(String username, String password) {
-        try {
-            login.acceptCookies();
-        } catch (Exception e) {
-            //Ignored.
-        }
-        login.logIn(username, password);
-    }
-
-    @Override
-    public void logout() {
-        getCustomChromeDriver().findElementWaiting(By.id("profilematcher-menu")).click();
-        getCustomChromeDriver().findElementWaiting(By.id("profilematcher-menu-logout")).click();
     }
 
     public void selectProfilesOnMenu() {

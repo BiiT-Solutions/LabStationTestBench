@@ -22,7 +22,6 @@ public class UserManager extends ToolTest {
     private static final int USERNAME_GROUP_TABLE_COLUMN = 4;
     private static final int USERNAME_USER_TABLE_COLUMN = 3;
 
-    private final Login login;
     private final NavBar navBar;
     private final Table table;
     private final Popup popup;
@@ -36,8 +35,7 @@ public class UserManager extends ToolTest {
     private String context;
 
     public UserManager(CustomChromeDriver customChromeDriver, Login login, NavBar navBar, Table table, Popup popup, Dropdown dropdown, Tab tab) {
-        super(customChromeDriver);
-        this.login = login;
+        super(customChromeDriver, login);
         this.navBar = navBar;
         this.table = table;
         this.popup = popup;
@@ -48,22 +46,6 @@ public class UserManager extends ToolTest {
     @Override
     public void access() {
         access(serverDomain, context);
-    }
-
-    @Override
-    public void login(String username, String password) {
-        try {
-            login.acceptCookies();
-        } catch (Exception e) {
-            //Ignored.
-        }
-        login.logIn(username, password);
-    }
-
-    @Override
-    public void logout() {
-        getCustomChromeDriver().findElementWaiting(By.id("usermanager-menu")).click();
-        getCustomChromeDriver().findElementWaiting(By.id("usermanager-menu-logout")).click();
     }
 
     public void selectUserOnMenu() {

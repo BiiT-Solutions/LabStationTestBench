@@ -30,7 +30,7 @@ import static com.biit.labstation.tests.LoginIT.ADMIN_USER_PASSWORD;
 @Test(groups = "profiles", dependsOnGroups = "userManagerDefaultData")
 @Listeners({TestListener.class, ClassTestListener.class})
 @DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_CLASS)
-public class ProfileMatcherIT extends BaseTest implements ITestWithWebDriver {
+public class ProfileMatcherTests extends BaseTest implements ITestWithWebDriver {
 
     private static final String OLD_PROFILE_NAME = "OldProfile";
     private static final String NEW_PROFILE_NAME = "NewProfile";

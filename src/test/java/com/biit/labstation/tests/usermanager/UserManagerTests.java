@@ -31,7 +31,7 @@ import static com.biit.labstation.tests.LoginIT.ADMIN_USER_PASSWORD;
 @Test(groups = "userManagerDefaultData")
 @Listeners({TestListener.class, ClassTestListener.class})
 @DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_CLASS)
-public class UserManagerIT extends BaseTest implements ITestWithWebDriver {
+public class UserManagerTests extends BaseTest implements ITestWithWebDriver {
 
     private static final String ADMIN_NAME = "Angus";
     private static final String ADMIN_LASTNAME = "MacGyver";

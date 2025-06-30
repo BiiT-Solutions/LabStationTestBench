@@ -13,15 +13,17 @@
                 <include name="userManagerDuplications"/>
                 <include name="login"/>
                 <include name="profiles"/>
+                <include name="cardgame"/>
             </run>
         </groups>
         <classes>
-            <class name="com.biit.labstation.tests.usermanager.UserManagerIT"/>
-            <class name="com.biit.labstation.tests.usermanager.UserManagerBasicUserPermissionsIT"/>
-            <class name="com.biit.labstation.tests.usermanager.UserManagerEditorUserPermissionsIT"/>
-            <class name="com.biit.labstation.tests.usermanager.UserManagerDuplicationsIT"/>
+            <class name="com.biit.labstation.tests.usermanager.UserManagerTests"/>
+            <class name="com.biit.labstation.tests.usermanager.UserManagerBasicUserPermissionsTests"/>
+            <class name="com.biit.labstation.tests.usermanager.UserManagerEditorUserPermissionsTests"/>
+            <class name="com.biit.labstation.tests.usermanager.UserManagerDuplicationsTests"/>
             <class name="com.biit.labstation.tests.LoginIT"/>
-            <class name="com.biit.labstation.tests.profilematcher.ProfileMatcherIT"/>
+            <class name="com.biit.labstation.tests.profilematcher.ProfileMatcherTests"/>
+            <class name="com.biit.labstation.tests.cardgame.CardGameTests"/>
         </classes>
     </test>
 </suite>
