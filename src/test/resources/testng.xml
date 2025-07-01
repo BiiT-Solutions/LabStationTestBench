@@ -13,7 +13,7 @@
                 <include name="userManagerDuplications"/>
                 <include name="login"/>
                 <include name="profiles"/>
-<!--                <include name="cardgame"/>-->
+                <include name="cardgame"/>
             </run>
         </groups>
         <classes>
