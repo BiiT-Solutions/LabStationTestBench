@@ -10,9 +10,11 @@ import org.springframework.stereotype.Component;
 public class Login {
 
     private final CustomChromeDriver customChromeDriver;
+    private final Tab tab;
 
-    public Login(CustomChromeDriver customChromeDriver) {
+    public Login(CustomChromeDriver customChromeDriver, Tab tab) {
         this.customChromeDriver = customChromeDriver;
+        this.tab = tab;
     }
 
     public void logIn(String username, String password) {
@@ -20,6 +22,18 @@ public class Login {
         getUsernameOnLoginPage().sendKeys(username);
         getPasswordOnLoginPage().sendKeys(password);
         getLoginButton().click();
+    }
+
+
+    public void signUp(String username, String password, String name, String lastname, String email) {
+        ComponentLogger.debug(this.getClass().getName(), "Signing up in with user '{}' and password '{}'.", username, password);
+        selectSignUpTab();
+        getUsernameOnSignUpPage().sendKeys(username);
+        getPasswordOnSignUpPage().sendKeys(username);
+        getNameOnSignUpPage().sendKeys(name);
+        getLastnameOnSignUpPage().sendKeys(lastname);
+        getEmailOnSignUpPage().sendKeys(email);
+        getSignUpButton().click();
     }
 
     private WebElement getLoginTab() {
@@ -50,5 +64,37 @@ public class Login {
         } catch (Exception e) {
             //No login tab
         }
+    }
+
+    private WebElement getUsernameOnSignUpPage() {
+        return customChromeDriver.findElementWaiting(By.id("signup-username")).findElement(By.className("input-object"));
+    }
+
+    private WebElement getNameOnSignUpPage() {
+        return customChromeDriver.findElementWaiting(By.id("signup-name")).findElement(By.className("input-object"));
+    }
+
+    private WebElement getLastnameOnSignUpPage() {
+        return customChromeDriver.findElementWaiting(By.id("signup-lastname")).findElement(By.className("input-object"));
+    }
+
+    private WebElement getEmailOnSignUpPage() {
+        return customChromeDriver.findElementWaiting(By.id("signup-email")).findElement(By.className("input-object"));
+    }
+
+    private WebElement getPasswordOnSignUpPage() {
+        return customChromeDriver.findElementWaiting(By.id("signup-password")).findElement(By.className("input-object"));
+    }
+
+    private WebElement getSignUpButton() {
+        return customChromeDriver.findElementWaiting(By.id("signup-button"));
+    }
+
+    private void selectLoginTab() {
+        tab.selectTab(TabId.LOGIN, "tab-login");
+    }
+
+    private void selectSignUpTab() {
+        tab.selectTab(TabId.LOGIN, "tab-signup");
     }
 }

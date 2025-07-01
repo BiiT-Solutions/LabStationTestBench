@@ -2,7 +2,8 @@ package com.biit.labstation.components;
 
 public enum TabId {
     USERS("user-tabs"),
-    PROFILES("profile-tabs");
+    PROFILES("profile-tabs"),
+    LOGIN("login-tabs"),;
 
     private final String id;
 

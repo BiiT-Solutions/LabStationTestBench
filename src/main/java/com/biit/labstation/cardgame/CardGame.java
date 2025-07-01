@@ -17,7 +17,6 @@ import static org.awaitility.Awaitility.await;
 public class CardGame extends ToolTest {
 
     private static final int WAITING_CARD_SELECTION = 5000;
-    private static final int WAITING_PAGE_TRANSITION = 1000;
 
     @Value("${testing.server.domain}")
     private String serverDomain;

@@ -346,7 +346,7 @@ public class UserManager extends ToolTest {
         dropdown.selectItem(PopupId.USER_ROLE.getId(), "role-selector", role);
         popup.findElement(PopupId.USER_ROLE, "role-assign-button").click();
         popup.close(PopupId.ROLE);
-        table.unselectRow(TableId.USERS_TABLE, user, 1);
+        table.unselectRow(TableId.USERS_TABLE, user, USERNAME_COLUMN);
     }
 
 

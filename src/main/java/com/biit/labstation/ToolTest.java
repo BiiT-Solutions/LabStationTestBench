@@ -83,4 +83,13 @@ public abstract class ToolTest {
             LabStationLogger.errorMessage(this.getClass(), e);
         }
     }
+
+    public void signUp(String username, String password, String name, String lastname, String email) {
+        try {
+            login.acceptCookies();
+        } catch (Exception e) {
+            //Ignored.
+        }
+        login.signUp(username, password, name, lastname, email);
+    }
 }
