@@ -23,7 +23,8 @@ public enum PopupId {
     CONFIRMATION_DELETE("confirmation-delete-popup"),
     PROFILE("profile-popup"),
     ASSIGN_USER_POPUP("assign-user-popup"),
-    CANDIDATES_POPUP("candidates-popup"),;
+    CANDIDATES_POPUP("candidates-popup"),
+    LOGIN_WARNING("warning-popup");
 
     private final String id;
 

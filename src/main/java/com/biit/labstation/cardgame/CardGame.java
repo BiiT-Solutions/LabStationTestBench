@@ -3,6 +3,7 @@ package com.biit.labstation.cardgame;
 import com.biit.labstation.CustomChromeDriver;
 import com.biit.labstation.ToolTest;
 import com.biit.labstation.components.Login;
+import com.biit.labstation.components.Popup;
 import org.openqa.selenium.By;
 import org.openqa.selenium.interactions.Actions;
 import org.springframework.beans.factory.annotation.Value;
@@ -25,8 +26,8 @@ public class CardGame extends ToolTest {
     private String context;
 
 
-    public CardGame(CustomChromeDriver customChromeDriver, Login login) {
-        super(customChromeDriver, login);
+    public CardGame(CustomChromeDriver customChromeDriver, Login login, Popup popup) {
+        super(customChromeDriver, login, popup);
     }
 
     @Override

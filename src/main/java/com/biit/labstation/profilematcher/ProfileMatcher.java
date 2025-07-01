@@ -38,7 +38,7 @@ public class ProfileMatcher extends ToolTest {
 
     public ProfileMatcher(CustomChromeDriver customChromeDriver, Login login, NavBar navBar, Table table, Popup popup, Tab tab,
                           Toggle toggle) {
-        super(customChromeDriver, login);
+        super(customChromeDriver, login, popup);
         this.navBar = navBar;
         this.table = table;
         this.popup = popup;

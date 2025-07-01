@@ -28,8 +28,10 @@ public class Login {
     public void signUp(String username, String password, String name, String lastname, String email) {
         ComponentLogger.debug(this.getClass().getName(), "Signing up in with user '{}' and password '{}'.", username, password);
         selectSignUpTab();
-        getUsernameOnSignUpPage().sendKeys(username);
-        getPasswordOnSignUpPage().sendKeys(username);
+        if (username != null) {
+            getUsernameOnSignUpPage().sendKeys(username);
+        }
+        getPasswordOnSignUpPage().sendKeys(password);
         getNameOnSignUpPage().sendKeys(name);
         getLastnameOnSignUpPage().sendKeys(lastname);
         getEmailOnSignUpPage().sendKeys(email);

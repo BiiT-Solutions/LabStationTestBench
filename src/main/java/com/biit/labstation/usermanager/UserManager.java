@@ -35,7 +35,7 @@ public class UserManager extends ToolTest {
     private String context;
 
     public UserManager(CustomChromeDriver customChromeDriver, Login login, NavBar navBar, Table table, Popup popup, Dropdown dropdown, Tab tab) {
-        super(customChromeDriver, login);
+        super(customChromeDriver, login, popup);
         this.navBar = navBar;
         this.table = table;
         this.popup = popup;

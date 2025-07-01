@@ -1,6 +1,8 @@
 package com.biit.labstation;
 
 import com.biit.labstation.components.Login;
+import com.biit.labstation.components.Popup;
+import com.biit.labstation.components.PopupId;
 import com.biit.labstation.logger.LabStationLogger;
 import org.openqa.selenium.By;
 
@@ -16,10 +18,12 @@ public abstract class ToolTest {
 
     private final CustomChromeDriver customChromeDriver;
     private final Login login;
+    private final Popup popup;
 
-    protected ToolTest(CustomChromeDriver customChromeDriver, Login login) {
+    protected ToolTest(CustomChromeDriver customChromeDriver, Login login, Popup popup) {
         this.customChromeDriver = customChromeDriver;
         this.login = login;
+        this.popup = popup;
     }
 
     public CustomChromeDriver getCustomChromeDriver() {
@@ -90,6 +94,7 @@ public abstract class ToolTest {
         } catch (Exception e) {
             //Ignored.
         }
+        popup.close(PopupId.LOGIN_WARNING);
         login.signUp(username, password, name, lastname, email);
     }
 }
