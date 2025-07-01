@@ -23,7 +23,7 @@
             <class name="com.biit.labstation.tests.usermanager.UserManagerDuplicationsTests"/>
             <class name="com.biit.labstation.tests.LoginIT"/>
             <class name="com.biit.labstation.tests.profilematcher.ProfileMatcherTests"/>
-<!--            <class name="com.biit.labstation.tests.cardgame.CardGameTests"/>-->
+            <class name="com.biit.labstation.tests.cardgame.CardGameTests"/>
         </classes>
     </test>
 </suite>

@@ -27,7 +27,7 @@ import static com.biit.labstation.tests.LoginIT.ADMIN_USER_NAME;
 import static com.biit.labstation.tests.LoginIT.ADMIN_USER_PASSWORD;
 
 @SpringBootTest
-@Test(groups = "profiles", dependsOnGroups = "userManagerDefaultData")
+@Test(groups = "profiles", priority = 100)
 @Listeners({TestListener.class, ClassTestListener.class})
 @DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_CLASS)
 public class ProfileMatcherTests extends BaseTest implements ITestWithWebDriver {
