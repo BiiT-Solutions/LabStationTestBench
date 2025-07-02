@@ -14,6 +14,8 @@ import java.io.IOException;
 @Component
 public class ScreenShooter {
 
+    private static boolean folderCleaned = false;
+
     @Value("${screenshots.folder:/tmp/SeleniumOutput}")
     private String screenShotsFolder;
 
@@ -25,11 +27,14 @@ public class ScreenShooter {
 
     @PostConstruct
     public void cleanFolder() {
-        LabStationLogger.debug(this.getClass(), "@@ Cleaning folder '" + screenShotsFolder + "'.");
-        final File folder = new File(screenShotsFolder);
-        folder.mkdirs();
-        for (File file : folder.listFiles()) {
-            file.delete();
+        if (!folderCleaned) {
+            LabStationLogger.debug(this.getClass(), "@@ Cleaning folder '" + screenShotsFolder + "'.");
+            final File folder = new File(screenShotsFolder);
+            folder.mkdirs();
+            for (File file : folder.listFiles()) {
+                file.delete();
+            }
+            folderCleaned = true;
         }
     }
 
