@@ -9,6 +9,7 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class Login {
+    private static final int LOGIN_WAITING_TIME = 500;
 
     private final CustomChromeDriver customChromeDriver;
     private final Tab tab;
@@ -24,7 +25,8 @@ public class Login {
         getUsernameOnLoginPage().sendKeys(username);
         getPasswordOnLoginPage().sendKeys(password);
         getLoginButton().click();
-        ToolTest.waitComponent();
+        ComponentLogger.debug(this.getClass().getName(), "User '{}' logged in.", username);
+        ToolTest.waitComponent(LOGIN_WAITING_TIME);
     }
 
 
