@@ -78,7 +78,7 @@ public class ValidationTests extends BaseTest implements ITestWithWebDriver {
         }
     }
 
-    @AfterClass(dependsOnMethods = "cleanup")
+    @AfterClass
     public void closeDriver() {
         userManager.getCustomChromeDriver().closeDriver();
     }
