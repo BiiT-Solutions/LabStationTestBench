@@ -11,6 +11,8 @@
                 <include name="userManagerBasicUserPermissions"/>
                 <include name="userManagerEditorUserPermissions"/>
                 <include name="userManagerDuplications"/>
+                <include name="organization"/>
+                <include name="validation"/>
                 <include name="login"/>
                 <include name="profiles"/>
                 <include name="cardgame"/>
@@ -23,6 +25,8 @@
             <class name="com.biit.labstation.tests.usermanager.UserManagerEditorUserPermissionsTests"/>
             <class name="com.biit.labstation.tests.usermanager.UserManagerDuplicationsTests"/>
             <class name="com.biit.labstation.tests.usermanager.SignUpTests"/>
+            <class name="com.biit.labstation.tests.usermanager.OrganizationsTests"/>
+            <class name="com.biit.labstation.tests.usermanager.ValidationTests"/>
             <class name="com.biit.labstation.tests.LoginIT"/>
             <class name="com.biit.labstation.tests.profilematcher.ProfileMatcherTests"/>
             <class name="com.biit.labstation.tests.cardgame.CardGameTests"/>

@@ -7,6 +7,8 @@ public enum TableId {
     APPLICATION_TABLE("application-table"),
     APPLICATION_ROLE_TABLE("application-role-table"),
     ROLE_TABLE("role-table"),
+    ORGANIZATION_TABLE("organization-table"),
+    TEAM_TABLE("teams-table"),
     SERVICE_TABLE("service-table"),
     SERVICE_ROLE_TABLE("service-role-table"),
     PROFILES_TABLE("profiles-table"),

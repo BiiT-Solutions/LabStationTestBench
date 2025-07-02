@@ -7,6 +7,7 @@ import com.biit.labstation.components.Login;
 import com.biit.labstation.components.NavBar;
 import com.biit.labstation.components.Popup;
 import com.biit.labstation.components.PopupId;
+import com.biit.labstation.components.SnackBar;
 import com.biit.labstation.components.Tab;
 import com.biit.labstation.components.TabId;
 import com.biit.labstation.components.Table;
@@ -23,12 +24,14 @@ public class UserManager extends ToolTest {
     private static final int USERNAME_GROUP_TABLE_COLUMN = 4;
     private static final int USERNAME_USER_TABLE_COLUMN = 3;
     private static final int ASSIGNED_USER_GROUP_TABLE_COLUMN = 3;
+    private static final int NAME_TABLE_COLUMN = 1;
 
     private final NavBar navBar;
     private final Table table;
     private final Popup popup;
     private final Dropdown dropdown;
     private final Tab tab;
+    private final SnackBar snackBar;
 
     @Value("${testing.server.domain}")
     private String serverDomain;
@@ -36,13 +39,15 @@ public class UserManager extends ToolTest {
     @Value("${usermanager.context}")
     private String context;
 
-    public UserManager(CustomChromeDriver customChromeDriver, Login login, NavBar navBar, Table table, Popup popup, Dropdown dropdown, Tab tab) {
+    public UserManager(CustomChromeDriver customChromeDriver, Login login, NavBar navBar, Table table, Popup popup, Dropdown dropdown, Tab tab,
+                       SnackBar snackBar) {
         super(customChromeDriver, login, popup);
         this.navBar = navBar;
         this.table = table;
         this.popup = popup;
         this.dropdown = dropdown;
         this.tab = tab;
+        this.snackBar = snackBar;
     }
 
     @Override
@@ -387,5 +392,77 @@ public class UserManager extends ToolTest {
 
         popup.close(PopupId.ASSIGN_USERS_TO_GROUP);
         table.unselectRow(TableId.USERS_GROUP_TABLE, group, 1);
+    }
+
+
+    public void addOrganization(String organization, String description) {
+        try {
+            selectOrganizationsOnMenu();
+        } catch (Exception e) {
+            //Already on this tab.
+        }
+        LabStationLogger.debug(this.getClass().getName(), "@@ Creating organization '{}'.", organization);
+        table.pressButton(TableId.ORGANIZATION_TABLE, "button-plus");
+        ToolTest.waitComponent();
+        popup.findElement(PopupId.ORGANIZATION, "organization-name").findElement(By.id("input")).sendKeys(organization);
+        popup.findElement(PopupId.ORGANIZATION, "organization-description").findElement(By.id("input")).sendKeys(description);
+        waitAndExecute(() -> popup.findElement(PopupId.ORGANIZATION, "popup-organization-save-button").click());
+    }
+
+
+    public void deleteOrganization(String organization) {
+        try {
+            selectOrganizationsOnMenu();
+        } catch (Exception e) {
+            //Already on this tab.
+        }
+        LabStationLogger.debug(this.getClass().getName(), "@@ Deleting organization '{}'.", organization);
+        table.selectRowWithoutCheckbox(TableId.ORGANIZATION_TABLE, organization, NAME_TABLE_COLUMN);
+        table.pressButton(TableId.ORGANIZATION_TABLE, "button-minus");
+        ToolTest.waitComponent();
+        popup.findElement(PopupId.CONFIRMATION_DELETE, "delete-button").click();
+        snackBar.checkMessage(SnackBar.Type.REGULAR, SnackBar.REQUEST_SUCCESSFUL);
+    }
+
+
+    public void addTeamToOrganization(String organization, String team, String description) {
+        try {
+            selectOrganizationsOnMenu();
+        } catch (Exception e) {
+            //Already on this tab.
+        }
+        LabStationLogger.debug(this.getClass().getName(), "@@ Assigning team '{}' to organization '{}'.", team, organization);
+        table.selectRowWithoutCheckbox(TableId.ORGANIZATION_TABLE, organization, NAME_TABLE_COLUMN);
+        table.pressButton(TableId.ORGANIZATION_TABLE, "button-team");
+        ToolTest.waitComponent();
+        table.pressButton(TableId.TEAM_TABLE, "organization-team-button-plus");
+        popup.findElement(PopupId.TEAM_FORM, "team-name").findElement(By.id("input")).sendKeys(team);
+        popup.findElement(PopupId.TEAM_FORM, "team-description").findElement(By.id("input")).sendKeys(description);
+        popup.findElement(PopupId.TEAM_FORM, "popup-save-button").click();
+        popup.close(PopupId.TEAM);
+    }
+
+
+    public void addUserToTeam(String username, String team, String organization) {
+        try {
+            selectOrganizationsOnMenu();
+        } catch (Exception e) {
+            //Already on this tab.
+        }
+        LabStationLogger.debug(this.getClass().getName(), "@@ Assigning user '{}' to team '{}' on organization '{}'.", username, team, organization);
+        table.selectRowWithoutCheckbox(TableId.ORGANIZATION_TABLE, organization, NAME_TABLE_COLUMN);
+        table.pressButton(TableId.ORGANIZATION_TABLE, "button-team");
+        ToolTest.waitComponent();
+        table.selectRowWithoutCheckbox(TableId.TEAM_TABLE, team, NAME_TABLE_COLUMN);
+        table.pressButton(TableId.TEAM_TABLE, "organization-team-button-user");
+        table.selectRowWithoutCheckbox(TableId.USERS_TABLE, username, USERNAME_GROUP_TABLE_COLUMN);
+        table.pressButton(TableId.USERS_TABLE, "assign-user");
+        popup.findElement(PopupId.CONFIRMATION_ASSIGN, "confirm-assign-button").click();
+        ToolTest.waitComponent();
+        table.getCell(TableId.USERS_TABLE, username, USERNAME_GROUP_TABLE_COLUMN, ASSIGNED_USER_GROUP_TABLE_COLUMN).findElement(By.id("assigned"));
+        popup.close(PopupId.ASSIGN_USER_POPUP);
+        ToolTest.waitComponent();
+        popup.close(PopupId.TEAM);
+        ToolTest.waitComponent();
     }
 }

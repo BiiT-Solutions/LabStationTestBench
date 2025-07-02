@@ -25,6 +25,13 @@ public class SnackBar {
     public static final String EMAIL_IN_USE = "The email is already in use.";
     public static final String REQUEST_FAILED = "Your request failed. Please, try again later.";
     public static final String NO_ASSIGNED_PROFILES = "Oops! It seems there are no assigned candidates for this profile.";
+    public static final String DATA_IS_INVALID = "Provided data are invalid!";
+
+    public enum Type {
+        REGULAR,
+        WARNING,
+        ERROR;
+    }
 
     protected static final int WAITING_TIME_SECONDS = 5;
     protected static final int SNACKBAR_WAITING_TIME = 250;
@@ -69,7 +76,11 @@ public class SnackBar {
         notifications.get(notifications.size() - 1).click();
     }
 
-    public void checkMessage(String type, String message) {
+    public void checkMessage(SnackBar.Type type, String message) {
+        checkMessage(type.toString().toLowerCase(), message);
+    }
+
+    private void checkMessage(String type, String message) {
         await().atMost(Duration.ofSeconds(WAITING_TIME_SECONDS)).and().with().pollDelay(SNACKBAR_WAITING_TIME, TimeUnit.MILLISECONDS).until(() -> {
             try {
                 LabStationLogger.debug(this.getClass().getName(), "Comparing messages: '{}' ({}) with '{}' ({}).",

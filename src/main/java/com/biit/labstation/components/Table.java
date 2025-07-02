@@ -70,14 +70,14 @@ public class Table {
      * Search a cell content from a table, by the text value on a different column.
      *
      * @param tableId      table.
-     * @param rowContent   content to compare.
+     * @param content   content to compare.
      * @param columContent column to compare.
      * @param columnToGet  content to retrieve.
      * @return
      */
-    public WebElement getCell(TableId tableId, String rowContent, int columContent, int columnToGet) {
+    public WebElement getCell(TableId tableId, String content, int columContent, int columnToGet) {
         for (int i = 0; i < countRows(tableId); i++) {
-            if (Objects.equals(getText(tableId, i, columContent), rowContent)) {
+            if (Objects.equals(getText(tableId, i, columContent), content)) {
                 return getCell(tableId, i, columnToGet);
             }
         }
