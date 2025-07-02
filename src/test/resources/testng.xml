@@ -14,6 +14,7 @@
                 <include name="login"/>
                 <include name="profiles"/>
                 <include name="cardgame"/>
+                <include name="signUp"/>
             </run>
         </groups>
         <classes>
@@ -21,6 +22,7 @@
             <class name="com.biit.labstation.tests.usermanager.UserManagerBasicUserPermissionsTests"/>
             <class name="com.biit.labstation.tests.usermanager.UserManagerEditorUserPermissionsTests"/>
             <class name="com.biit.labstation.tests.usermanager.UserManagerDuplicationsTests"/>
+            <class name="com.biit.labstation.tests.usermanager.SignUpTests"/>
             <class name="com.biit.labstation.tests.LoginIT"/>
             <class name="com.biit.labstation.tests.profilematcher.ProfileMatcherTests"/>
             <class name="com.biit.labstation.tests.cardgame.CardGameTests"/>

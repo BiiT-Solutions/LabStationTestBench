@@ -71,8 +71,8 @@ public class UserManagerTests extends BaseTest implements ITestWithWebDriver {
     public void checkUserExists() {
         userManager.login(ADMIN_USER_NAME, ADMIN_USER_PASSWORD);
 
-        Assert.assertEquals(table.getContent(TableId.USERS_TABLE, 0, 3), ADMIN_USER_NAME);
-        Assert.assertEquals(table.getContent(TableId.USERS_TABLE, 0, 6), LocalDateTime.now().format(DateTimeFormatter.ofPattern("dd/MM/yyyy")));
+        Assert.assertEquals(table.getText(TableId.USERS_TABLE, 0, 3), ADMIN_USER_NAME);
+        Assert.assertEquals(table.getText(TableId.USERS_TABLE, 0, 6), LocalDateTime.now().format(DateTimeFormatter.ofPattern("dd/MM/yyyy")));
 
         userManager.logout();
     }
@@ -83,11 +83,11 @@ public class UserManagerTests extends BaseTest implements ITestWithWebDriver {
 
         userManager.editUser(ADMIN_USER_NAME, ADMIN_USER_NAME, ADMIN_NAME, ADMIN_LASTNAME);
         table.search(TableId.USERS_TABLE, ADMIN_USER_NAME);
-        Assert.assertEquals(table.getContent(TableId.USERS_TABLE, 0, 1), ADMIN_NAME);
-        Assert.assertEquals(table.getContent(TableId.USERS_TABLE, 0, 2), ADMIN_LASTNAME);
-        Assert.assertEquals(table.getContent(TableId.USERS_TABLE, 0, 3), ADMIN_USER_NAME);
-        Assert.assertEquals(table.getContent(TableId.USERS_TABLE, 0, 4), ADMIN_USER_NAME);
-        Assert.assertEquals(table.getContent(TableId.USERS_TABLE, 0, 6), LocalDateTime.now().format(DateTimeFormatter.ofPattern("dd/MM/yyyy")));
+        Assert.assertEquals(table.getText(TableId.USERS_TABLE, 0, 1), ADMIN_NAME);
+        Assert.assertEquals(table.getText(TableId.USERS_TABLE, 0, 2), ADMIN_LASTNAME);
+        Assert.assertEquals(table.getText(TableId.USERS_TABLE, 0, 3), ADMIN_USER_NAME);
+        Assert.assertEquals(table.getText(TableId.USERS_TABLE, 0, 4), ADMIN_USER_NAME);
+        Assert.assertEquals(table.getText(TableId.USERS_TABLE, 0, 6), LocalDateTime.now().format(DateTimeFormatter.ofPattern("dd/MM/yyyy")));
 
         userManager.logout();
     }
@@ -513,8 +513,8 @@ public class UserManagerTests extends BaseTest implements ITestWithWebDriver {
         //No exception must be there.
         table.selectRow(TableId.ROLE_TABLE, "CADT", 1);
         table.pressButton(TableId.ROLE_TABLE, "popup-application-roles-button-linkage");
-        Assert.assertEquals(table.getContent(TableId.APPLICATION_ROLE_TABLE, 0, 1), "FactManager");
-        Assert.assertEquals(table.getContent(TableId.APPLICATION_ROLE_TABLE, 1, 1), "InfographicEngine");
+        Assert.assertEquals(table.getText(TableId.APPLICATION_ROLE_TABLE, 0, 1), "FactManager");
+        Assert.assertEquals(table.getText(TableId.APPLICATION_ROLE_TABLE, 1, 1), "InfographicEngine");
         popup.close(PopupId.APPLICATION_ROLE_ASSIGN);
         popup.close(PopupId.APPLICATION_ROLE);
 

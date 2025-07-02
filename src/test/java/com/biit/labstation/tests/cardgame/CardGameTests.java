@@ -11,6 +11,7 @@ import com.biit.labstation.tests.ITestWithWebDriver;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.annotation.DirtiesContext;
+import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
@@ -49,5 +50,11 @@ public class CardGameTests extends BaseTest implements ITestWithWebDriver {
 
 
         cardGame.submitTest();
+    }
+
+
+    @AfterClass()
+    public void closeDriver() {
+        cardGame.getCustomChromeDriver().closeDriver();
     }
 }

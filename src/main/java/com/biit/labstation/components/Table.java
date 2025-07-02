@@ -55,14 +55,33 @@ public class Table {
         getSearchField(tableId).sendKeys(Keys.ENTER);
     }
 
-    public String getContent(TableId tableId, int row, int column) {
-        final String text = getCell(tableId, row, column).findElement(By.xpath(".//span[contains(@class, 'ng-star-inserted')]")).getText();
-        LabStationLogger.debug(this.getClass().getName(), "Getting content '{}' from table ' {}' at row '{}' and column '{}'.", text, tableId, row, column);
+
+    public String getText(TableId tableId, int row, int column) {
+        final String text = getCell(tableId, row, column).getText();
+        LabStationLogger.debug(this.getClass().getName(), "Getting text '{}' from table ' {}' at row '{}' and column '{}'.", text, tableId, row, column);
         return text;
     }
 
     public WebElement getCell(TableId tableId, int row, int column) {
         return getRows(tableId).get(row).findElements(By.className("datatable-body-cell")).get(column);
+    }
+
+    /**
+     * Search a cell content from a table, by the text value on a different column.
+     *
+     * @param tableId      table.
+     * @param rowContent   content to compare.
+     * @param columContent column to compare.
+     * @param columnToGet  content to retrieve.
+     * @return
+     */
+    public WebElement getCell(TableId tableId, String rowContent, int columContent, int columnToGet) {
+        for (int i = 0; i < countRows(tableId); i++) {
+            if (Objects.equals(getText(tableId, i, columContent), rowContent)) {
+                return getCell(tableId, i, columnToGet);
+            }
+        }
+        throw new ElementNotFoundAsExpectedException();
     }
 
     public WebElement getRow(TableId tableId, int row) {
@@ -97,7 +116,7 @@ public class Table {
         search(tableId, label);
         await().atMost(Duration.ofSeconds(WAITING_TIME_SECONDS)).until(() -> {
             for (int i = 0; i < countRows(tableId); i++) {
-                if (Objects.equals(getContent(tableId, i, column), label)) {
+                if (Objects.equals(getText(tableId, i, column), label)) {
                     selectRow(tableId, i);
                     ComponentLogger.debug(this.getClass().getName(), "Selecting Table '{}'. Row '{}'. Column '{}'.", tableId, label, column);
                     return true;
@@ -111,7 +130,7 @@ public class Table {
         search(tableId, label);
         await().atMost(Duration.ofSeconds(WAITING_TIME_SECONDS)).until(() -> {
             for (int i = 0; i < countRows(tableId); i++) {
-                if (Objects.equals(getContent(tableId, i, column), label)) {
+                if (Objects.equals(getText(tableId, i, column), label)) {
                     clickRow(tableId, i);
                     ComponentLogger.debug(this.getClass().getName(), "Selecting Table '{}'. Row '{}'. Column '{}'.", tableId, label, column);
                     return true;
@@ -135,7 +154,7 @@ public class Table {
         try {
             await().atMost(Duration.ofSeconds(WAITING_TIME_SECONDS)).until(() -> {
                 for (int i = 0; i < countRows(tableId); i++) {
-                    if (Objects.equals(getContent(tableId, i, column), label)) {
+                    if (Objects.equals(getText(tableId, i, column), label)) {
                         unselectRow(tableId, i);
                         ComponentLogger.debug(this.getClass().getName(), "Unselecting Table '{}'. Row '{}'. Column '{}'.", tableId, label, column);
                         return true;
@@ -250,15 +269,15 @@ public class Table {
         LabStationLogger.debug(this.getClass().getName(), "@@ Testing table '{}'.", tableId);
         if (getTotalNumberOfItems(tableId) > 1) {
             //Seelct second row
-            final String itemToSearch = getContent(tableId, 1, 1);
+            final String itemToSearch = getText(tableId, 1, 1);
             search(tableId, itemToSearch);
             //After filtering, the element must be on the first row.
-            if (!Objects.equals(itemToSearch, getContent(tableId, 0, 1))) {
+            if (!Objects.equals(itemToSearch, getText(tableId, 0, 1))) {
                 throw new ElementNotFoundAsExpectedException();
             }
             //Again on the second row.
             clearSearch(tableId);
-            if (!Objects.equals(itemToSearch, getContent(tableId, 1, 1))) {
+            if (!Objects.equals(itemToSearch, getText(tableId, 1, 1))) {
                 throw new ElementNotFoundAsExpectedException();
             }
         }

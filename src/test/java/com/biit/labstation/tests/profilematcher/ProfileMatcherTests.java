@@ -19,6 +19,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.annotation.DirtiesContext;
 import org.testng.Assert;
+import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
@@ -58,7 +59,7 @@ public class ProfileMatcherTests extends BaseTest implements ITestWithWebDriver 
         profileMatcher.addProfile(OLD_PROFILE_NAME, null, null, null, CadtOptions.RECEPTIVE);
         ToolTest.waitComponent(1000);
         table.search(TableId.PROFILES_TABLE, OLD_PROFILE_NAME);
-        Assert.assertEquals(table.getContent(TableId.PROFILES_TABLE, 0, 1), OLD_PROFILE_NAME);
+        Assert.assertEquals(table.getText(TableId.PROFILES_TABLE, 0, 1), OLD_PROFILE_NAME);
         table.clearSearch(TableId.PROFILES_TABLE);
     }
 
@@ -68,7 +69,7 @@ public class ProfileMatcherTests extends BaseTest implements ITestWithWebDriver 
         profileMatcher.editProfile(OLD_PROFILE_NAME, NEW_PROFILE_NAME, null, null, null, CadtOptions.BANKER);
         ToolTest.waitComponent(1000);
         table.search(TableId.PROFILES_TABLE, NEW_PROFILE_NAME);
-        Assert.assertEquals(table.getContent(TableId.PROFILES_TABLE, 0, 1), NEW_PROFILE_NAME);
+        Assert.assertEquals(table.getText(TableId.PROFILES_TABLE, 0, 1), NEW_PROFILE_NAME);
         table.clearSearch(TableId.PROFILES_TABLE);
 
         try {
@@ -116,5 +117,10 @@ public class ProfileMatcherTests extends BaseTest implements ITestWithWebDriver 
         } finally {
             table.clearSearch(TableId.PROFILES_TABLE);
         }
+    }
+
+    @AfterClass()
+    public void closeDriver() {
+        profileMatcher.getCustomChromeDriver().closeDriver();
     }
 }

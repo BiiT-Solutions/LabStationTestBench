@@ -22,6 +22,7 @@ public class UserManager extends ToolTest {
     private static final int EMAIL_COLUMN = 4;
     private static final int USERNAME_GROUP_TABLE_COLUMN = 4;
     private static final int USERNAME_USER_TABLE_COLUMN = 3;
+    private static final int ASSIGNED_USER_GROUP_TABLE_COLUMN = 3;
 
     private final NavBar navBar;
     private final Table table;
@@ -357,15 +358,34 @@ public class UserManager extends ToolTest {
     }
 
 
-    public void checkUserExistsByEmail(String email) {
+    public String checkUserExistsByEmail(String email) {
         try {
             selectUserOnMenu();
         } catch (Exception e) {
             //Already on this tab.
         }
         table.selectRow(TableId.USERS_TABLE, email, EMAIL_COLUMN);
+        final String username = table.getText(TableId.USERS_TABLE, 0, USERNAME_COLUMN);
         table.unselectRow(TableId.USERS_TABLE, email, EMAIL_COLUMN);
+        return username;
     }
 
 
+    public void checkUserIsInGroup(String username, String group) {
+        try {
+            selectGroupsOnMenu();
+        } catch (Exception e) {
+            //Already on this tab.
+        }
+        table.selectRow(TableId.USERS_GROUP_TABLE, group, 1);
+        table.pressButton(TableId.USERS_GROUP_TABLE, "button-group");
+        table.selectRow(TableId.USERS_TABLE, username, USERNAME_GROUP_TABLE_COLUMN);
+
+        //Assigned icon exists.
+        table.getCell(TableId.USERS_TABLE, username, USERNAME_GROUP_TABLE_COLUMN, ASSIGNED_USER_GROUP_TABLE_COLUMN).findElement(By.id("assigned"));
+
+
+        popup.close(PopupId.ASSIGN_USERS_TO_GROUP);
+        table.unselectRow(TableId.USERS_GROUP_TABLE, group, 1);
+    }
 }
