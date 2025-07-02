@@ -19,6 +19,7 @@ import org.springframework.stereotype.Component;
 @Component
 public class UserManager extends ToolTest {
     private static final int USERNAME_COLUMN = 3;
+    private static final int EMAIL_COLUMN = 4;
     private static final int USERNAME_GROUP_TABLE_COLUMN = 4;
     private static final int USERNAME_USER_TABLE_COLUMN = 3;
 
@@ -46,6 +47,12 @@ public class UserManager extends ToolTest {
     @Override
     public void access() {
         access(serverDomain, context);
+    }
+
+    @Override
+    public void logout() {
+        getCustomChromeDriver().findElementWaiting(By.id("usermanager-menu")).click();
+        getCustomChromeDriver().findElementWaiting(By.id("usermanager-menu-logout")).click();
     }
 
     public void selectUserOnMenu() {
@@ -347,6 +354,17 @@ public class UserManager extends ToolTest {
         popup.findElement(PopupId.USER_ROLE, "role-assign-button").click();
         popup.close(PopupId.ROLE);
         table.unselectRow(TableId.USERS_TABLE, user, USERNAME_COLUMN);
+    }
+
+
+    public void checkUserExistsByEmail(String email) {
+        try {
+            selectUserOnMenu();
+        } catch (Exception e) {
+            //Already on this tab.
+        }
+        table.selectRow(TableId.USERS_TABLE, email, EMAIL_COLUMN);
+        table.unselectRow(TableId.USERS_TABLE, email, EMAIL_COLUMN);
     }
 
 

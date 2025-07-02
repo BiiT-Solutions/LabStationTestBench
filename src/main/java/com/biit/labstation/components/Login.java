@@ -1,6 +1,7 @@
 package com.biit.labstation.components;
 
 import com.biit.labstation.CustomChromeDriver;
+import com.biit.labstation.ToolTest;
 import com.biit.labstation.logger.ComponentLogger;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
@@ -19,9 +20,11 @@ public class Login {
 
     public void logIn(String username, String password) {
         ComponentLogger.debug(this.getClass().getName(), "Login in with user '{}' and password '{}'.", username, password);
+        ToolTest.waitComponent();
         getUsernameOnLoginPage().sendKeys(username);
         getPasswordOnLoginPage().sendKeys(password);
         getLoginButton().click();
+        ToolTest.waitComponent();
     }
 
 

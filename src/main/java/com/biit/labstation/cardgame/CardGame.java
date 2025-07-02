@@ -35,6 +35,11 @@ public class CardGame extends ToolTest {
         access(serverDomain, context);
     }
 
+    @Override
+    public void logout() {
+        //No logout menu on card game.
+    }
+
     public void closeWelcomePage() {
         await().atMost(Duration.ofSeconds(LONG_WAITING_TIME_SECONDS)).until(() -> {
             try {

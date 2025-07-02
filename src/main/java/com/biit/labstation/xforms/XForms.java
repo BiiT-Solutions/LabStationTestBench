@@ -24,4 +24,9 @@ public class XForms extends ToolTest {
     public void access() {
         access(serverDomain, context);
     }
+
+    @Override
+    public void logout() {
+        //No logout option.
+    }
 }

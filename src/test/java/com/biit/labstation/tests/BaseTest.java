@@ -2,6 +2,7 @@ package com.biit.labstation.tests;
 
 import com.biit.labstation.CustomChromeDriver;
 import com.biit.labstation.ScreenShooter;
+import com.biit.labstation.ToolTest;
 import com.biit.labstation.components.SnackBar;
 import com.biit.labstation.logger.LabStationLogger;
 import com.biit.labstation.usermanager.UserManager;
@@ -50,19 +51,19 @@ public abstract class BaseTest extends AbstractTestNGSpringContextTests implemen
         return screenShooter;
     }
 
-    protected void waitUntilReady() {
-        userManager.login(ADMIN_USER_NAME, ADMIN_USER_PASSWORD);
+    protected void waitUntilReady(ToolTest toolTest) {
+        toolTest.login(ADMIN_USER_NAME, ADMIN_USER_PASSWORD);
         try {
             if (Objects.equals(SnackBar.REQUEST_FAILED, snackBar.getMessage())) {
                 LabStationLogger.info(this.getClass(), "System is not ready yet! Waiting...");
                 Thread.sleep(2000);
-                waitUntilReady();
+                waitUntilReady(toolTest);
             }
         } catch (Exception e) {
             //Ignore. Has logged in.
         }
         try {
-            userManager.logout();
+            toolTest.logout();
         } catch (Exception e) {
             //Ignore. Has logged in.
         }

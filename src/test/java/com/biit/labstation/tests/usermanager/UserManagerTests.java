@@ -56,7 +56,7 @@ public class UserManagerTests extends BaseTest implements ITestWithWebDriver {
         userManager.access();
         //Creates admin user.
         LabStationLogger.info(this.getClass(), "First access try...");
-        waitUntilReady();
+        waitUntilReady(userManager);
         LabStationLogger.info(this.getClass(), "System is ready!");
         //After a complete wipe out of the database, the first login is for creating user, the second one for accessing it.
         if (startsFormCleanDatabase) {

@@ -51,6 +51,12 @@ public class ProfileMatcher extends ToolTest {
         access(serverDomain, context);
     }
 
+    @Override
+    public void logout() {
+        getCustomChromeDriver().findElementWaiting(By.id("profilematcher-menu")).click();
+        getCustomChromeDriver().findElementWaiting(By.id("profilematcher-menu-logout")).click();
+    }
+
     public void selectProfilesOnMenu() {
         navBar.goTo("nav-item-Profiles");
         ToolTest.waitComponent();

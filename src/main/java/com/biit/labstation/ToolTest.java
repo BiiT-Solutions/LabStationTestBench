@@ -4,7 +4,6 @@ import com.biit.labstation.components.Login;
 import com.biit.labstation.components.Popup;
 import com.biit.labstation.components.PopupId;
 import com.biit.labstation.logger.LabStationLogger;
-import org.openqa.selenium.By;
 
 import java.time.Duration;
 
@@ -65,10 +64,7 @@ public abstract class ToolTest {
         login.logIn(username, password);
     }
 
-    public void logout() {
-        getCustomChromeDriver().findElementWaiting(By.id("usermanager-menu")).click();
-        getCustomChromeDriver().findElementWaiting(By.id("usermanager-menu-logout")).click();
-    }
+    public abstract void logout();
 
     public void access(String serverDomain, String context) {
         try {

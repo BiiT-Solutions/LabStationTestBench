@@ -25,6 +25,7 @@ public class ScreenShooter {
 
     @PostConstruct
     public void cleanFolder() {
+        LabStationLogger.debug(this.getClass(), "@@ Cleaning folder '" + screenShotsFolder + "'.");
         final File folder = new File(screenShotsFolder);
         folder.mkdirs();
         for (File file : folder.listFiles()) {

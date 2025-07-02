@@ -49,6 +49,5 @@ public class CardGameTests extends BaseTest implements ITestWithWebDriver {
 
 
         cardGame.submitTest();
-
     }
 }
