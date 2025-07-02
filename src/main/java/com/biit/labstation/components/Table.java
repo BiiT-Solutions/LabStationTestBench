@@ -56,7 +56,9 @@ public class Table {
     }
 
     public String getContent(TableId tableId, int row, int column) {
-        return getCell(tableId, row, column).findElement(By.xpath(".//span[contains(@class, 'ng-star-inserted')]")).getText();
+        final String text = getCell(tableId, row, column).findElement(By.xpath(".//span[contains(@class, 'ng-star-inserted')]")).getText();
+        LabStationLogger.debug(this.getClass().getName(), "Getting content '{}' from table ' {}' at row '{}' and column '{}'.", text, tableId, row, column);
+        return text;
     }
 
     public WebElement getCell(TableId tableId, int row, int column) {
