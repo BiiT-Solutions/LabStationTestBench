@@ -21,6 +21,11 @@ public class Login {
 
     public void logIn(String username, String password) {
         ComponentLogger.debug(this.getClass().getName(), "Login in with user '{}' and password '{}'.", username, password);
+        try {
+            selectLoginTab();
+        } catch (Exception e) {
+            //Maybe signup is not active.
+        }
         ToolTest.waitComponent();
         getUsernameOnLoginPage().sendKeys(username);
         getPasswordOnLoginPage().sendKeys(password);
