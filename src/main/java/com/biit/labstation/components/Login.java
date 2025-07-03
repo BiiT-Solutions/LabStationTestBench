@@ -73,35 +73,39 @@ public class Login {
         }
     }
 
-    private WebElement getUsernameOnSignUpPage() {
+    public WebElement getUsernameOnSignUpPage() {
         return customChromeDriver.findElementWaiting(By.id("signup-username")).findElement(By.className("input-object"));
     }
 
-    private WebElement getNameOnSignUpPage() {
+    public String getUsernameOnSignUpPageError() {
+        return customChromeDriver.findElementWaiting(By.id("signup-username")).findElement(By.id("error-message")).findElement(By.id("message")).getText();
+    }
+
+    public WebElement getNameOnSignUpPage() {
         return customChromeDriver.findElementWaiting(By.id("signup-name")).findElement(By.className("input-object"));
     }
 
-    private WebElement getLastnameOnSignUpPage() {
+    public WebElement getLastnameOnSignUpPage() {
         return customChromeDriver.findElementWaiting(By.id("signup-lastname")).findElement(By.className("input-object"));
     }
 
-    private WebElement getEmailOnSignUpPage() {
+    public WebElement getEmailOnSignUpPage() {
         return customChromeDriver.findElementWaiting(By.id("signup-email")).findElement(By.className("input-object"));
     }
 
-    private WebElement getPasswordOnSignUpPage() {
+    public WebElement getPasswordOnSignUpPage() {
         return customChromeDriver.findElementWaiting(By.id("signup-password")).findElement(By.className("input-object"));
     }
 
-    private WebElement getSignUpButton() {
+    public WebElement getSignUpButton() {
         return customChromeDriver.findElementWaiting(By.id("signup-button"));
     }
 
-    private void selectLoginTab() {
+    public void selectLoginTab() {
         tab.selectTab(TabId.LOGIN, "tab-login");
     }
 
-    private void selectSignUpTab() {
+    public void selectSignUpTab() {
         tab.selectTab(TabId.LOGIN, "tab-signup");
     }
 }

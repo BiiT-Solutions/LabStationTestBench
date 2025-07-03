@@ -27,6 +27,7 @@ public class SnackBar {
     public static final String NO_ASSIGNED_PROFILES = "Oops! It seems there are no assigned candidates for this profile.";
     public static final String DATA_IS_INVALID = "Provided data are invalid!";
     public static final String CANNOT_SELECT_MORE_THAN_TEN = "You cannot select more than 10 cards. Please, deselect one to select another.";
+    public static final String USERNAME_ALREADY_EXISTS = "The user already exists.";
 
     public enum Type {
         REGULAR,

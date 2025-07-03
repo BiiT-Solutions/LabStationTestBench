@@ -37,6 +37,7 @@ public class CardGameTests extends BaseTest implements ITestWithWebDriver {
         cardGame.access();
     }
 
+    @Test
     public void cadtGame() {
         cardGame.login(ADMIN_USER_NAME, ADMIN_USER_PASSWORD);
         cardGame.closeWelcomePage();
