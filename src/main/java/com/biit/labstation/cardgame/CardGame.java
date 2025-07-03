@@ -65,7 +65,7 @@ public class CardGame extends ToolTest {
         });
     }
 
-    public boolean canSubmitTest(){
+    public boolean canSubmitTest() {
         return getCustomChromeDriver().findElement(By.id("button-submit")).isEnabled();
     }
 
@@ -134,7 +134,8 @@ public class CardGame extends ToolTest {
     public void undoChooseCompetences(Competence... competences) {
         for (Competence competence : competences) {
             final Actions actions = new Actions(getCustomChromeDriver().getDriver());
-            actions.clickAndHold(getCustomChromeDriver().findElement(By.id("selected-items")).findElement(By.id("card-drop-place")).findElement(By.id(competence.getTag())))
+            actions.clickAndHold(getCustomChromeDriver().findElement(By.id("selected-items"))
+                            .findElement(By.id("card-drop-place")).findElement(By.id(competence.getTag())))
                     .moveToElement(getCustomChromeDriver().findElement(By.id("card-mat")))
                     .release(getCustomChromeDriver().findElement(By.id("card-mat")))
                     .build().perform();
@@ -160,7 +161,8 @@ public class CardGame extends ToolTest {
     public void undoDiscardCompetences(Competence... competences) {
         for (Competence competence : competences) {
             final Actions actions = new Actions(getCustomChromeDriver().getDriver());
-            actions.clickAndHold(getCustomChromeDriver().findElement(By.id("dismissed-items")).findElement(By.id("card-drop-place")).findElement(By.id(competence.getTag())))
+            actions.clickAndHold(getCustomChromeDriver().findElement(By.id("dismissed-items")).findElement(By.id("card-drop-place"))
+                            .findElement(By.id(competence.getTag())))
                     .moveToElement(getCustomChromeDriver().findElement(By.id("card-mat")))
                     .release(getCustomChromeDriver().findElement(By.id("card-mat")))
                     .build().perform();
