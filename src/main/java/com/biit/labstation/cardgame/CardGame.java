@@ -4,6 +4,7 @@ import com.biit.labstation.CustomChromeDriver;
 import com.biit.labstation.ToolTest;
 import com.biit.labstation.components.Login;
 import com.biit.labstation.components.Popup;
+import com.biit.labstation.logger.LabStationLogger;
 import org.openqa.selenium.By;
 import org.openqa.selenium.interactions.Actions;
 import org.springframework.beans.factory.annotation.Value;
@@ -51,10 +52,12 @@ public class CardGame extends ToolTest {
         });
     }
 
+
     public void submitTest() {
         await().atMost(Duration.ofSeconds(LONG_WAITING_TIME_SECONDS)).until(() -> {
             try {
                 getCustomChromeDriver().findElement(By.id("button-submit")).click();
+                LabStationLogger.info(this.getClass(), "Submitting CADT game.");
                 return true;
             } catch (Exception e) {
                 return false;
@@ -62,14 +65,23 @@ public class CardGame extends ToolTest {
         });
     }
 
+    public boolean canSubmitTest(){
+        return getCustomChromeDriver().findElement(By.id("button-submit")).isEnabled();
+    }
+
+
     public void chooseArchetypesByClick(Archetype archetypes1, Archetype archetypes2, Archetype archetypes3) {
         getCustomChromeDriver().findElementWaiting(By.id("card-rows")).findElement(By.id(archetypes1.getTag())).click();
+        LabStationLogger.info(this.getClass(), "Selecting card '{}' as first option.", archetypes1);
         ToolTest.waitComponent(WAITING_CARD_SELECTION);
         getCustomChromeDriver().findElementWaiting(By.id("card-rows")).findElement(By.id(archetypes2.getTag())).click();
+        LabStationLogger.info(this.getClass(), "Selecting card '{}' as second option.", archetypes2);
         ToolTest.waitComponent(WAITING_CARD_SELECTION);
         getCustomChromeDriver().findElementWaiting(By.id("card-rows")).findElement(By.id(archetypes3.getTag())).click();
         ToolTest.waitComponent(WAITING_CARD_SELECTION);
+        LabStationLogger.info(this.getClass(), "Selecting card '{}' as third option.", archetypes3);
     }
+
 
     public void chooseArchetypesByDragAndDrop(Archetype archetypes1, Archetype archetypes2, Archetype archetypes3) {
         final Actions actions = new Actions(getCustomChromeDriver().getDriver());
@@ -78,16 +90,19 @@ public class CardGame extends ToolTest {
                 .moveToElement(getCustomChromeDriver().findElement(By.id("envelope")).findElement(By.className("card-drop-place")))
                 .release(getCustomChromeDriver().findElement(By.id("envelope")).findElement(By.className("card-drop-place")))
                 .build().perform();
+        LabStationLogger.info(this.getClass(), "Selecting card '{}' as first option.", archetypes1);
         ToolTest.waitComponent(WAITING_CARD_SELECTION);
         actions.clickAndHold(getCustomChromeDriver().findElement(By.id("card-rows")).findElement(By.id(archetypes2.getTag())))
                 .moveToElement(getCustomChromeDriver().findElement(By.id("envelope")).findElement(By.className("card-drop-place")))
                 .release(getCustomChromeDriver().findElement(By.id("envelope")).findElement(By.className("card-drop-place")))
                 .build().perform();
+        LabStationLogger.info(this.getClass(), "Selecting card '{}' as second option.", archetypes2);
         ToolTest.waitComponent(WAITING_CARD_SELECTION);
         actions.clickAndHold(getCustomChromeDriver().findElement(By.id("card-rows")).findElement(By.id(archetypes3.getTag())))
                 .moveToElement(getCustomChromeDriver().findElement(By.id("envelope")).findElement(By.className("card-drop-place")))
                 .release(getCustomChromeDriver().findElement(By.id("envelope")).findElement(By.className("card-drop-place")))
                 .build().perform();
+        LabStationLogger.info(this.getClass(), "Selecting card '{}' as third option.", archetypes3);
         ToolTest.waitComponent(WAITING_CARD_SELECTION);
     }
 
@@ -110,6 +125,20 @@ public class CardGame extends ToolTest {
                     .moveToElement(getCustomChromeDriver().findElement(By.id("selected-items")).findElement(By.id("card-drop-place")))
                     .release(getCustomChromeDriver().findElement(By.id("selected-items")).findElement(By.id("card-drop-place")))
                     .build().perform();
+            LabStationLogger.info(this.getClass(), "Selecting competence '{}'.", competence);
+
+            ToolTest.waitComponent();
+        }
+    }
+
+    public void undoChooseCompetences(Competence... competences) {
+        for (Competence competence : competences) {
+            final Actions actions = new Actions(getCustomChromeDriver().getDriver());
+            actions.clickAndHold(getCustomChromeDriver().findElement(By.id("selected-items")).findElement(By.id("card-drop-place")).findElement(By.id(competence.getTag())))
+                    .moveToElement(getCustomChromeDriver().findElement(By.id("card-mat")))
+                    .release(getCustomChromeDriver().findElement(By.id("card-mat")))
+                    .build().perform();
+            LabStationLogger.info(this.getClass(), "Unselecting competence '{}'.", competence);
 
             ToolTest.waitComponent();
         }
@@ -123,6 +152,19 @@ public class CardGame extends ToolTest {
                     .moveToElement(getCustomChromeDriver().findElement(By.id("dismissed-items")).findElement(By.id("card-drop-place")))
                     .release(getCustomChromeDriver().findElement(By.id("dismissed-items")).findElement(By.id("card-drop-place")))
                     .build().perform();
+            LabStationLogger.info(this.getClass(), "Discarding competence '{}'.", competence);
+            ToolTest.waitComponent();
+        }
+    }
+
+    public void undoDiscardCompetences(Competence... competences) {
+        for (Competence competence : competences) {
+            final Actions actions = new Actions(getCustomChromeDriver().getDriver());
+            actions.clickAndHold(getCustomChromeDriver().findElement(By.id("dismissed-items")).findElement(By.id("card-drop-place")).findElement(By.id(competence.getTag())))
+                    .moveToElement(getCustomChromeDriver().findElement(By.id("card-mat")))
+                    .release(getCustomChromeDriver().findElement(By.id("card-mat")))
+                    .build().perform();
+            LabStationLogger.info(this.getClass(), "Discarding competence '{}'.", competence);
             ToolTest.waitComponent();
         }
     }
