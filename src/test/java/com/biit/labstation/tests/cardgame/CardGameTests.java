@@ -79,6 +79,8 @@ public class CardGameTests extends BaseTest implements ITestWithWebDriver {
 
         Assert.assertTrue(cardGame.canSubmitTest());
         cardGame.submitTest();
+
+        cardGame.closeTestFinishedPage();
     }
 
 

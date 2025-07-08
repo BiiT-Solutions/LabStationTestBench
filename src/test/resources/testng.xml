@@ -17,6 +17,8 @@
                 <include name="profiles"/>
                 <include name="cardgame"/>
                 <include name="signUp"/>
+                <include name="cadt"/>
+                <include name="dashboard"/>
             </run>
         </groups>
         <classes>
@@ -30,6 +32,7 @@
             <class name="com.biit.labstation.tests.LoginIT"/>
             <class name="com.biit.labstation.tests.profilematcher.ProfileMatcherTests"/>
             <class name="com.biit.labstation.tests.cardgame.CardGameTests"/>
+            <class name="com.biit.labstation.tests.dashboard.DashboardTests"/>
         </classes>
     </test>
 </suite>

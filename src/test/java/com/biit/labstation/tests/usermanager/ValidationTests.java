@@ -59,7 +59,7 @@ public class ValidationTests extends BaseTest implements ITestWithWebDriver {
             popup.close(PopupId.USER);
         } finally {
             userManager.logout();
-           snackBar.checkMessage(SnackBar.Type.REGULAR, SnackBar.LOGGED_OUT);
+            snackBar.checkMessage(SnackBar.Type.REGULAR, SnackBar.LOGGED_OUT);
         }
     }
 
@@ -74,7 +74,7 @@ public class ValidationTests extends BaseTest implements ITestWithWebDriver {
             popup.close(PopupId.ORGANIZATION);
         } finally {
             userManager.logout();
-           snackBar.checkMessage(SnackBar.Type.REGULAR, SnackBar.LOGGED_OUT);
+            snackBar.checkMessage(SnackBar.Type.REGULAR, SnackBar.LOGGED_OUT);
         }
     }
 

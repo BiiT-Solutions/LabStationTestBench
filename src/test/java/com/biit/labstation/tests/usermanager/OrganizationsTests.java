@@ -52,10 +52,10 @@ public class OrganizationsTests extends BaseTest implements ITestWithWebDriver {
         try {
             userManager.selectOrganizationsOnMenu();
             userManager.addOrganization(ORGANIZATION_NAME, ORGANIZATION_DESCRIPTION);
-           snackBar.checkMessage(SnackBar.Type.REGULAR, SnackBar.REQUEST_SUCCESSFUL);
+            snackBar.checkMessage(SnackBar.Type.REGULAR, SnackBar.REQUEST_SUCCESSFUL);
         } finally {
             userManager.logout();
-           snackBar.checkMessage(SnackBar.Type.REGULAR, SnackBar.LOGGED_OUT);
+            snackBar.checkMessage(SnackBar.Type.REGULAR, SnackBar.LOGGED_OUT);
         }
     }
 

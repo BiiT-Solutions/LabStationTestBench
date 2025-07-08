@@ -117,6 +117,17 @@ public class CardGame extends ToolTest {
         });
     }
 
+    public void closeTestFinishedPage() {
+        await().atMost(Duration.ofSeconds(LONG_WAITING_TIME_SECONDS)).until(() -> {
+            try {
+                getCustomChromeDriver().findElementWaiting(By.id("cardgame-menu-logout")).click();
+                return true;
+            } catch (Exception e) {
+                return false;
+            }
+        });
+    }
+
 
     public void chooseCompetences(Competence... competences) {
         for (Competence competence : competences) {

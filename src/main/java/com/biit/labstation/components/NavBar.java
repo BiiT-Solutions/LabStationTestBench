@@ -1,6 +1,7 @@
 package com.biit.labstation.components;
 
 import com.biit.labstation.CustomChromeDriver;
+import com.biit.labstation.ToolTest;
 import com.biit.labstation.logger.ComponentLogger;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
@@ -18,7 +19,12 @@ public class NavBar {
 
     public void goTo(String id) {
         ComponentLogger.debug(this.getClass().getName(), "Pressing '{}' on navigation menu.", id);
-        customChromeDriver.findElementWaiting(By.id("nav-menu")).findElement(By.id(id)).click();
+        getMenuItem(id).click();
+    }
+
+    public void goTo(String menuId, String submenuId) {
+        ComponentLogger.debug(this.getClass().getName(), "Pressing '{}' and '{}' on navigation menu.", menuId, submenuId);
+        getSubmenuItem(menuId, submenuId).click();
     }
 
     public WebElement getMenuItem(String id) {
@@ -27,11 +33,7 @@ public class NavBar {
 
     public WebElement getSubmenuItem(String menuId, String submenuId) {
         customChromeDriver.findElementWaiting(By.id("nav-menu")).findElement(By.id(menuId)).click();
-        return customChromeDriver.findElementWaiting(By.id(submenuId));
-    }
-
-    public WebElement getUserSubmenuItem(String menuId, String submenuId) {
-        customChromeDriver.findElementWaiting(By.id("nav-menu")).findElement(By.id(menuId)).click();
+        ToolTest.waitComponent();
         return customChromeDriver.findElementWaiting(By.id(submenuId));
     }
 }
