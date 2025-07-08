@@ -19,7 +19,7 @@ import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
 
 @SpringBootTest
-@Test(groups = "dashboard", dependsOnGroups = "cardgame")
+@Test(groups = "dashboard", dependsOnGroups = "cardgame", priority = 250)
 @Listeners({TestListener.class, ClassTestListener.class})
 @DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_CLASS)
 public class DashboardTests extends BaseTest implements ITestWithWebDriver {
