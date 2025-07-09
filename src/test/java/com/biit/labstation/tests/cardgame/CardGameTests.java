@@ -19,14 +19,14 @@ import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
 
-import static com.biit.labstation.tests.cardgame.CardGameTests.PRIORITY;
+import static com.biit.labstation.tests.cardgame.CardGameTests.CARD_GAME_PRIORITY;
 
 @SpringBootTest
-@Test(groups = "cardgame", priority = PRIORITY)
+@Test(groups = "cardgame", priority = CARD_GAME_PRIORITY)
 @Listeners({TestListener.class, ClassTestListener.class})
 @DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_CLASS)
 public class CardGameTests extends BaseTest implements ITestWithWebDriver {
-    public static final int PRIORITY = 200;
+    public static final int CARD_GAME_PRIORITY = 1000;
     public static final String ADMIN_USER_NAME = "admin@test.com";
     public static final String ADMIN_USER_PASSWORD = "asd123";
 
