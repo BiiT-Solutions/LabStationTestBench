@@ -7,6 +7,7 @@ import com.biit.labstation.dashboard.cadt.CadtCustomerPage2;
 import com.biit.labstation.dashboard.cadt.CadtCustomerPage3;
 import com.biit.labstation.dashboard.cadt.CadtCustomerPage4;
 import com.biit.labstation.logger.ClassTestListener;
+import com.biit.labstation.logger.LabStationLogger;
 import com.biit.labstation.logger.TestListener;
 import com.biit.labstation.tests.BaseTest;
 import com.biit.labstation.tests.ITestWithWebDriver;
@@ -14,12 +15,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.annotation.DirtiesContext;
 import org.testng.Assert;
+import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
 
+import static com.biit.labstation.tests.cardgame.CardGameTests.PRIORITY;
+
 @SpringBootTest
-@Test(groups = "dashboard", dependsOnGroups = "cardgame", priority = 250)
+@Test(groups = "dashboard", dependsOnGroups = "cardgame", priority = PRIORITY + 1)
 @Listeners({TestListener.class, ClassTestListener.class})
 @DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_CLASS)
 public class DashboardTests extends BaseTest implements ITestWithWebDriver {
@@ -39,6 +43,9 @@ public class DashboardTests extends BaseTest implements ITestWithWebDriver {
     public void checkFirstCadtSelectionInfographic() {
         dashboard.login(ADMIN_USER_NAME, ADMIN_USER_PASSWORD);
         dashboard.selectPersonalCadtOnMenu();
+
+        LabStationLogger.info(this.getClass(), "@@ Checking Page 1 of the report");
+
         //Checking texts
         Assert.assertEquals(dashboard.getSvgElement(CadtCustomerPage1.SVG_ID, "text", CadtCustomerPage1.PRIMARY_POWER_TEXT).getText(), "I am a global citizen.");
 
@@ -63,6 +70,7 @@ public class DashboardTests extends BaseTest implements ITestWithWebDriver {
         Assert.assertEquals(dashboard.getSvgElement(CadtCustomerPage1.SVG_ID, "rect", CadtCustomerPage1.SECOND_MASCULINE_ARCHETYPE_FIRST_COMPETENCE).getAttribute("fill"), CadtColors.SCIENTIST);
         Assert.assertEquals(dashboard.getSvgElement(CadtCustomerPage1.SVG_ID, "rect", CadtCustomerPage1.SECOND_MASCULINE_ARCHETYPE_SECOND_COMPETENCE).getAttribute("fill"), CadtColors.COLOR_WHITE);
 
+        LabStationLogger.info(this.getClass(), "@@ Checking Page 2 of the report");
         //Checking texts
         Assert.assertEquals(dashboard.getSvgElement(CadtCustomerPage2.SVG_ID, "text", CadtCustomerPage2.PRIMARY_VULNERABLE_POWER_TEXT).getText(), "Everyone rejects me.");
 
@@ -86,6 +94,7 @@ public class DashboardTests extends BaseTest implements ITestWithWebDriver {
         Assert.assertEquals(dashboard.getSvgElement(CadtCustomerPage2.SVG_ID, "rect", CadtCustomerPage2.FOURTH_MASCULINE_ARCHETYPE_FIRST_COMPETENCE).getAttribute("fill"), CadtColors.COLOR_WHITE);
         Assert.assertEquals(dashboard.getSvgElement(CadtCustomerPage2.SVG_ID, "rect", CadtCustomerPage2.FOURTH_MASCULINE_ARCHETYPE_SECOND_COMPETENCE).getAttribute("fill"), CadtColors.COLOR_WHITE);
 
+        LabStationLogger.info(this.getClass(), "@@ Checking Page 3 of the report");
         //Checking colors
         Assert.assertEquals(dashboard.getSvgElement(CadtCustomerPage3.SVG_ID, "rect", CadtCustomerPage3.STRUCTURE_FIRST_COMPETENCE).getAttribute("fill"), CadtColors.STRUCTURE);
         Assert.assertEquals(dashboard.getSvgElement(CadtCustomerPage3.SVG_ID, "rect", CadtCustomerPage3.STRUCTURE_SECOND_COMPETENCE).getAttribute("fill"), CadtColors.COLOR_WHITE);
@@ -104,6 +113,7 @@ public class DashboardTests extends BaseTest implements ITestWithWebDriver {
         Assert.assertEquals(dashboard.getSvgElement(CadtCustomerPage3.SVG_ID, "text", CadtCustomerPage3.ADAPTABILITY_ACTION_BALANCED_TEXT).getText(), "BALANCED");
 
 
+        LabStationLogger.info(this.getClass(), "@@ Checking Page 4 of the report");
         //Page 4
         Assert.assertEquals(dashboard.getSvgElement(CadtCustomerPage4.SVG_ID, "circle", CadtCustomerPage4.UNIVERSAL_ARCHETYPE).getAttribute("fill"), CadtColors.RECEPTIVE);
         Assert.assertEquals(dashboard.getSvgElement(CadtCustomerPage4.SVG_ID, "circle", CadtCustomerPage4.UNIVERSAL_FIRST_COMPETENCE).getAttribute("fill"), CadtColors.RECEPTIVE);
@@ -152,5 +162,12 @@ public class DashboardTests extends BaseTest implements ITestWithWebDriver {
         Assert.assertEquals(dashboard.getSvgElement(CadtCustomerPage4.SVG_ID, "rect", CadtCustomerPage4.ANALYSIS_ARCHETYPE).getAttribute("fill"), CadtColors.SCIENTIST);
         Assert.assertEquals(dashboard.getSvgElement(CadtCustomerPage4.SVG_ID, "rect", CadtCustomerPage4.ANALYSIS_FIRST_COMPETENCE).getAttribute("fill"), CadtColors.SCIENTIST);
         Assert.assertEquals(dashboard.getSvgElement(CadtCustomerPage4.SVG_ID, "rect", CadtCustomerPage4.ANALYSIS_SECOND_COMPETENCE).getAttribute("fill"), CadtColors.COLOR_WHITE);
+
+        dashboard.logout();
+    }
+
+    @AfterClass()
+    public void closeDriver() {
+        dashboard.getCustomChromeDriver().closeDriver();
     }
 }
