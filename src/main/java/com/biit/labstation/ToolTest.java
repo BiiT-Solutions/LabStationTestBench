@@ -61,6 +61,7 @@ public abstract class ToolTest {
         } catch (Exception e) {
             //Ignored.
         }
+        ToolTest.waitComponent();
         login.logIn(username, password);
     }
 
