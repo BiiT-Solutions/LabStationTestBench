@@ -45,6 +45,7 @@ public class DashboardTests extends BaseTest implements ITestWithWebDriver {
         //Cadt takes time to be processed. We need to wait until is ready
         if (headLessMode) {
             try {
+                LabStationLogger.info(this.getClass(), "Waiting for cadt to be ready...");
                 Thread.sleep(CADT_WAITING_TIME);
             } catch (InterruptedException e) {
                 Thread.currentThread().interrupt();
