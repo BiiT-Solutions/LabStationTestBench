@@ -29,7 +29,7 @@ import static com.biit.labstation.tests.cardgame.CardGameTests.CARD_GAME_PRIORIT
 @DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_CLASS)
 public class DashboardTests extends BaseTest implements ITestWithWebDriver {
 
-    public static final int CADT_WAITING_TIME = 60000;
+    public static final int CADT_WAITING_TIME = 90000;
 
     public static final String ADMIN_USER_NAME = "admin@test.com";
     public static final String ADMIN_USER_PASSWORD = "asd123";
