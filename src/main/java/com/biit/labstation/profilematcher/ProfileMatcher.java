@@ -161,8 +161,9 @@ public class ProfileMatcher extends ToolTest {
         } catch (Exception e) {
             //Already on this tab.
         }
-        //This table has no checkbox. Sow the standard
+        //This table has no checkbox. Show the standard
         table.selectRowWithoutCheckbox(TableId.PROFILES_TABLE, profile, 0);
+        ToolTest.waitComponent();
         table.pressButton(TableId.PROFILES_TABLE, "open-profile");
         ToolTest.waitComponent();
         getCustomChromeDriver().findElement(By.id("profile-details")).findElement(By.id("compare-button")).click();

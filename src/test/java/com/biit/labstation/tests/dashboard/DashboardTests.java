@@ -12,6 +12,7 @@ import com.biit.labstation.logger.TestListener;
 import com.biit.labstation.tests.BaseTest;
 import com.biit.labstation.tests.ITestWithWebDriver;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.annotation.DirtiesContext;
 import org.testng.Assert;
@@ -28,11 +29,28 @@ import static com.biit.labstation.tests.cardgame.CardGameTests.CARD_GAME_PRIORIT
 @DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_CLASS)
 public class DashboardTests extends BaseTest implements ITestWithWebDriver {
 
+    public static final int CADT_WAITING_TIME = 60000;
+
     public static final String ADMIN_USER_NAME = "admin@test.com";
     public static final String ADMIN_USER_PASSWORD = "asd123";
 
     @Autowired
     private Dashboard dashboard;
+
+    @Value("${headless.mode}")
+    private boolean headLessMode;
+
+    @BeforeClass
+    public void waitForCadt() {
+        //Cadt takes time to be processed. We need to wait until is ready
+        if (headLessMode) {
+            try {
+                Thread.sleep(CADT_WAITING_TIME);
+            } catch (InterruptedException e) {
+                Thread.currentThread().interrupt();
+            }
+        }
+    }
 
     @BeforeClass
     public void setup() {

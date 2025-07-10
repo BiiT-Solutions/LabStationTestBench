@@ -84,7 +84,7 @@ public class ProfileMatcherTests extends BaseTest implements ITestWithWebDriver 
     @Test(dependsOnMethods = "editProfile")
     public void nothingToCompare() {
         profileMatcher.openProfileForMatching(NEW_PROFILE_NAME);
-       snackBar.checkMessage(SnackBar.Type.WARNING, SnackBar.NO_ASSIGNED_PROFILES);
+        snackBar.checkMessage(SnackBar.Type.WARNING, SnackBar.NO_ASSIGNED_PROFILES);
         profileMatcher.getCustomChromeDriver().findElement(By.id("profile-details")).findElement(By.id("cancel-button")).click();
     }
 
@@ -98,7 +98,7 @@ public class ProfileMatcherTests extends BaseTest implements ITestWithWebDriver 
     public void canCompare() {
         profileMatcher.openProfileForMatching(NEW_PROFILE_NAME);
         try {
-           snackBar.checkMessage(SnackBar.Type.WARNING, SnackBar.NO_ASSIGNED_PROFILES);
+            snackBar.checkMessage(SnackBar.Type.WARNING, SnackBar.NO_ASSIGNED_PROFILES);
         } catch (ConditionTimeoutException e) {
             throw new ElementNotFoundAsExpectedException();
         } finally {
