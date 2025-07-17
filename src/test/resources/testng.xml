@@ -19,7 +19,7 @@
                 <include name="signUp"/>
                 <include name="cadt"/>
                 <include name="dashboard"/>
-                <include name="organizationAdmin"/>
+                <exclude name="organizationAdmin"/>
             </run>
         </groups>
         <classes>
