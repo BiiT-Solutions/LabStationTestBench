@@ -19,6 +19,7 @@
                 <include name="signUp"/>
                 <include name="cadt"/>
                 <include name="dashboard"/>
+                <include name="organizationAdmin"/>
             </run>
         </groups>
         <classes>
@@ -29,6 +30,7 @@
             <class name="com.biit.labstation.tests.usermanager.SignUpTests"/>
             <class name="com.biit.labstation.tests.usermanager.OrganizationsTests"/>
             <class name="com.biit.labstation.tests.usermanager.ValidationTests"/>
+            <class name="com.biit.labstation.tests.usermanager.OrganizationAdminTests"/>
             <class name="com.biit.labstation.tests.LoginIT"/>
             <class name="com.biit.labstation.tests.profilematcher.ProfileMatcherTests"/>
             <class name="com.biit.labstation.tests.cardgame.CardGameTests"/>

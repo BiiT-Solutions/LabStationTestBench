@@ -26,9 +26,10 @@ import org.testng.annotations.Test;
 
 import static com.biit.labstation.tests.LoginIT.ADMIN_USER_NAME;
 import static com.biit.labstation.tests.LoginIT.ADMIN_USER_PASSWORD;
+import static com.biit.labstation.tests.Priorities.PROFILES_TESTS_PRIORITY;
 
 @SpringBootTest
-@Test(groups = "profiles", priority = 100)
+@Test(groups = "profiles", priority = PROFILES_TESTS_PRIORITY)
 @Listeners({TestListener.class, ClassTestListener.class})
 @DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_CLASS)
 public class ProfileMatcherTests extends BaseTest implements ITestWithWebDriver {

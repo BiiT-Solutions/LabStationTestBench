@@ -26,9 +26,10 @@ import java.time.format.DateTimeFormatter;
 
 import static com.biit.labstation.tests.LoginIT.ADMIN_USER_NAME;
 import static com.biit.labstation.tests.LoginIT.ADMIN_USER_PASSWORD;
+import static com.biit.labstation.tests.Priorities.USER_MANAGER_PRIORITY;
 
 @SpringBootTest
-@Test(groups = "userManagerDefaultData", priority = Integer.MIN_VALUE)
+@Test(groups = "userManagerDefaultData", priority = USER_MANAGER_PRIORITY)
 @Listeners({TestListener.class, ClassTestListener.class})
 @DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_CLASS)
 public class UserManagerTests extends BaseTest implements ITestWithWebDriver {
@@ -77,7 +78,7 @@ public class UserManagerTests extends BaseTest implements ITestWithWebDriver {
         userManager.logout();
     }
 
-    @Test(dependsOnMethods = "checkUserExists", priority = -1)
+    @Test(dependsOnMethods = "checkUserExists")
     public void editUser() {
         userManager.login(ADMIN_USER_NAME, ADMIN_USER_PASSWORD);
 

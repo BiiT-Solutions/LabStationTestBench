@@ -17,17 +17,18 @@ import org.testng.annotations.Test;
 
 import static com.biit.labstation.tests.LoginIT.ADMIN_USER_NAME;
 import static com.biit.labstation.tests.LoginIT.ADMIN_USER_PASSWORD;
+import static com.biit.labstation.tests.Priorities.ORGANIZATION_TESTS_PRIORITY;
 
 @SpringBootTest
-@Test(groups = "organization")
+@Test(groups = "organization", priority = ORGANIZATION_TESTS_PRIORITY)
 @Listeners({TestListener.class, ClassTestListener.class})
 @DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_CLASS)
 public class OrganizationsTests extends BaseTest implements ITestWithWebDriver {
 
-    private static final String ORGANIZATION_NAME = "Umbrella";
+    public static final String ORGANIZATION_NAME = "Umbrella";
     private static final String ORGANIZATION_DESCRIPTION = "Developing safe medical supplies";
 
-    private static final String TEAM_NAME = "U.S.S.";
+    public static final String TEAM_NAME = "U.S.S.";
     private static final String TEAM_DESCRIPTION = "Umbrella Security Service";
 
 
@@ -79,17 +80,6 @@ public class OrganizationsTests extends BaseTest implements ITestWithWebDriver {
     public void cleanup() {
         try {
             popup.close(null);
-        } catch (Exception e) {
-            //Ignore
-        }
-        try {
-            userManager.logout();
-        } catch (Exception e) {
-            //Ignore
-        }
-        try {
-            userManager.login(ADMIN_USER_NAME, ADMIN_USER_PASSWORD);
-            userManager.deleteOrganization(ORGANIZATION_NAME);
         } catch (Exception e) {
             //Ignore
         }

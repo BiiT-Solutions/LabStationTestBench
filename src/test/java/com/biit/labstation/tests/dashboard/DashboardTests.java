@@ -21,10 +21,10 @@ import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
 
-import static com.biit.labstation.tests.cardgame.CardGameTests.CARD_GAME_PRIORITY;
+import static com.biit.labstation.tests.Priorities.DASHBOARD_PRIORITY;
 
 @SpringBootTest
-@Test(groups = "dashboard", priority = CARD_GAME_PRIORITY + 1)
+@Test(groups = "dashboard", priority = DASHBOARD_PRIORITY)
 @Listeners({TestListener.class, ClassTestListener.class})
 @DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_CLASS)
 public class DashboardTests extends BaseTest implements ITestWithWebDriver {
