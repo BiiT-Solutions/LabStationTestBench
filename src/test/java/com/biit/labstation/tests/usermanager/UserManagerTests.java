@@ -78,7 +78,7 @@ public class UserManagerTests extends BaseTest implements ITestWithWebDriver {
         userManager.logout();
     }
 
-    @Test(dependsOnMethods = "checkUserExists")
+    @Test(dependsOnMethods = "checkUserExists", priority = -1)
     public void editUser() {
         userManager.login(ADMIN_USER_NAME, ADMIN_USER_PASSWORD);
 
