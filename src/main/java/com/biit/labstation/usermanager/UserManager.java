@@ -91,6 +91,11 @@ public class UserManager extends ToolTest {
         ToolTest.waitComponent();
     }
 
+    public void selectTeamsOnMenu() {
+        navBar.goTo("nav-item-Teams");
+        ToolTest.waitComponent();
+    }
+
 
     public void addService(String name, String description) {
         LabStationLogger.debug(this.getClass().getName(), "@@ Adding service '{}'.", name);
@@ -450,12 +455,12 @@ public class UserManager extends ToolTest {
             //Already on this tab.
         }
         LabStationLogger.debug(this.getClass().getName(), "@@ Assigning user '{}' to team '{}' on organization '{}'.", username, team, organization);
-        table.selectRowWithoutCheckbox(TableId.ORGANIZATION_TABLE, organization, NAME_TABLE_COLUMN);
+        table.selectRow(TableId.ORGANIZATION_TABLE, organization, NAME_TABLE_COLUMN);
         table.pressButton(TableId.ORGANIZATION_TABLE, "button-team");
         ToolTest.waitComponent();
-        table.selectRowWithoutCheckbox(TableId.TEAM_TABLE, team, NAME_TABLE_COLUMN);
+        table.selectRow(TableId.TEAM_TABLE, team, NAME_TABLE_COLUMN);
         table.pressButton(TableId.TEAM_TABLE, "organization-team-button-user");
-        table.selectRowWithoutCheckbox(TableId.USERS_TABLE, username, USERNAME_GROUP_TABLE_COLUMN);
+        table.selectRow(TableId.USERS_TABLE, username, USERNAME_GROUP_TABLE_COLUMN);
         table.pressButton(TableId.USERS_TABLE, "assign-user");
         popup.findElement(PopupId.CONFIRMATION_ASSIGN, "confirm-assign-button").click();
         ToolTest.waitComponent();
@@ -463,6 +468,25 @@ public class UserManager extends ToolTest {
         popup.close(PopupId.ASSIGN_USER_POPUP);
         ToolTest.waitComponent();
         popup.close(PopupId.TEAM);
+        ToolTest.waitComponent();
+    }
+
+
+    public void addUserToTeamByOrgAdmin(String username, String team) {
+        try {
+            selectTeamsOnMenu();
+        } catch (Exception e) {
+            //Already on this tab.
+        }
+        LabStationLogger.debug(this.getClass().getName(), "@@ Assigning user '{}' to team '{}' by organization admin.", username, team);
+        table.selectRow(TableId.TEAM_TABLE, team, NAME_TABLE_COLUMN);
+        table.pressButton(TableId.TEAM_TABLE, "organization-team-button-user");
+        table.selectRow(TableId.USERS_TABLE, username, USERNAME_GROUP_TABLE_COLUMN);
+        table.pressButton(TableId.USERS_TABLE, "assign-user");
+        popup.findElement(PopupId.CONFIRMATION_ASSIGN, "confirm-assign-button").click();
+        ToolTest.waitComponent();
+        table.getCell(TableId.USERS_TABLE, username, USERNAME_GROUP_TABLE_COLUMN, ASSIGNED_USER_GROUP_TABLE_COLUMN).findElement(By.id("assigned"));
+        popup.close(PopupId.ASSIGN_USER_POPUP);
         ToolTest.waitComponent();
     }
 }
