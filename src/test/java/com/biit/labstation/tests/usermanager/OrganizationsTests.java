@@ -51,7 +51,6 @@ public class OrganizationsTests extends BaseTest implements ITestWithWebDriver {
     public void createOrganization() {
         userManager.login(ADMIN_USER_NAME, ADMIN_USER_PASSWORD);
         try {
-            userManager.selectOrganizationsOnMenu();
             userManager.addOrganization(ORGANIZATION_NAME, ORGANIZATION_DESCRIPTION);
             snackBar.checkMessage(SnackBar.Type.REGULAR, SnackBar.REQUEST_SUCCESSFUL);
         } finally {
