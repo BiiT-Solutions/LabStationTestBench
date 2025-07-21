@@ -471,6 +471,29 @@ public class UserManager extends ToolTest {
         ToolTest.waitComponent();
     }
 
+    public void removeUserFromTeam(String username, String team, String organization) {
+        try {
+            selectOrganizationsOnMenu();
+        } catch (Exception e) {
+            //Already on this tab.
+        }
+        LabStationLogger.debug(this.getClass().getName(), "@@ Removing user '{}' from team '{}' on organization '{}'.", username, team, organization);
+        table.selectRow(TableId.ORGANIZATION_TABLE, organization, NAME_TABLE_COLUMN);
+        table.pressButton(TableId.ORGANIZATION_TABLE, "button-team");
+        ToolTest.waitComponent();
+        table.selectRow(TableId.TEAM_TABLE, team, NAME_TABLE_COLUMN);
+        table.pressButton(TableId.TEAM_TABLE, "organization-team-button-user");
+        table.selectRow(TableId.USERS_TABLE, username, USERNAME_GROUP_TABLE_COLUMN);
+        table.pressButton(TableId.USERS_TABLE, "unassign-user");
+        popup.findElement(PopupId.CONFIRMATION_ASSIGN, "confirm-unassign-button").click();
+        snackBar.checkMessage(SnackBar.Type.REGULAR, SnackBar.REQUEST_SUCCESSFUL);
+        ToolTest.waitComponent();
+        popup.close(PopupId.ASSIGN_USER_POPUP);
+        ToolTest.waitComponent();
+        popup.close(PopupId.TEAM);
+        ToolTest.waitComponent();
+    }
+
 
     public void addUserToTeamByOrgAdmin(String username, String team) {
         try {

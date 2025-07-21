@@ -72,6 +72,7 @@ public class OrganizationsTests extends BaseTest implements ITestWithWebDriver {
     public void addUserToTeam() {
         userManager.login(ADMIN_USER_NAME, ADMIN_USER_PASSWORD);
         userManager.addUserToTeam(ADMIN_USER_NAME, TEAM_NAME, ORGANIZATION_NAME);
+        userManager.removeUserFromTeam(ADMIN_USER_NAME, TEAM_NAME, ORGANIZATION_NAME);
         userManager.logout();
     }
 
