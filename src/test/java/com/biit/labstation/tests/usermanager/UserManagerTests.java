@@ -306,7 +306,7 @@ public class UserManagerTests extends BaseTest implements ITestWithWebDriver {
         snackBar.checkMessage(SnackBar.Type.REGULAR, SnackBar.REQUEST_SUCCESSFUL);
         userManager.linkApplicationRoleWithServiceRole("AppointmentCenter", "manager", "AppointmentCenter", "editor");
         snackBar.checkMessage(SnackBar.Type.REGULAR, SnackBar.REQUEST_SUCCESSFUL);
-        userManager.linkApplicationRoleWithServiceRole("AppointmentCenter", "viewer", "UserManagerSystem", "editor");
+        userManager.linkApplicationRoleWithServiceRole("AppointmentCenter", "manager", "UserManagerSystem", "editor");
         snackBar.checkMessage(SnackBar.Type.REGULAR, SnackBar.REQUEST_SUCCESSFUL);
         userManager.addApplicationRole("AppointmentCenter", "speaker");
         snackBar.checkMessage(SnackBar.Type.REGULAR, SnackBar.REQUEST_SUCCESSFUL);
