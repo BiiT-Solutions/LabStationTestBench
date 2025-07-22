@@ -54,19 +54,13 @@ public class CadtTests extends BaseTest implements ITestWithWebDriver {
 
         cardGame.closeWelcomePage();
 
-        ToolTest.waitComponent(5000);
         LabStationLogger.info(this.getClass().getName(), "Selecting feminine archetypes.");
         cardGame.chooseArchetypesByDragAndDrop(Archetype.INNOVATOR, Archetype.RECEPTIVE, Archetype.VISIONARY);
-        cardGame.closeCompletionPage();
-        ToolTest.waitComponent(5000);
 
         LabStationLogger.info(this.getClass().getName(), "Selecting masculine cards.");
         cardGame.chooseArchetypesByClick(Archetype.SCIENTIST, Archetype.BANKER, Archetype.LEADER);
-        cardGame.closeCompletionPage();
-        ToolTest.waitComponent(5000);
 
         LabStationLogger.info(this.getClass().getName(), "Selecting competence cards.");
-
         cardGame.chooseCompetences(Competence.COOPERATION, Competence.INNOVATION, Competence.PERSUASIVENESS, Competence.JUDGEMENT, Competence.INITIATIVE,
                 Competence.PLANIFICATION, Competence.PROBLEM_ANALYSIS, Competence.INDEPENDENCE, Competence.TENACITY, Competence.GOAL_SETTING);
 

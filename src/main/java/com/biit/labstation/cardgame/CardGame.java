@@ -50,6 +50,7 @@ public class CardGame extends ToolTest {
                 return false;
             }
         });
+        ToolTest.waitComponent(WAITING_CARD_SELECTION);
     }
 
 
@@ -63,6 +64,7 @@ public class CardGame extends ToolTest {
                 return false;
             }
         });
+        ToolTest.waitComponent();
     }
 
     public boolean canSubmitTest() {
@@ -80,6 +82,8 @@ public class CardGame extends ToolTest {
         getCustomChromeDriver().findElementWaiting(By.id("card-rows")).findElement(By.id(archetypes3.getTag())).click();
         ToolTest.waitComponent(WAITING_CARD_SELECTION);
         LabStationLogger.info(this.getClass(), "Selecting card '{}' as third option.", archetypes3);
+        closeCompletionPage();
+        ToolTest.waitComponent(WAITING_CARD_SELECTION);
     }
 
 
@@ -103,6 +107,9 @@ public class CardGame extends ToolTest {
                 .release(getCustomChromeDriver().findElement(By.id("envelope")).findElement(By.className("card-drop-place")))
                 .build().perform();
         LabStationLogger.info(this.getClass(), "Selecting card '{}' as third option.", archetypes3);
+        ToolTest.waitComponent(WAITING_CARD_SELECTION);
+
+        closeCompletionPage();
         ToolTest.waitComponent(WAITING_CARD_SELECTION);
     }
 
