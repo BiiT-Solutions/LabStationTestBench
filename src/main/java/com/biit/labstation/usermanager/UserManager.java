@@ -485,7 +485,7 @@ public class UserManager extends ToolTest {
         table.pressButton(TableId.TEAM_TABLE, "organization-team-button-user");
         table.selectRow(TableId.USERS_TABLE, username, USERNAME_GROUP_TABLE_COLUMN);
         table.pressButton(TableId.USERS_TABLE, "unassign-user");
-        popup.findElement(PopupId.CONFIRMATION_ASSIGN, "confirm-unassign-button").click();
+        popup.findElement(PopupId.CONFIRMATION_UNASSIGN, "confirm-unassign-button").click();
         snackBar.checkMessage(SnackBar.Type.REGULAR, SnackBar.REQUEST_SUCCESSFUL);
         ToolTest.waitComponent();
         popup.close(PopupId.ASSIGN_USER_POPUP);
