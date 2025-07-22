@@ -45,16 +45,11 @@ public class CardGameTests extends BaseTest implements ITestWithWebDriver {
         cardGame.login(ADMIN_USER_NAME, ADMIN_USER_PASSWORD);
         cardGame.closeWelcomePage();
 
-        ToolTest.waitComponent(5000);
         LabStationLogger.info(this.getClass().getName(), "Selecting feminine archetypes.");
         cardGame.chooseArchetypesByDragAndDrop(Archetype.RECEPTIVE, Archetype.INNOVATOR, Archetype.STRATEGIST);
-        cardGame.closeCompletionPage();
-        ToolTest.waitComponent(5000);
 
         LabStationLogger.info(this.getClass().getName(), "Selecting masculine cards.");
         cardGame.chooseArchetypesByClick(Archetype.LEADER, Archetype.TRADESMAN, Archetype.SCIENTIST);
-        cardGame.closeCompletionPage();
-        ToolTest.waitComponent(5000);
 
         LabStationLogger.info(this.getClass().getName(), "Selecting competence cards.");
         //One less card!
