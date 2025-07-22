@@ -39,9 +39,6 @@ public class CadtTests extends BaseTest implements ITestWithWebDriver {
     private CardGame cardGame;
 
     @Autowired
-    private SnackBar snackBar;
-
-    @Autowired
     private UserManager userManager;
 
     private String username;

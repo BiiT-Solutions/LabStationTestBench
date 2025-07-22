@@ -44,6 +44,12 @@ public class Dashboard extends ToolTest {
         ToolTest.waitComponent(CADT_WAIT_TIME);
     }
 
+
+    public void selectCadtOverviewOnMenu() {
+        navBar.goTo("nav-item-CADT", "nav-subitem-Overview");
+        ToolTest.waitComponent(CADT_WAIT_TIME);
+    }
+
     private WebElement findSvg(String id) {
         return getCustomChromeDriver().findElementWaiting(By.xpath("//*[name() = 'svg' and @id='" + id + "']"));
     }
@@ -51,5 +57,12 @@ public class Dashboard extends ToolTest {
     public WebElement getSvgElement(String svgId, String node, String id) {
         return getCustomChromeDriver().findElementWaiting(By.xpath("//*[name() = 'svg' and @id='" + svgId + "']"
                 + "//*[local-name()='" + node + "' and @id='" + id + "']"));
+    }
+
+    public String getCadtHeatMapValue(int column, CadtHeatmapRow row) {
+        return getCustomChromeDriver().findElementWaiting(By.id("chart")).findElement(By.className("apexcharts-inner"))
+                .findElements(By.className("apexcharts-heatmap-series")).get(row.getColumn())
+                .findElements(By.className("apexcharts-data-labels")).get(column)
+                .getText();
     }
 }

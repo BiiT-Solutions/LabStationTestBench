@@ -17,4 +17,5 @@ public class Priorities {
 
     public static final int CARD_GAME_PRIORITY = 1000;
     public static final int DASHBOARD_PRIORITY = CARD_GAME_PRIORITY + 1;
+    public static final int ORGANIZATION_ADMIN_DASHBOARD_PRIORITY = DASHBOARD_PRIORITY + 1;
 }

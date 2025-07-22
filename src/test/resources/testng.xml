@@ -18,8 +18,9 @@
                 <include name="cardgame"/>
                 <include name="signUp"/>
                 <include name="cadt"/>
-                <include name="dashboard"/>
+                <include name="cadtDashboard"/>
                 <include name="organizationAdmin"/>
+                <exclude name="organizationAdminDashboard"/>
             </run>
         </groups>
         <classes>
@@ -34,7 +35,8 @@
             <class name="com.biit.labstation.tests.LoginIT"/>
             <class name="com.biit.labstation.tests.profilematcher.ProfileMatcherTests"/>
             <class name="com.biit.labstation.tests.cardgame.CardGameTests"/>
-            <class name="com.biit.labstation.tests.dashboard.DashboardTests"/>
+            <class name="com.biit.labstation.tests.dashboard.CadtDashboardTests"/>
+            <class name="com.biit.labstation.tests.dashboard.OrganizationAdminDashboardTests"/>
         </classes>
     </test>
 </suite>

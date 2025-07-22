@@ -38,7 +38,8 @@ public class CardGame extends ToolTest {
 
     @Override
     public void logout() {
-        //No logout menu on card game.
+        //Only when test is finished.
+        getCustomChromeDriver().findElementWaiting(By.id("cardgame-menu-logout")).click();
     }
 
     public void closeWelcomePage() {
