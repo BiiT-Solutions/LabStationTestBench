@@ -24,7 +24,7 @@ import static com.biit.labstation.tests.LoginIT.ADMIN_USER_NAME;
 import static com.biit.labstation.tests.LoginIT.ADMIN_USER_PASSWORD;
 
 @SpringBootTest
-@Test(groups = "cadt", dependsOnGroups = "userManagerDefaultData", priority = Integer.MAX_VALUE)
+@Test(groups = "cadt", priority = Integer.MAX_VALUE)
 @Listeners({TestListener.class, ClassTestListener.class})
 @DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_CLASS)
 public class CadtTests extends BaseTest implements ITestWithWebDriver {
