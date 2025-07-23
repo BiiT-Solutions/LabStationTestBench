@@ -20,7 +20,7 @@ import static com.biit.labstation.tests.LoginIT.ADMIN_USER_PASSWORD;
 import static com.biit.labstation.tests.Priorities.ORGANIZATION_TESTS_PRIORITY;
 
 @SpringBootTest
-@Test(groups = "organization", priority = ORGANIZATION_TESTS_PRIORITY)
+@Test(groups = "organization", dependsOnGroups = "userManagerDefaultData", priority = ORGANIZATION_TESTS_PRIORITY)
 @Listeners({TestListener.class, ClassTestListener.class})
 @DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_CLASS)
 public class OrganizationsTests extends BaseTest implements ITestWithWebDriver {

@@ -22,7 +22,7 @@ import org.testng.annotations.Test;
 import static com.biit.labstation.tests.Priorities.CARD_GAME_PRIORITY;
 
 @SpringBootTest
-@Test(groups = "cardgame", priority = CARD_GAME_PRIORITY)
+@Test(groups = "cardgame", dependsOnGroups = "userManagerDefaultData", priority = CARD_GAME_PRIORITY)
 @Listeners({TestListener.class, ClassTestListener.class})
 @DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_CLASS)
 public class CardGameTests extends BaseTest implements ITestWithWebDriver {

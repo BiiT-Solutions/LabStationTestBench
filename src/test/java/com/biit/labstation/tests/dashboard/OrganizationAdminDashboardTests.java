@@ -26,7 +26,7 @@ import static com.biit.labstation.tests.usermanager.OrganizationsTests.ORGANIZAT
 import static com.biit.labstation.tests.usermanager.OrganizationsTests.TEAM_NAME;
 
 @SpringBootTest
-@Test(groups = "organizationAdminDashboard", priority = ORGANIZATION_ADMIN_DASHBOARD_PRIORITY)
+@Test(groups = "organizationAdminDashboard", dependsOnGroups = "userManagerDefaultData", priority = ORGANIZATION_ADMIN_DASHBOARD_PRIORITY)
 @Listeners({TestListener.class, ClassTestListener.class})
 @DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_CLASS)
 public class OrganizationAdminDashboardTests extends BaseTest implements ITestWithWebDriver {

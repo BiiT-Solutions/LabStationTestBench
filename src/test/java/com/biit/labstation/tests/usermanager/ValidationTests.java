@@ -30,9 +30,6 @@ public class ValidationTests extends BaseTest implements ITestWithWebDriver {
     private static final String ORGANIZATION_NAME = "A";
     private static final String ORGANIZATION_DESCRIPTION = "A";
 
-    private static final String TEAM_NAME = "U.S.S.";
-    private static final String TEAM_DESCRIPTION = "Umbrella Security Service";
-
 
     @Autowired
     private UserManager userManager;

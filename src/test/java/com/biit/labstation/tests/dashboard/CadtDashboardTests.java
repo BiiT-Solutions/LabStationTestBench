@@ -24,7 +24,7 @@ import org.testng.annotations.Test;
 import static com.biit.labstation.tests.Priorities.DASHBOARD_PRIORITY;
 
 @SpringBootTest
-@Test(groups = "cadtDashboard", priority = DASHBOARD_PRIORITY)
+@Test(groups = "cadtDashboard", dependsOnGroups = "userManagerDefaultData", priority = DASHBOARD_PRIORITY)
 @Listeners({TestListener.class, ClassTestListener.class})
 @DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_CLASS)
 public class CadtDashboardTests extends BaseTest implements ITestWithWebDriver {
