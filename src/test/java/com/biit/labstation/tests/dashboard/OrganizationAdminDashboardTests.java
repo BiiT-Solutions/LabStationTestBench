@@ -1,8 +1,11 @@
 package com.biit.labstation.tests.dashboard;
 
+import com.biit.labstation.ToolTest;
 import com.biit.labstation.cardgame.Archetype;
 import com.biit.labstation.cardgame.CardGame;
 import com.biit.labstation.cardgame.Competence;
+import com.biit.labstation.components.Table;
+import com.biit.labstation.components.TableId;
 import com.biit.labstation.dashboard.CadtHeatmapRow;
 import com.biit.labstation.dashboard.Dashboard;
 import com.biit.labstation.logger.ClassTestListener;
@@ -26,7 +29,7 @@ import static com.biit.labstation.tests.usermanager.OrganizationsTests.ORGANIZAT
 import static com.biit.labstation.tests.usermanager.OrganizationsTests.TEAM_NAME;
 
 @SpringBootTest
-@Test(groups = "organizationAdminDashboard", dependsOnGroups = "userManagerDefaultData", priority = ORGANIZATION_ADMIN_DASHBOARD_PRIORITY)
+@Test(groups = "organizationAdminDashboard", priority = ORGANIZATION_ADMIN_DASHBOARD_PRIORITY)
 @Listeners({TestListener.class, ClassTestListener.class})
 @DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_CLASS)
 public class OrganizationAdminDashboardTests extends BaseTest implements ITestWithWebDriver {
@@ -54,6 +57,9 @@ public class OrganizationAdminDashboardTests extends BaseTest implements ITestWi
 
     @Autowired
     private CardGame cardGame;
+
+    @Autowired
+    private Table table;
 
     @Test
     public void createTestUsers() {
@@ -197,6 +203,41 @@ public class OrganizationAdminDashboardTests extends BaseTest implements ITestWi
         Assert.assertEquals(dashboard.getCadtHeatMapValue(IN_ORG_USER_COLUMN - 1, CadtHeatmapRow.ADAPTABILITY_ACTION), "1");
 
         //No more users are visible
+
+        dashboard.logout();
+    }
+
+
+    @Test(dependsOnMethods = {"createTestUsers"})
+    public void orgAdminOnlyCanListOrganizationUsersOnDashboard() {
+        dashboard.access();
+
+        //OrgAdmin can only see two users.
+        dashboard.login(ORGANIZATION_ADMIN_USER_NAME, ORGANIZATION_ADMIN_USER_PASSWORD);
+        ToolTest.waitComponent();
+        dashboard.selectCustomerListOnMenu();
+        ToolTest.waitComponent();
+
+        //Admin, Jack and Ptah has createdOn the user organization. + OrgAdmin.
+        Assert.assertEquals(table.countRows(TableId.USERS_TABLE), 4);
+
+        dashboard.logout();
+    }
+
+
+    @Test(dependsOnMethods = {"createTestUsers"})
+    public void adminCanListAllUsersOnDashboard() {
+        dashboard.access();
+
+        //OrgAdmin can only see two users.
+        dashboard.login(ADMIN_USER_NAME, ADMIN_USER_PASSWORD);
+        ToolTest.waitComponent();
+        dashboard.selectCustomerListOnMenu();
+        ToolTest.waitComponent();
+
+        Assert.assertEquals(table.countRows(TableId.USERS_TABLE), 6);
+
+        dashboard.logout();
     }
 
 

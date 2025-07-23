@@ -13,8 +13,6 @@ import org.springframework.stereotype.Component;
 @Component
 public class Dashboard extends ToolTest {
 
-    public static final int CADT_WAIT_TIME = 5000;
-
     @Value("${testing.server.domain}")
     private String serverDomain;
 
@@ -41,18 +39,26 @@ public class Dashboard extends ToolTest {
 
     public void selectPersonalCadtOnMenu() {
         navBar.goTo("nav-item-CADT", "nav-subitem-Personal");
-        ToolTest.waitComponent(CADT_WAIT_TIME);
+        ToolTest.waitComponent();
     }
 
 
     public void selectCadtOverviewOnMenu() {
         navBar.goTo("nav-item-CADT", "nav-subitem-Overview");
-        ToolTest.waitComponent(CADT_WAIT_TIME);
+        ToolTest.waitComponent();
     }
+
+
+    public void selectCustomerListOnMenu() {
+        navBar.goTo("nav-item-Customer List");
+        ToolTest.waitComponent();
+    }
+
 
     private WebElement findSvg(String id) {
         return getCustomChromeDriver().findElementWaiting(By.xpath("//*[name() = 'svg' and @id='" + id + "']"));
     }
+
 
     public WebElement getSvgElement(String svgId, String node, String id) {
         return getCustomChromeDriver().findElementWaiting(By.xpath("//*[name() = 'svg' and @id='" + svgId + "']"
