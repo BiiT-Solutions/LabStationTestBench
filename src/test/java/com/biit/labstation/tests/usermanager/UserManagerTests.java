@@ -332,7 +332,7 @@ public class UserManagerTests extends BaseTest implements ITestWithWebDriver {
 
         userManager.addApplicationRole("BiitSurveys", "user");
         snackBar.checkMessage(SnackBar.Type.REGULAR, SnackBar.REQUEST_SUCCESSFUL);
-        userManager.linkApplicationRoleWithServiceRole("BiitSurveys", "user", "FactManager", "editor");
+        userManager.linkApplicationRoleWithServiceRole("BiitSurveys", "user", "KafkaProxy", "editor");
         snackBar.checkMessage(SnackBar.Type.REGULAR, SnackBar.REQUEST_SUCCESSFUL);
 
         userManager.addApplicationRole("CardGame", "user");

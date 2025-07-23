@@ -42,6 +42,7 @@ public class OrganizationAdminDashboardTests extends BaseTest implements ITestWi
     public static final String IN_ORG_USER_NAME = "inorg@test.com";
     public static final String IN_ORG_USER_PASSWORD = "asd123";
 
+    public static final int ADMIN_USER_COLUMN = 0;
     public static final int NON_ORG_USER_COLUMN = 1;
     public static final int IN_ORG_USER_COLUMN = 2;
 
@@ -131,6 +132,17 @@ public class OrganizationAdminDashboardTests extends BaseTest implements ITestWi
 
         dashboard.selectCadtOverviewOnMenu();
 
+        Assert.assertEquals(dashboard.getCadtHeatMapValue(ADMIN_USER_COLUMN, CadtHeatmapRow.VISIONARY), "-1");
+        Assert.assertEquals(dashboard.getCadtHeatMapValue(ADMIN_USER_COLUMN, CadtHeatmapRow.SCIENTIST), "1");
+        Assert.assertEquals(dashboard.getCadtHeatMapValue(ADMIN_USER_COLUMN, CadtHeatmapRow.TRADESMAN), "0");
+        Assert.assertEquals(dashboard.getCadtHeatMapValue(ADMIN_USER_COLUMN, CadtHeatmapRow.INNOVATOR), "-2");
+        Assert.assertEquals(dashboard.getCadtHeatMapValue(ADMIN_USER_COLUMN, CadtHeatmapRow.LEADER), "1");
+        Assert.assertEquals(dashboard.getCadtHeatMapValue(ADMIN_USER_COLUMN, CadtHeatmapRow.STRATEGIST), "1");
+        Assert.assertEquals(dashboard.getCadtHeatMapValue(ADMIN_USER_COLUMN, CadtHeatmapRow.BANKER), "0");
+        Assert.assertEquals(dashboard.getCadtHeatMapValue(ADMIN_USER_COLUMN, CadtHeatmapRow.RECEPTIVE), "1");
+        Assert.assertEquals(dashboard.getCadtHeatMapValue(ADMIN_USER_COLUMN, CadtHeatmapRow.STRUCTURE_INSPIRATION), "-1");
+        Assert.assertEquals(dashboard.getCadtHeatMapValue(ADMIN_USER_COLUMN, CadtHeatmapRow.ADAPTABILITY_ACTION), "1");
+
         Assert.assertEquals(dashboard.getCadtHeatMapValue(NON_ORG_USER_COLUMN, CadtHeatmapRow.VISIONARY), "-1");
         Assert.assertEquals(dashboard.getCadtHeatMapValue(NON_ORG_USER_COLUMN, CadtHeatmapRow.SCIENTIST), "-1");
         Assert.assertEquals(dashboard.getCadtHeatMapValue(NON_ORG_USER_COLUMN, CadtHeatmapRow.TRADESMAN), "1");
@@ -152,6 +164,7 @@ public class OrganizationAdminDashboardTests extends BaseTest implements ITestWi
         Assert.assertEquals(dashboard.getCadtHeatMapValue(IN_ORG_USER_COLUMN, CadtHeatmapRow.RECEPTIVE), "0");
         Assert.assertEquals(dashboard.getCadtHeatMapValue(IN_ORG_USER_COLUMN, CadtHeatmapRow.STRUCTURE_INSPIRATION), "-1");
         Assert.assertEquals(dashboard.getCadtHeatMapValue(IN_ORG_USER_COLUMN, CadtHeatmapRow.ADAPTABILITY_ACTION), "1");
+        dashboard.logout();
     }
 
     @Test(dependsOnMethods = {"checkDashboardByAdmin"})
@@ -160,6 +173,17 @@ public class OrganizationAdminDashboardTests extends BaseTest implements ITestWi
         dashboard.login(ORGANIZATION_ADMIN_USER_NAME, ORGANIZATION_ADMIN_USER_PASSWORD);
 
         dashboard.selectCadtOverviewOnMenu();
+
+        Assert.assertEquals(dashboard.getCadtHeatMapValue(ADMIN_USER_COLUMN, CadtHeatmapRow.VISIONARY), "-1");
+        Assert.assertEquals(dashboard.getCadtHeatMapValue(ADMIN_USER_COLUMN, CadtHeatmapRow.SCIENTIST), "1");
+        Assert.assertEquals(dashboard.getCadtHeatMapValue(ADMIN_USER_COLUMN, CadtHeatmapRow.TRADESMAN), "0");
+        Assert.assertEquals(dashboard.getCadtHeatMapValue(ADMIN_USER_COLUMN, CadtHeatmapRow.INNOVATOR), "-2");
+        Assert.assertEquals(dashboard.getCadtHeatMapValue(ADMIN_USER_COLUMN, CadtHeatmapRow.LEADER), "1");
+        Assert.assertEquals(dashboard.getCadtHeatMapValue(ADMIN_USER_COLUMN, CadtHeatmapRow.STRATEGIST), "1");
+        Assert.assertEquals(dashboard.getCadtHeatMapValue(ADMIN_USER_COLUMN, CadtHeatmapRow.BANKER), "0");
+        Assert.assertEquals(dashboard.getCadtHeatMapValue(ADMIN_USER_COLUMN, CadtHeatmapRow.RECEPTIVE), "1");
+        Assert.assertEquals(dashboard.getCadtHeatMapValue(ADMIN_USER_COLUMN, CadtHeatmapRow.STRUCTURE_INSPIRATION), "-1");
+        Assert.assertEquals(dashboard.getCadtHeatMapValue(ADMIN_USER_COLUMN, CadtHeatmapRow.ADAPTABILITY_ACTION), "1");
 
         Assert.assertEquals(dashboard.getCadtHeatMapValue(IN_ORG_USER_COLUMN - 1, CadtHeatmapRow.VISIONARY), "1");
         Assert.assertEquals(dashboard.getCadtHeatMapValue(IN_ORG_USER_COLUMN - 1, CadtHeatmapRow.SCIENTIST), "2");
