@@ -126,7 +126,7 @@ public class OrganizationAdminDashboardTests extends BaseTest implements ITestWi
     }
 
     @Test(dependsOnMethods = {"waitForCadt"})
-    public void checkDashboardByAdmin() {
+    public void checkDashboardByAdminCanSee3Users() {
         dashboard.access();
         dashboard.login(ADMIN_USER_NAME, ADMIN_USER_PASSWORD);
 
@@ -167,8 +167,8 @@ public class OrganizationAdminDashboardTests extends BaseTest implements ITestWi
         dashboard.logout();
     }
 
-    @Test(dependsOnMethods = {"checkDashboardByAdmin"})
-    public void checkDashboardByOrgAdmin() {
+    @Test(dependsOnMethods = {"checkDashboardByAdminCanSee3Users"})
+    public void checkDashboardByOrgAdminCanOnlySee2Users() {
         dashboard.access();
         dashboard.login(ORGANIZATION_ADMIN_USER_NAME, ORGANIZATION_ADMIN_USER_PASSWORD);
 
