@@ -20,7 +20,7 @@
                 <include name="cadt"/>
                 <include name="cadtDashboard"/>
                 <include name="organizationAdmin"/>
-                <exclude name="organizationAdminDashboard"/>
+                <include name="organizationAdminDashboard"/>
             </run>
         </groups>
         <classes>
