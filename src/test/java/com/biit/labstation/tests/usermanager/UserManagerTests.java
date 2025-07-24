@@ -52,6 +52,11 @@ public class UserManagerTests extends BaseTest implements ITestWithWebDriver {
     @Value("${starts.from.clean.database}")
     private boolean startsFormCleanDatabase;
 
+    @Value("${jwt.user}")
+    private String jwtUser;
+    @Value("${jwt.password}")
+    private String jwtPassword;
+
     @BeforeClass
     public void setup() throws InterruptedException {
         userManager.access();
@@ -784,11 +789,11 @@ public class UserManagerTests extends BaseTest implements ITestWithWebDriver {
     public void createJwtUser() {
         userManager.login(ADMIN_USER_NAME, ADMIN_USER_PASSWORD);
 
-        userManager.addUser("jwt", "token@test.com", "System", "Token", "asd123");
+        userManager.addUser(jwtUser, "token@test.com", "System", "Token", jwtPassword);
         snackBar.checkMessage(SnackBar.Type.REGULAR, SnackBar.USER_CREATED);
-        userManager.addUserRoles("jwt", "UserManagerSystem", "admin");
+        userManager.addUserRoles(jwtUser, "UserManagerSystem", "admin");
         snackBar.checkMessage(SnackBar.Type.REGULAR, SnackBar.REQUEST_SUCCESSFUL);
-        userManager.addUserRoles("jwt", "FactManager", "admin");
+        userManager.addUserRoles(jwtUser, "FactManager", "admin");
         snackBar.checkMessage(SnackBar.Type.REGULAR, SnackBar.REQUEST_SUCCESSFUL);
 
         userManager.logout();
