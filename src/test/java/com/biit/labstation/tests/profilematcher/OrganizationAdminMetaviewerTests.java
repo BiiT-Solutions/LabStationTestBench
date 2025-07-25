@@ -47,6 +47,7 @@ public class OrganizationAdminMetaviewerTests extends BaseTest implements ITestW
         profileMatcher.selectTriageOnMenu();
         ToolTest.waitComponent();
         Assert.assertEquals(profileMatcher.countMetaviewerElements(), 3);
+        profileMatcher.logout();
     }
 
 
@@ -57,5 +58,6 @@ public class OrganizationAdminMetaviewerTests extends BaseTest implements ITestW
         profileMatcher.selectTriageOnMenu();
         ToolTest.waitComponent();
         Assert.assertEquals(profileMatcher.countMetaviewerElements(), 2);
+        profileMatcher.logout();
     }
 }

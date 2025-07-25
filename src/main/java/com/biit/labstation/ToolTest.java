@@ -63,6 +63,7 @@ public abstract class ToolTest {
         }
         ToolTest.waitComponent();
         login.logIn(username, password);
+        ToolTest.waitComponent();
     }
 
     public abstract void logout();
