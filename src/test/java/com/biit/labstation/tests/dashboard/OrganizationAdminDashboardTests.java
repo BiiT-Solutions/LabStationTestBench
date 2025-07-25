@@ -15,6 +15,7 @@ import com.biit.labstation.tests.BaseTest;
 import com.biit.labstation.tests.ITestWithWebDriver;
 import com.biit.labstation.usermanager.UserManager;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.annotation.DirtiesContext;
 import org.testng.Assert;
@@ -22,8 +23,6 @@ import org.testng.annotations.AfterClass;
 import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
 
-import static com.biit.labstation.tests.LoginIT.ADMIN_USER_NAME;
-import static com.biit.labstation.tests.LoginIT.ADMIN_USER_PASSWORD;
 import static com.biit.labstation.tests.Priorities.ORGANIZATION_ADMIN_DASHBOARD_PRIORITY;
 import static com.biit.labstation.tests.usermanager.OrganizationsTests.ORGANIZATION_NAME;
 import static com.biit.labstation.tests.usermanager.OrganizationsTests.TEAM_NAME;
@@ -36,8 +35,8 @@ public class OrganizationAdminDashboardTests extends BaseTest implements ITestWi
 
     public static final int CADT_WAITING_TIME = 90000;
 
-    public static final String ORGANIZATION_ADMIN_USER_NAME = "orgadmin@test.com";
-    public static final String ORGANIZATION_ADMIN_USER_PASSWORD = "asd123";
+    public static final String ORGANIZATION_adminUser = "orgadmin@test.com";
+    public static final String ORGANIZATION_adminPassword = "asd123";
 
     public static final String NON_ORG_USER_NAME = "nonorg@test.com";
     public static final String NON_ORG_USER_PASSWORD = "asd123";
@@ -61,10 +60,15 @@ public class OrganizationAdminDashboardTests extends BaseTest implements ITestWi
     @Autowired
     private Table table;
 
+    @Value("${admin.user}")
+    private String adminUser;
+    @Value("${admin.password}")
+    private String adminPassword;
+
     @Test
     public void createTestUsers() {
         userManager.access();
-        userManager.login(ADMIN_USER_NAME, ADMIN_USER_PASSWORD);
+        userManager.login(adminUser, adminPassword);
         userManager.addUser(NON_ORG_USER_NAME, NON_ORG_USER_NAME, "Imhotep", "Ptah", NON_ORG_USER_PASSWORD);
 
         userManager.addUser(IN_ORG_USER_NAME, IN_ORG_USER_NAME, "Jack", "O'Neill", IN_ORG_USER_PASSWORD);
@@ -134,7 +138,7 @@ public class OrganizationAdminDashboardTests extends BaseTest implements ITestWi
     @Test(dependsOnMethods = {"waitForCadt"})
     public void checkDashboardByAdminCanSee3Users() {
         dashboard.access();
-        dashboard.login(ADMIN_USER_NAME, ADMIN_USER_PASSWORD);
+        dashboard.login(adminUser, adminPassword);
 
         dashboard.selectCadtOverviewOnMenu();
 
@@ -176,7 +180,7 @@ public class OrganizationAdminDashboardTests extends BaseTest implements ITestWi
     @Test(dependsOnMethods = {"checkDashboardByAdminCanSee3Users"})
     public void checkDashboardByOrgAdminCanOnlySee2Users() {
         dashboard.access();
-        dashboard.login(ORGANIZATION_ADMIN_USER_NAME, ORGANIZATION_ADMIN_USER_PASSWORD);
+        dashboard.login(ORGANIZATION_adminUser, ORGANIZATION_adminPassword);
 
         dashboard.selectCadtOverviewOnMenu();
 
@@ -213,7 +217,7 @@ public class OrganizationAdminDashboardTests extends BaseTest implements ITestWi
         dashboard.access();
 
         //OrgAdmin can only see two users.
-        dashboard.login(ORGANIZATION_ADMIN_USER_NAME, ORGANIZATION_ADMIN_USER_PASSWORD);
+        dashboard.login(ORGANIZATION_adminUser, ORGANIZATION_adminPassword);
         ToolTest.waitComponent();
         dashboard.selectCustomerListOnMenu();
         ToolTest.waitComponent();
@@ -230,7 +234,7 @@ public class OrganizationAdminDashboardTests extends BaseTest implements ITestWi
         dashboard.access();
 
         //OrgAdmin can only see two users.
-        dashboard.login(ADMIN_USER_NAME, ADMIN_USER_PASSWORD);
+        dashboard.login(adminUser, adminPassword);
         ToolTest.waitComponent();
         dashboard.selectCustomerListOnMenu();
         ToolTest.waitComponent();
@@ -244,7 +248,7 @@ public class OrganizationAdminDashboardTests extends BaseTest implements ITestWi
     @AfterClass
     public void cleanup() {
         try {
-            userManager.login(ADMIN_USER_NAME, ADMIN_USER_PASSWORD);
+            userManager.login(adminUser, adminPassword);
             userManager.deleteUser(NON_ORG_USER_NAME);
             userManager.deleteUser(IN_ORG_USER_NAME);
         } catch (Exception e) {

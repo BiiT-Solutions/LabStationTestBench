@@ -1,11 +1,9 @@
 package com.biit.labstation.tests.cadt;
 
 
-import com.biit.labstation.ToolTest;
 import com.biit.labstation.cardgame.Archetype;
 import com.biit.labstation.cardgame.CardGame;
 import com.biit.labstation.cardgame.Competence;
-import com.biit.labstation.components.SnackBar;
 import com.biit.labstation.logger.ClassTestListener;
 import com.biit.labstation.logger.LabStationLogger;
 import com.biit.labstation.logger.TestListener;
@@ -14,14 +12,12 @@ import com.biit.labstation.tests.ITestWithWebDriver;
 import com.biit.labstation.usermanager.UserManager;
 import graphql.Assert;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.annotation.DirtiesContext;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
-
-import static com.biit.labstation.tests.LoginIT.ADMIN_USER_NAME;
-import static com.biit.labstation.tests.LoginIT.ADMIN_USER_PASSWORD;
 
 @SpringBootTest
 @Test(groups = "cadt", priority = Integer.MAX_VALUE)
@@ -40,6 +36,11 @@ public class CadtTests extends BaseTest implements ITestWithWebDriver {
 
     @Autowired
     private UserManager userManager;
+
+    @Value("${admin.user}")
+    private String adminUser;
+    @Value("${admin.password}")
+    private String adminPassword;
 
     private String username;
 
@@ -68,7 +69,7 @@ public class CadtTests extends BaseTest implements ITestWithWebDriver {
     @Test(dependsOnMethods = "signUpOnCardGame")
     public void getUsername() {
         userManager.access();
-        userManager.login(ADMIN_USER_NAME, ADMIN_USER_PASSWORD);
+        userManager.login(adminUser, adminPassword);
         username = userManager.checkUserExistsByEmail(NEW_USER_EMAIL);
         org.testng.Assert.assertNotNull(username);
         userManager.logout();
@@ -78,7 +79,7 @@ public class CadtTests extends BaseTest implements ITestWithWebDriver {
     @AfterClass
     public void cleanup() {
         try {
-            userManager.login(ADMIN_USER_NAME, ADMIN_USER_PASSWORD);
+            userManager.login(adminUser, adminPassword);
             userManager.deleteUser(username);
         } catch (Exception e) {
             //Ignore

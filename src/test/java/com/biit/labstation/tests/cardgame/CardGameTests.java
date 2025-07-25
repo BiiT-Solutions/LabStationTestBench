@@ -12,6 +12,7 @@ import com.biit.labstation.tests.BaseTest;
 import com.biit.labstation.tests.ITestWithWebDriver;
 import graphql.Assert;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.annotation.DirtiesContext;
 import org.testng.annotations.AfterClass;
@@ -27,13 +28,15 @@ import static com.biit.labstation.tests.Priorities.CARD_GAME_PRIORITY;
 @DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_CLASS)
 public class CardGameTests extends BaseTest implements ITestWithWebDriver {
 
-    public static final String ADMIN_USER_NAME = "admin@test.com";
-    public static final String ADMIN_USER_PASSWORD = "asd123";
-
     @Autowired
     private CardGame cardGame;
     @Autowired
     private SnackBar snackBar;
+
+    @Value("${admin.user}")
+    private String adminUser;
+    @Value("${admin.password}")
+    private String adminPassword;
 
     @BeforeClass
     public void setup() {
@@ -42,7 +45,7 @@ public class CardGameTests extends BaseTest implements ITestWithWebDriver {
 
     @Test
     public void cadtGame() {
-        cardGame.login(ADMIN_USER_NAME, ADMIN_USER_PASSWORD);
+        cardGame.login(adminUser, adminPassword);
         cardGame.closeWelcomePage();
 
         LabStationLogger.info(this.getClass().getName(), "Selecting feminine archetypes.");

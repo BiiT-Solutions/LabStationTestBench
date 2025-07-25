@@ -31,11 +31,14 @@ public class CadtDashboardTests extends BaseTest implements ITestWithWebDriver {
 
     public static final int CADT_WAITING_TIME = 90000;
 
-    public static final String ADMIN_USER_NAME = "admin@test.com";
-    public static final String ADMIN_USER_PASSWORD = "asd123";
 
     @Autowired
     private Dashboard dashboard;
+
+    @Value("${admin.user}")
+    private String adminUser;
+    @Value("${admin.password}")
+    private String adminPassword;
 
     @Value("${headless.mode}")
     private boolean headLessMode;
@@ -60,7 +63,7 @@ public class CadtDashboardTests extends BaseTest implements ITestWithWebDriver {
 
     @Test
     public void checkFirstCadtSelectionInfographic() {
-        dashboard.login(ADMIN_USER_NAME, ADMIN_USER_PASSWORD);
+        dashboard.login(adminUser, adminPassword);
         dashboard.selectPersonalCadtOnMenu();
 
         LabStationLogger.info(this.getClass(), "@@ Checking Page 1 of the report");

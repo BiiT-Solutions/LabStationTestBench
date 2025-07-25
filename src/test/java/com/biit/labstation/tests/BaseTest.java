@@ -21,9 +21,6 @@ import java.time.Duration;
 import java.util.Objects;
 import java.util.concurrent.TimeUnit;
 
-import static com.biit.labstation.tests.LoginIT.ADMIN_USER_NAME;
-import static com.biit.labstation.tests.LoginIT.ADMIN_USER_PASSWORD;
-
 public abstract class BaseTest extends AbstractTestNGSpringContextTests implements ITestWithWebDriver {
 
     @Value("${screenshots.folder:/tmp/SeleniumOutput}")
@@ -41,6 +38,11 @@ public abstract class BaseTest extends AbstractTestNGSpringContextTests implemen
     @Autowired
     private SnackBar snackBar;
 
+    @Value("${admin.user}")
+    private String adminUser;
+    @Value("${admin.password}")
+    private String adminPassword;
+
     @Override
     public CustomChromeDriver getDriver() {
         return customChromeDriver;
@@ -52,7 +54,7 @@ public abstract class BaseTest extends AbstractTestNGSpringContextTests implemen
     }
 
     protected void waitUntilReady(ToolTest toolTest) {
-        toolTest.login(ADMIN_USER_NAME, ADMIN_USER_PASSWORD);
+        toolTest.login(adminUser, adminPassword);
         try {
             if (Objects.equals(SnackBar.REQUEST_FAILED, snackBar.getMessage())) {
                 snackBar.closeLatest();

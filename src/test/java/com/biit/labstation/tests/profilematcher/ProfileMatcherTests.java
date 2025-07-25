@@ -16,6 +16,7 @@ import com.biit.labstation.tests.ITestWithWebDriver;
 import org.awaitility.core.ConditionTimeoutException;
 import org.openqa.selenium.By;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.annotation.DirtiesContext;
 import org.testng.Assert;
@@ -24,8 +25,6 @@ import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
 
-import static com.biit.labstation.tests.LoginIT.ADMIN_USER_NAME;
-import static com.biit.labstation.tests.LoginIT.ADMIN_USER_PASSWORD;
 import static com.biit.labstation.tests.Priorities.PROFILES_TESTS_PRIORITY;
 
 @SpringBootTest
@@ -49,6 +48,11 @@ public class ProfileMatcherTests extends BaseTest implements ITestWithWebDriver 
     @Autowired
     private Popup popup;
 
+    @Value("${admin.user}")
+    private String adminUser;
+    @Value("${admin.password}")
+    private String adminPassword;
+
     @BeforeClass
     public void setup() {
         profileMatcher.access();
@@ -56,7 +60,7 @@ public class ProfileMatcherTests extends BaseTest implements ITestWithWebDriver 
 
     @Test
     public void createProfile() {
-        profileMatcher.login(ADMIN_USER_NAME, ADMIN_USER_PASSWORD);
+        profileMatcher.login(adminUser, adminPassword);
         profileMatcher.addProfile(OLD_PROFILE_NAME, null, null, null, CadtOptions.RECEPTIVE);
         ToolTest.waitComponent(1000);
         table.search(TableId.PROFILES_TABLE, OLD_PROFILE_NAME);
@@ -92,7 +96,7 @@ public class ProfileMatcherTests extends BaseTest implements ITestWithWebDriver 
 
     @Test(dependsOnMethods = "nothingToCompare")
     public void assignProfile() {
-        profileMatcher.assignCandidate(NEW_PROFILE_NAME, ADMIN_USER_NAME);
+        profileMatcher.assignCandidate(NEW_PROFILE_NAME, adminUser);
     }
 
     @Test(dependsOnMethods = "assignProfile", expectedExceptions = ElementNotFoundAsExpectedException.class)

@@ -9,15 +9,13 @@ import com.biit.labstation.tests.BaseTest;
 import com.biit.labstation.tests.ITestWithWebDriver;
 import com.biit.labstation.usermanager.UserManager;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.annotation.DirtiesContext;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
-
-import static com.biit.labstation.tests.LoginIT.ADMIN_USER_NAME;
-import static com.biit.labstation.tests.LoginIT.ADMIN_USER_PASSWORD;
 
 @SpringBootTest
 @Test(groups = "validation")
@@ -40,6 +38,11 @@ public class ValidationTests extends BaseTest implements ITestWithWebDriver {
     @Autowired
     private Popup popup;
 
+    @Value("${admin.user}")
+    private String adminUser;
+    @Value("${admin.password}")
+    private String adminPassword;
+
     @BeforeClass
     public void setup() {
         userManager.access();
@@ -48,7 +51,7 @@ public class ValidationTests extends BaseTest implements ITestWithWebDriver {
 
     @Test
     public void checkUserValidation() {
-        userManager.login(ADMIN_USER_NAME, ADMIN_USER_PASSWORD);
+        userManager.login(adminUser, adminPassword);
         try {
             userManager.selectUserOnMenu();
             userManager.addUser(USERNAME, USERNAME + "@test.com", "Basic", "User", "aaaa");
@@ -63,7 +66,7 @@ public class ValidationTests extends BaseTest implements ITestWithWebDriver {
 
     @Test
     public void checkOrganizationValidation() {
-        userManager.login(ADMIN_USER_NAME, ADMIN_USER_PASSWORD);
+        userManager.login(adminUser, adminPassword);
         try {
             userManager.selectOrganizationsOnMenu();
             userManager.addOrganization(ORGANIZATION_NAME, ORGANIZATION_DESCRIPTION);

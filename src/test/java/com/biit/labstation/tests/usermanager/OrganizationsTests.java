@@ -8,6 +8,7 @@ import com.biit.labstation.tests.BaseTest;
 import com.biit.labstation.tests.ITestWithWebDriver;
 import com.biit.labstation.usermanager.UserManager;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.annotation.DirtiesContext;
 import org.testng.annotations.AfterClass;
@@ -15,8 +16,6 @@ import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
 
-import static com.biit.labstation.tests.LoginIT.ADMIN_USER_NAME;
-import static com.biit.labstation.tests.LoginIT.ADMIN_USER_PASSWORD;
 import static com.biit.labstation.tests.Priorities.ORGANIZATION_TESTS_PRIORITY;
 
 @SpringBootTest
@@ -41,6 +40,11 @@ public class OrganizationsTests extends BaseTest implements ITestWithWebDriver {
     @Autowired
     private Popup popup;
 
+    @Value("${admin.user}")
+    private String adminUser;
+    @Value("${admin.password}")
+    private String adminPassword;
+
     @BeforeClass
     public void setup() {
         userManager.access();
@@ -49,7 +53,7 @@ public class OrganizationsTests extends BaseTest implements ITestWithWebDriver {
 
     @Test
     public void createOrganization() {
-        userManager.login(ADMIN_USER_NAME, ADMIN_USER_PASSWORD);
+        userManager.login(adminUser, adminPassword);
         try {
             userManager.addOrganization(ORGANIZATION_NAME, ORGANIZATION_DESCRIPTION);
             snackBar.checkMessage(SnackBar.Type.REGULAR, SnackBar.REQUEST_SUCCESSFUL);
@@ -62,7 +66,7 @@ public class OrganizationsTests extends BaseTest implements ITestWithWebDriver {
 
     @Test(dependsOnMethods = "createOrganization")
     public void addTeamToOrganization() {
-        userManager.login(ADMIN_USER_NAME, ADMIN_USER_PASSWORD);
+        userManager.login(adminUser, adminPassword);
         userManager.addTeamToOrganization(ORGANIZATION_NAME, TEAM_NAME, TEAM_DESCRIPTION);
         userManager.logout();
     }
@@ -70,9 +74,9 @@ public class OrganizationsTests extends BaseTest implements ITestWithWebDriver {
 
     @Test(dependsOnMethods = "addTeamToOrganization")
     public void addAndRemoveUserToTeam() {
-        userManager.login(ADMIN_USER_NAME, ADMIN_USER_PASSWORD);
-        userManager.addUserToTeam(ADMIN_USER_NAME, TEAM_NAME, ORGANIZATION_NAME);
-        userManager.removeUserFromTeam(ADMIN_USER_NAME, TEAM_NAME, ORGANIZATION_NAME);
+        userManager.login(adminUser, adminPassword);
+        userManager.addUserToTeam(adminUser, TEAM_NAME, ORGANIZATION_NAME);
+        userManager.removeUserFromTeam(adminUser, TEAM_NAME, ORGANIZATION_NAME);
         userManager.logout();
     }
 

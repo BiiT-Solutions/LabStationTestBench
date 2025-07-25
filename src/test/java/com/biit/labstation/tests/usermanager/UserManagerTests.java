@@ -24,8 +24,6 @@ import org.testng.annotations.Test;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
-import static com.biit.labstation.tests.LoginIT.ADMIN_USER_NAME;
-import static com.biit.labstation.tests.LoginIT.ADMIN_USER_PASSWORD;
 import static com.biit.labstation.tests.Priorities.USER_MANAGER_PRIORITY;
 
 @SpringBootTest
@@ -52,6 +50,11 @@ public class UserManagerTests extends BaseTest implements ITestWithWebDriver {
     @Value("${starts.from.clean.database}")
     private boolean startsFormCleanDatabase;
 
+    @Value("${admin.user}")
+    private String adminUser;
+    @Value("${admin.password}")
+    private String adminPassword;
+
     @Value("${jwt.user}")
     private String jwtUser;
     @Value("${jwt.password}")
@@ -68,16 +71,16 @@ public class UserManagerTests extends BaseTest implements ITestWithWebDriver {
         if (startsFormCleanDatabase) {
             Thread.sleep(2000);
             LabStationLogger.info(this.getClass(), "Checking admin user!");
-            userManager.login(ADMIN_USER_NAME, ADMIN_USER_PASSWORD);
+            userManager.login(adminUser, adminPassword);
             userManager.logout();
         }
     }
 
     @Test
     public void checkUserExists() {
-        userManager.login(ADMIN_USER_NAME, ADMIN_USER_PASSWORD);
+        userManager.login(adminUser, adminPassword);
 
-        Assert.assertEquals(table.getText(TableId.USERS_TABLE, 0, 3), ADMIN_USER_NAME);
+        Assert.assertEquals(table.getText(TableId.USERS_TABLE, 0, 3), adminUser);
         Assert.assertEquals(table.getText(TableId.USERS_TABLE, 0, 6), LocalDateTime.now().format(DateTimeFormatter.ofPattern("dd/MM/yyyy")));
 
         userManager.logout();
@@ -85,14 +88,14 @@ public class UserManagerTests extends BaseTest implements ITestWithWebDriver {
 
     @Test(dependsOnMethods = "checkUserExists", priority = -1)
     public void editUser() {
-        userManager.login(ADMIN_USER_NAME, ADMIN_USER_PASSWORD);
+        userManager.login(adminUser, adminPassword);
 
-        userManager.editUser(ADMIN_USER_NAME, ADMIN_USER_NAME, ADMIN_NAME, ADMIN_LASTNAME);
-        table.search(TableId.USERS_TABLE, ADMIN_USER_NAME);
+        userManager.editUser(adminUser, adminUser, ADMIN_NAME, ADMIN_LASTNAME);
+        table.search(TableId.USERS_TABLE, adminUser);
         Assert.assertEquals(table.getText(TableId.USERS_TABLE, 0, 1), ADMIN_NAME);
         Assert.assertEquals(table.getText(TableId.USERS_TABLE, 0, 2), ADMIN_LASTNAME);
-        Assert.assertEquals(table.getText(TableId.USERS_TABLE, 0, 3), ADMIN_USER_NAME);
-        Assert.assertEquals(table.getText(TableId.USERS_TABLE, 0, 4), ADMIN_USER_NAME);
+        Assert.assertEquals(table.getText(TableId.USERS_TABLE, 0, 3), adminUser);
+        Assert.assertEquals(table.getText(TableId.USERS_TABLE, 0, 4), adminUser);
         Assert.assertEquals(table.getText(TableId.USERS_TABLE, 0, 6), LocalDateTime.now().format(DateTimeFormatter.ofPattern("dd/MM/yyyy")));
 
         userManager.logout();
@@ -101,7 +104,7 @@ public class UserManagerTests extends BaseTest implements ITestWithWebDriver {
 
     @Test(dependsOnMethods = "checkUserExists")
     public void addBackendServices() {
-        userManager.login(ADMIN_USER_NAME, ADMIN_USER_PASSWORD);
+        userManager.login(adminUser, adminPassword);
 
         //Appointment Center
         userManager.addService("AppointmentCenter", "Tool for handling appointments");
@@ -213,7 +216,7 @@ public class UserManagerTests extends BaseTest implements ITestWithWebDriver {
 
     @Test(dependsOnMethods = "checkUserExists")
     public void addRoles() {
-        userManager.login(ADMIN_USER_NAME, ADMIN_USER_PASSWORD);
+        userManager.login(adminUser, adminPassword);
 
         //Appointment Center
         userManager.addRole("CADT", "Fill up the CADT test.");
@@ -255,7 +258,7 @@ public class UserManagerTests extends BaseTest implements ITestWithWebDriver {
 
     @Test(dependsOnMethods = {"addBackendServices"})
     public void addApplications() {
-        userManager.login(ADMIN_USER_NAME, ADMIN_USER_PASSWORD);
+        userManager.login(adminUser, adminPassword);
 
         //Appointment Center
         userManager.addApplication("AppointmentCenter", "Tool for handling appointments.");
@@ -293,7 +296,7 @@ public class UserManagerTests extends BaseTest implements ITestWithWebDriver {
 
     @Test(dependsOnMethods = {"addApplications", "addRoles"})
     public void addApplicationsRoles() {
-        userManager.login(ADMIN_USER_NAME, ADMIN_USER_PASSWORD);
+        userManager.login(adminUser, adminPassword);
 
         userManager.addApplicationRole("AppointmentCenter", "admin");
         snackBar.checkMessage(SnackBar.Type.REGULAR, SnackBar.REQUEST_SUCCESSFUL);
@@ -509,7 +512,7 @@ public class UserManagerTests extends BaseTest implements ITestWithWebDriver {
      */
     @Test(dependsOnMethods = {"addApplications", "addRoles"})
     public void linkRoles() {
-        userManager.login(ADMIN_USER_NAME, ADMIN_USER_PASSWORD);
+        userManager.login(adminUser, adminPassword);
 
         userManager.linkRoleWithApplication("CADT", "FactsDashboard");
         snackBar.checkMessage(SnackBar.Type.REGULAR, SnackBar.REQUEST_SUCCESSFUL);
@@ -536,7 +539,7 @@ public class UserManagerTests extends BaseTest implements ITestWithWebDriver {
 
     @Test(dependsOnMethods = "checkUserExists")
     public void addGroups() {
-        userManager.login(ADMIN_USER_NAME, ADMIN_USER_PASSWORD);
+        userManager.login(adminUser, adminPassword);
 
         userManager.addGroup("Admin", "With great power comes great responsibility");
         snackBar.checkMessage(SnackBar.Type.REGULAR, SnackBar.REQUEST_SUCCESSFUL);
@@ -565,7 +568,7 @@ public class UserManagerTests extends BaseTest implements ITestWithWebDriver {
 
     @Test(dependsOnMethods = {"addGroups", "addApplicationsRoles", "linkRoles"})
     public void assignRolesToGroups() {
-        userManager.login(ADMIN_USER_NAME, ADMIN_USER_PASSWORD);
+        userManager.login(adminUser, adminPassword);
 
         userManager.addGroupRole("Admin", "AppointmentCenter", "admin");
         snackBar.checkMessage(SnackBar.Type.REGULAR, SnackBar.REQUEST_SUCCESSFUL);
@@ -777,9 +780,9 @@ public class UserManagerTests extends BaseTest implements ITestWithWebDriver {
 
     @Test(dependsOnMethods = "assignRolesToGroups")
     public void assignUsersToGroups() {
-        userManager.login(ADMIN_USER_NAME, ADMIN_USER_PASSWORD);
+        userManager.login(adminUser, adminPassword);
 
-        userManager.addUserToGroup(ADMIN_USER_NAME, "Admin");
+        userManager.addUserToGroup(adminUser, "Admin");
 
         userManager.logout();
     }
@@ -787,7 +790,7 @@ public class UserManagerTests extends BaseTest implements ITestWithWebDriver {
 
     @Test()
     public void createJwtUser() {
-        userManager.login(ADMIN_USER_NAME, ADMIN_USER_PASSWORD);
+        userManager.login(adminUser, adminPassword);
 
         userManager.addUser(jwtUser, "token@test.com", "System", "Token", jwtPassword);
         snackBar.checkMessage(SnackBar.Type.REGULAR, SnackBar.USER_CREATED);
