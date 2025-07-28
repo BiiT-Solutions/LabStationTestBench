@@ -12,13 +12,14 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.annotation.DirtiesContext;
 import org.testng.Assert;
+import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
 
 import static com.biit.labstation.tests.Priorities.ORG_ADMIN_PROFILES_TESTS_PRIORITY;
-import static com.biit.labstation.tests.usermanager.OrganizationAdminTests.ORGANIZATION_adminPassword;
-import static com.biit.labstation.tests.usermanager.OrganizationAdminTests.ORGANIZATION_adminUser;
+import static com.biit.labstation.tests.usermanager.OrganizationAdminTests.ORGANIZATION_ADMIN_PASSWORD;
+import static com.biit.labstation.tests.usermanager.OrganizationAdminTests.ORGANIZATION_ADMIN_USER;
 
 @SpringBootTest
 @Test(groups = "orgAdminMetaviewer", priority = ORG_ADMIN_PROFILES_TESTS_PRIORITY)
@@ -53,11 +54,26 @@ public class OrganizationAdminMetaviewerTests extends BaseTest implements ITestW
 
     @Test
     public void orgAdminCanSee2ElementsOnMetaviewer() {
-        profileMatcher.login(ORGANIZATION_adminUser, ORGANIZATION_adminPassword);
+        profileMatcher.login(ORGANIZATION_ADMIN_USER, ORGANIZATION_ADMIN_PASSWORD);
 
         profileMatcher.selectTriageOnMenu();
         ToolTest.waitComponent();
         Assert.assertEquals(profileMatcher.countMetaviewerElements(), 2);
         profileMatcher.logout();
+    }
+
+    @AfterClass
+    public void cleanup() {
+        try {
+            profileMatcher.logout();
+        } catch (Exception e) {
+            //Ignore
+        }
+    }
+
+
+    @AfterClass(dependsOnMethods = "cleanup")
+    public void closeDriver() {
+        profileMatcher.getCustomChromeDriver().closeDriver();
     }
 }
