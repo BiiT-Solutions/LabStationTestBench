@@ -21,7 +21,7 @@
                 <include name="cadtDashboard"/>
                 <include name="organizationAdmin"/>
                 <include name="organizationAdminDashboard"/>
-                <include name="orgAdminMetaviewer"/>
+                <exclude name="orgAdminMetaviewer"/>
             </run>
         </groups>
         <classes>
