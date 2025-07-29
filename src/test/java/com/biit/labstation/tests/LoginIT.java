@@ -13,10 +13,11 @@ import org.testng.annotations.Test;
 
 import java.time.Duration;
 
+import static com.biit.labstation.tests.Priorities.LOGIN_PRIORITY;
 import static org.awaitility.Awaitility.await;
 
 @SpringBootTest
-@Test(groups = "login")
+@Test(groups = "login", priority = LOGIN_PRIORITY)
 @DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_CLASS)
 public class LoginIT extends AbstractTestNGSpringContextTests {
 

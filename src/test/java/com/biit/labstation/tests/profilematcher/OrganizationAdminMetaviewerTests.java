@@ -4,6 +4,7 @@ package com.biit.labstation.tests.profilematcher;
 import com.biit.labstation.ToolTest;
 import com.biit.labstation.logger.ClassTestListener;
 import com.biit.labstation.logger.TestListener;
+import com.biit.labstation.profilematcher.Metaviewer;
 import com.biit.labstation.profilematcher.ProfileMatcher;
 import com.biit.labstation.tests.BaseTest;
 import com.biit.labstation.tests.ITestWithWebDriver;
@@ -30,6 +31,9 @@ public class OrganizationAdminMetaviewerTests extends BaseTest implements ITestW
     @Autowired
     private ProfileMatcher profileMatcher;
 
+    @Autowired
+    private Metaviewer metaviewer;
+
     @Value("${admin.user}")
     private String adminUser;
     @Value("${admin.password}")
@@ -47,7 +51,26 @@ public class OrganizationAdminMetaviewerTests extends BaseTest implements ITestW
 
         profileMatcher.selectTriageOnMenu();
         ToolTest.waitComponent();
-        Assert.assertEquals(profileMatcher.countMetaviewerElements(), 3);
+        Assert.assertEquals(metaviewer.countMetaviewerElements(), 3);
+
+        metaviewer.openElement(0);
+        Assert.assertEquals(metaviewer.getMetaviewerElementHeader(), "admin@test.com");
+        //Admin is receptive
+        Assert.assertEquals(metaviewer.getMetaviewerElementData(1), "true");
+        metaviewer.metaviewerElementClose();
+
+        metaviewer.openElement(1);
+        Assert.assertEquals(metaviewer.getMetaviewerElementHeader(), "nonorg@test.com");
+        //nonorg is not receptive
+        Assert.assertEquals(metaviewer.getMetaviewerElementData(1), "true");
+        metaviewer.metaviewerElementClose();
+
+        metaviewer.openElement(2);
+        Assert.assertEquals(metaviewer.getMetaviewerElementHeader(), "inorg@test.com");
+        //inorg is not receptive
+        Assert.assertEquals(metaviewer.getMetaviewerElementData(1), "false");
+        metaviewer.metaviewerElementClose();
+
         profileMatcher.logout();
     }
 
@@ -58,7 +81,20 @@ public class OrganizationAdminMetaviewerTests extends BaseTest implements ITestW
 
         profileMatcher.selectTriageOnMenu();
         ToolTest.waitComponent();
-        Assert.assertEquals(profileMatcher.countMetaviewerElements(), 2);
+        Assert.assertEquals(metaviewer.countMetaviewerElements(), 2);
+
+        metaviewer.openElement(0);
+        Assert.assertEquals(metaviewer.getMetaviewerElementHeader(), "admin@test.com");
+        //Admin is receptive
+        Assert.assertEquals(metaviewer.getMetaviewerElementData(1), "true");
+        metaviewer.metaviewerElementClose();
+
+        metaviewer.openElement(1);
+        Assert.assertEquals(metaviewer.getMetaviewerElementHeader(), "inorg@test.com");
+        //inorg is not receptive
+        Assert.assertEquals(metaviewer.getMetaviewerElementData(1), "false");
+        metaviewer.metaviewerElementClose();
+
         profileMatcher.logout();
     }
 

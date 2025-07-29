@@ -4,6 +4,7 @@ public class Priorities {
 
 
     public static final int USER_MANAGER_PRIORITY = Integer.MIN_VALUE;
+    public static final int LOGIN_PRIORITY = Integer.MIN_VALUE + 1;
 
     public static final int USER_TESTS_PRIORITY = -1000;
     public static final int USER_MANAGER_EDITOR_PRIORITY = USER_TESTS_PRIORITY + 1;

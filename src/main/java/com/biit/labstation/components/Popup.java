@@ -10,11 +10,9 @@ import org.springframework.stereotype.Component;
 public class Popup {
 
     private final CustomChromeDriver customChromeDriver;
-    private final Table table;
 
-    public Popup(CustomChromeDriver customChromeDriver, Table table) {
+    public Popup(CustomChromeDriver customChromeDriver) {
         this.customChromeDriver = customChromeDriver;
-        this.table = table;
     }
 
     public WebElement findElement(PopupId popupId, String id) {

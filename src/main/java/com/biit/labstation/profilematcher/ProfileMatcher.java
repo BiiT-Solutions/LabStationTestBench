@@ -184,13 +184,4 @@ public class ProfileMatcher extends ToolTest {
         popup.findElement(PopupId.ASSIGN_USER_POPUP, "assign-user-button").click();
     }
 
-    public int countMetaviewerElements() {
-        return getCustomChromeDriver().findElementWaiting(By.id("metaviewer-board")).findElements(By.className("metaviewer-element"))
-                .size();
-    }
-
-    public String getMetaviewerColor(int bulletIndex) {
-        return getCustomChromeDriver().findElementWaiting(By.id("metaviewer-board")).findElements(By.className("metaviewer-element"))
-                .get(bulletIndex).getCssValue("background-color");
-    }
 }
