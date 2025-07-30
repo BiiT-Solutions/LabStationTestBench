@@ -245,7 +245,7 @@ public class OrganizationAdminDashboardTests extends BaseTest implements ITestWi
     }
 
 
-    @AfterClass
+    @AfterClass(alwaysRun = true)
     public void cleanup() {
         try {
             userManager.login(adminUser, adminPassword);
@@ -262,7 +262,7 @@ public class OrganizationAdminDashboardTests extends BaseTest implements ITestWi
     }
 
 
-    @AfterClass(dependsOnMethods = "cleanup")
+    @AfterClass(dependsOnMethods = "cleanup", alwaysRun = true)
     public void closeDriver() {
         userManager.getCustomChromeDriver().closeDriver();
     }

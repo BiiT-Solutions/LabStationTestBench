@@ -99,7 +99,7 @@ public class OrganizationAdminMetaviewerTests extends BaseTest implements ITestW
     }
 
 
-    @AfterClass
+    @AfterClass(alwaysRun = true)
     public void cleanup() {
         try {
             profileMatcher.logout();
@@ -109,7 +109,7 @@ public class OrganizationAdminMetaviewerTests extends BaseTest implements ITestW
     }
 
 
-    @AfterClass(dependsOnMethods = "cleanup")
+    @AfterClass(dependsOnMethods = "cleanup", alwaysRun = true)
     public void closeDriver() {
         profileMatcher.getCustomChromeDriver().closeDriver();
     }

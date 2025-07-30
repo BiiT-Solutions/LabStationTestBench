@@ -19,8 +19,10 @@ import org.testng.annotations.AfterClass;
 import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
 
+import static com.biit.labstation.tests.Priorities.CARD_GAME_PRIORITY;
+
 @SpringBootTest
-@Test(groups = "cadt", priority = Integer.MAX_VALUE)
+@Test(groups = "cadt", priority = CARD_GAME_PRIORITY)
 @Listeners({TestListener.class, ClassTestListener.class})
 @DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_CLASS)
 public class CadtTests extends BaseTest implements ITestWithWebDriver {
@@ -76,7 +78,7 @@ public class CadtTests extends BaseTest implements ITestWithWebDriver {
     }
 
 
-    @AfterClass
+    @AfterClass(alwaysRun = true)
     public void cleanup() {
         try {
             userManager.login(adminUser, adminPassword);
@@ -91,7 +93,7 @@ public class CadtTests extends BaseTest implements ITestWithWebDriver {
         }
     }
 
-    @AfterClass(dependsOnMethods = "cleanup")
+    @AfterClass(dependsOnMethods = "cleanup", alwaysRun = true)
     public void closeDriver() {
         userManager.getCustomChromeDriver().closeDriver();
     }

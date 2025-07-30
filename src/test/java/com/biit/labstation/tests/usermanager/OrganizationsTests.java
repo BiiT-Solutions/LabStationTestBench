@@ -80,7 +80,7 @@ public class OrganizationsTests extends BaseTest implements ITestWithWebDriver {
         userManager.logout();
     }
 
-    @AfterClass
+    @AfterClass(alwaysRun = true)
     public void cleanup() {
         try {
             popup.close(null);
@@ -94,7 +94,7 @@ public class OrganizationsTests extends BaseTest implements ITestWithWebDriver {
         }
     }
 
-    @AfterClass(dependsOnMethods = "cleanup")
+    @AfterClass(dependsOnMethods = "cleanup", alwaysRun = true)
     public void closeDriver() {
         userManager.getCustomChromeDriver().closeDriver();
     }
