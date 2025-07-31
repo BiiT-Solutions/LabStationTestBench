@@ -38,7 +38,7 @@ public class Metaviewer {
 
     public String getMetaviewerElementData(int index) {
         return customChromeDriver.findElementWaiting(By.id("metadata-viewer")).findElement(By.id("metaviewer-data")).findElement(By.id("metaviewer-info"))
-                .findElements(By.id("metaviewer-info-row")).get(index).findElement(By.id("field")).findElement(By.id("input")).getText();
+                .findElements(By.id("metaviewer-info-row")).get(index).findElement(By.id("field")).findElement(By.id("input")).getAttribute("value");
     }
 
     public void metaviewerElementClose() {

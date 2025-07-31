@@ -20,7 +20,7 @@ import org.springframework.stereotype.Component;
 public class ProfileMatcher extends ToolTest {
 
     private static final int NAME_PROFILE_TABLE_COLUMN = 1;
-    private static final int USERNAME_USER_TABLE_COLUMN = 4;
+    private static final int USERNAME_USER_TABLE_COLUMN = 1;
 
 
     private final NavBar navBar;
@@ -182,6 +182,7 @@ public class ProfileMatcher extends ToolTest {
         table.selectRow(TableId.CANDIDATES_TABLE, username, USERNAME_USER_TABLE_COLUMN);
         table.pressButton(TableId.CANDIDATES_TABLE, "button-assign");
         popup.findElement(PopupId.ASSIGN_USER_POPUP, "assign-user-button").click();
+        ToolTest.waitComponent();
     }
 
 }
