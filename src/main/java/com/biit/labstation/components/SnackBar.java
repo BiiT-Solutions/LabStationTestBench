@@ -91,6 +91,7 @@ public class SnackBar {
                         message, type, getMessage(), getMessageType());
                 if (Objects.equals(getMessageType(), type) && Objects.equals(getMessage(), message)) {
                     closeLatest();
+                    LabStationLogger.debug(this.getClass().getName(), "Message found!");
                     return true;
                 }
             } catch (Exception e) {
