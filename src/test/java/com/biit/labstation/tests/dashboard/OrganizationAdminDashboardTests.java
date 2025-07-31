@@ -35,8 +35,8 @@ public class OrganizationAdminDashboardTests extends BaseTest implements ITestWi
 
     public static final int CADT_WAITING_TIME = 90000;
 
-    public static final String ORGANIZATION_adminUser = "orgadmin@test.com";
-    public static final String ORGANIZATION_adminPassword = "asd123";
+    public static final String ORGANIZATION_ADMIN_USER = "orgadmin@test.com";
+    public static final String ORGANIZATION_ADMIN_PASSWORD = "asd123";
 
     public static final String NON_ORG_USER_NAME = "nonorg@test.com";
     public static final String NON_ORG_USER_PASSWORD = "asd123";
@@ -142,6 +142,7 @@ public class OrganizationAdminDashboardTests extends BaseTest implements ITestWi
 
         dashboard.selectCadtOverviewOnMenu();
 
+        ToolTest.waitComponent();
         Assert.assertEquals(dashboard.getCadtHeatMapValue(ADMIN_USER_COLUMN, CadtHeatmapRow.VISIONARY), "-1");
         Assert.assertEquals(dashboard.getCadtHeatMapValue(ADMIN_USER_COLUMN, CadtHeatmapRow.SCIENTIST), "1");
         Assert.assertEquals(dashboard.getCadtHeatMapValue(ADMIN_USER_COLUMN, CadtHeatmapRow.TRADESMAN), "0");
@@ -180,7 +181,7 @@ public class OrganizationAdminDashboardTests extends BaseTest implements ITestWi
     @Test(dependsOnMethods = {"checkDashboardByAdminCanSee3Users"})
     public void checkDashboardByOrgAdminCanOnlySee2Users() {
         dashboard.access();
-        dashboard.login(ORGANIZATION_adminUser, ORGANIZATION_adminPassword);
+        dashboard.login(ORGANIZATION_ADMIN_USER, ORGANIZATION_ADMIN_PASSWORD);
 
         dashboard.selectCadtOverviewOnMenu();
 
@@ -217,7 +218,7 @@ public class OrganizationAdminDashboardTests extends BaseTest implements ITestWi
         dashboard.access();
 
         //OrgAdmin can only see two users.
-        dashboard.login(ORGANIZATION_adminUser, ORGANIZATION_adminPassword);
+        dashboard.login(ORGANIZATION_ADMIN_USER, ORGANIZATION_ADMIN_PASSWORD);
         ToolTest.waitComponent();
         dashboard.selectCustomerListOnMenu();
         ToolTest.waitComponent();
