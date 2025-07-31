@@ -115,7 +115,7 @@ public class ProfileMatcherTests extends BaseTest implements ITestWithWebDriver 
         profileMatcher.login(adminUser, adminPassword);
         profileMatcher.openProfileForMatching(NEW_PROFILE_NAME);
         try {
-            screenShooter.takeScreenshot("CanCompareTest2");
+            screenShooter.takeScreenshot("CanCompareTest1");
             snackBar.checkMessage(SnackBar.Type.WARNING, SnackBar.NO_ASSIGNED_PROFILES);
             screenShooter.takeScreenshot("CanCompareTest2");
         } catch (ConditionTimeoutException e) {
