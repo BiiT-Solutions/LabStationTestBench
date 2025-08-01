@@ -12,6 +12,7 @@ public enum TableId {
     SERVICE_TABLE("service-table"),
     SERVICE_ROLE_TABLE("service-role-table"),
     PROFILES_TABLE("profiles-table"),
+    PROJECTS_TABLE("projects-table"),
     CANDIDATES_TABLE("candidates-table");
 
     private final String id;

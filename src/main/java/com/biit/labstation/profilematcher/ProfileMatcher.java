@@ -20,7 +20,9 @@ import org.springframework.stereotype.Component;
 public class ProfileMatcher extends ToolTest {
 
     private static final int NAME_PROFILE_TABLE_COLUMN = 1;
+    private static final int NAME_PROJECT_TABLE_COLUMN = 1;
     private static final int USERNAME_USER_TABLE_COLUMN = 1;
+    private static final int USERNAME_PROFILES_TABLE_COLUMN = 4;
 
 
     private final NavBar navBar;
@@ -55,6 +57,11 @@ public class ProfileMatcher extends ToolTest {
     public void logout() {
         getCustomChromeDriver().findElementWaiting(By.id("profilematcher-menu")).click();
         getCustomChromeDriver().findElementWaiting(By.id("profilematcher-menu-logout")).click();
+    }
+
+    public void selectProjectsOnMenu() {
+        navBar.goTo("nav-item-Projects");
+        ToolTest.waitComponent();
     }
 
     public void selectProfilesOnMenu() {
@@ -185,4 +192,99 @@ public class ProfileMatcher extends ToolTest {
         ToolTest.waitComponent();
     }
 
+
+    public void addProject(String name, String description) {
+        LabStationLogger.debug(this.getClass().getName(), "@@ Adding project '{}'.", name);
+        try {
+            selectProjectsOnMenu();
+        } catch (Exception e) {
+            //Already on this tab.
+        }
+        table.pressButton(TableId.PROJECTS_TABLE, "button-plus");
+        if (name != null) {
+            popup.findElement(PopupId.PROJECT, "project-name").findElement(By.id("input")).sendKeys(name);
+        }
+        if (description != null) {
+            popup.findElement(PopupId.PROJECT, "project-description").findElement(By.id("input")).sendKeys(description);
+        }
+        popup.findElement(PopupId.PROJECT, "popup-project-save-button").click();
+    }
+
+
+    public void deleteProject(String name) {
+        LabStationLogger.debug(this.getClass().getName(), "@@ Deleting project '{}'.", name);
+        try {
+            selectProjectsOnMenu();
+        } catch (Exception e) {
+            //Already on this tab.
+        }
+        table.selectRow(TableId.PROJECTS_TABLE, name, NAME_PROJECT_TABLE_COLUMN);
+        table.pressButton(TableId.PROJECTS_TABLE, "button-minus");
+        popup.findElement(PopupId.CONFIRMATION_DELETE, "confirm-delete-button").click();
+    }
+
+    public void assignProfile(String project, String profile) {
+        LabStationLogger.debug(this.getClass().getName(), "@@ Assigning profile '{}' to project '{}'.", profile, project);
+        try {
+            selectProjectsOnMenu();
+        } catch (Exception e) {
+            //Already on this tab.
+        }
+        table.selectRow(TableId.PROJECTS_TABLE, project, NAME_PROJECT_TABLE_COLUMN);
+        ToolTest.waitComponent();
+        table.pressButton(TableId.PROJECTS_TABLE, "button-linkage");
+
+        table.selectRow(TableId.PROFILES_TABLE, profile, NAME_PROFILE_TABLE_COLUMN);
+        popup.findElement(PopupId.ASSIGN_PROFILES_POPUP, "popup-assign-button").click();
+        ToolTest.waitComponent();
+        popup.findElement(PopupId.CONFIRMATION, "assign-button").click();
+        ToolTest.waitComponent();
+        popup.close(PopupId.ASSIGN_PROFILES_POPUP);
+        ToolTest.waitComponent();
+    }
+
+    public void assignUserToProfile(String project, String profile, String user) {
+        LabStationLogger.debug(this.getClass().getName(), "@@ Assigning user '{}' to profile '{}' on project.", user, profile, project);
+        try {
+            selectProjectsOnMenu();
+        } catch (Exception e) {
+            //Already on this tab.
+        }
+        table.selectRow(TableId.PROJECTS_TABLE, project, NAME_PROJECT_TABLE_COLUMN);
+        ToolTest.waitComponent();
+        table.pressButton(TableId.PROJECTS_TABLE, "button-linkage");
+
+        table.selectRow(TableId.PROFILES_TABLE, profile, NAME_PROFILE_TABLE_COLUMN);
+        popup.findElement(PopupId.ASSIGN_PROFILES_POPUP, "popup-assign-users").click();
+        ToolTest.waitComponent();
+        table.selectRow(TableId.USERS_TABLE, user, USERNAME_PROFILES_TABLE_COLUMN);
+        popup.findElement(PopupId.USERS_PROFILES_POPUP, "popup-assign-button").click();
+        ToolTest.waitComponent();
+        popup.findElement(PopupId.CONFIRMATION, "assign-button").click();
+        ToolTest.waitComponent();
+        popup.close(PopupId.USERS_PROFILES_POPUP);
+        ToolTest.waitComponent();
+        popup.close(PopupId.ASSIGN_PROFILES_POPUP);
+        ToolTest.waitComponent();
+    }
+
+    public void unassignProfile(String project, String profile) {
+        LabStationLogger.debug(this.getClass().getName(), "@@ Unassigning profile '{}' from project '{}'.", profile, project);
+        try {
+            selectProjectsOnMenu();
+        } catch (Exception e) {
+            //Already on this tab.
+        }
+        table.selectRow(TableId.PROJECTS_TABLE, project, NAME_PROJECT_TABLE_COLUMN);
+        ToolTest.waitComponent();
+        table.pressButton(TableId.PROJECTS_TABLE, "button-linkage");
+
+        table.selectRow(TableId.PROFILES_TABLE, profile, NAME_PROFILE_TABLE_COLUMN);
+        popup.findElement(PopupId.ASSIGN_PROFILES_POPUP, "popup-unassign-button").click();
+        ToolTest.waitComponent();
+        popup.findElement(PopupId.CONFIRMATION_DELETE, "unassign-button").click();
+        ToolTest.waitComponent();
+        popup.close(PopupId.ASSIGN_PROFILES_POPUP);
+        ToolTest.waitComponent();
+    }
 }

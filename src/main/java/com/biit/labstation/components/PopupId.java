@@ -23,7 +23,10 @@ public enum PopupId {
     CONFIRMATION_UNASSIGN("confirmation-unassign-popup"),
     CONFIRMATION_DELETE("confirmation-delete-popup"),
     PROFILE("profile-popup"),
+    PROJECT("project-popup"),
     ASSIGN_USER_POPUP("assign-user-popup"),
+    ASSIGN_PROFILES_POPUP("profiles-popup"),
+    USERS_PROFILES_POPUP("user-profiles-popup"),
     CANDIDATES_POPUP("candidates-popup"),
     LOGIN_WARNING("warning-popup");
 

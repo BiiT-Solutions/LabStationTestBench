@@ -32,7 +32,7 @@ import static com.biit.labstation.tests.Priorities.PROFILES_TESTS_PRIORITY;
 @Test(groups = "profiles", priority = PROFILES_TESTS_PRIORITY)
 @Listeners({TestListener.class, ClassTestListener.class})
 @DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_CLASS)
-public class ProfileMatcherTests extends BaseTest implements ITestWithWebDriver {
+public class ProfilesTests extends BaseTest implements ITestWithWebDriver {
 
     private static final String OLD_PROFILE_NAME = "OldProfile";
     private static final String NEW_PROFILE_NAME = "NewProfile";

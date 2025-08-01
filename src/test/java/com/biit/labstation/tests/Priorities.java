@@ -15,6 +15,7 @@ public class Priorities {
     public static final int ORGANIZATION_ADMIN_TESTS_PRIORITY = ORGANIZATION_TESTS_PRIORITY + 1;
 
     public static final int PROFILES_TESTS_PRIORITY = 100;
+    public static final int PROJECTS_TESTS_PRIORITY = PROFILES_TESTS_PRIORITY + 1;
     public static final int ORG_ADMIN_PROFILES_TESTS_PRIORITY = 150;
 
     public static final int CARD_GAME_PRIORITY = 1000;
