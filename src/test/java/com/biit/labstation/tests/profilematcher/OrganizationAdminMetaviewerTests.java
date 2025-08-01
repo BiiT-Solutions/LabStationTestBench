@@ -56,19 +56,19 @@ public class OrganizationAdminMetaviewerTests extends BaseTest implements ITestW
         metaviewer.openElement(0);
         Assert.assertEquals(metaviewer.getMetaviewerElementHeader(), "admin@test.com");
         //Admin is receptive
-//        Assert.assertEquals(metaviewer.getMetaviewerElementData(1), "true");
+        Assert.assertEquals(metaviewer.getMetaviewerElementData(1), "true");
         metaviewer.metaviewerElementClose();
 
         metaviewer.openElement(1);
         Assert.assertEquals(metaviewer.getMetaviewerElementHeader(), "nonorg@test.com");
         //nonorg is not receptive
-//        Assert.assertEquals(metaviewer.getMetaviewerElementData(1), "true");
+        Assert.assertEquals(metaviewer.getMetaviewerElementData(1), "true");
         metaviewer.metaviewerElementClose();
 
         metaviewer.openElement(2);
         Assert.assertEquals(metaviewer.getMetaviewerElementHeader(), "inorg@test.com");
         //inorg is not receptive
-//        Assert.assertEquals(metaviewer.getMetaviewerElementData(1), "false");
+        Assert.assertEquals(metaviewer.getMetaviewerElementData(1), "false");
         metaviewer.metaviewerElementClose();
 
         profileMatcher.logout();
@@ -86,13 +86,13 @@ public class OrganizationAdminMetaviewerTests extends BaseTest implements ITestW
         metaviewer.openElement(0);
         Assert.assertEquals(metaviewer.getMetaviewerElementHeader(), "admin@test.com");
         //Admin is receptive
-//        Assert.assertEquals(metaviewer.getMetaviewerElementData(1), "true");
+        Assert.assertEquals(metaviewer.getMetaviewerElementData(1), "true");
         metaviewer.metaviewerElementClose();
 
         metaviewer.openElement(1);
         Assert.assertEquals(metaviewer.getMetaviewerElementHeader(), "inorg@test.com");
         //inorg is not receptive
-//        Assert.assertEquals(metaviewer.getMetaviewerElementData(1), "false");
+        Assert.assertEquals(metaviewer.getMetaviewerElementData(1), "false");
         metaviewer.metaviewerElementClose();
 
         profileMatcher.logout();
