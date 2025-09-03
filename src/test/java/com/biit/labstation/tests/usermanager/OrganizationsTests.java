@@ -88,6 +88,7 @@ public class OrganizationsTests extends BaseTest implements ITestWithWebDriver {
             //Ignore
         }
         try {
+            userManager.access();
             userManager.logout();
         } catch (Exception e) {
             //Ignore
