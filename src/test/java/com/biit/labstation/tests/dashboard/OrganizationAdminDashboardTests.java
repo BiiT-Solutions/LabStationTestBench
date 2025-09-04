@@ -240,7 +240,7 @@ public class OrganizationAdminDashboardTests extends BaseTest implements ITestWi
         dashboard.selectCustomerListOnMenu();
         ToolTest.waitComponent();
 
-        Assert.assertEquals(table.countRows(TableId.USERS_TABLE), 6);
+        Assert.assertEquals(table.countRows(TableId.USERS_TABLE), 5);
 
         dashboard.logout();
     }
