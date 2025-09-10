@@ -33,8 +33,18 @@ public class Dashboard extends ToolTest {
 
     @Override
     public void logout() {
-        getCustomChromeDriver().findElementWaiting(By.id("dashboard-menu")).click();
+        getCustomChromeDriver().findElementWaiting(By.id("dashboard-menu-user")).click();
         getCustomChromeDriver().findElementWaiting(By.id("dashboard-menu-logout")).click();
+    }
+
+    public void selectActivities() {
+        getCustomChromeDriver().findElementWaiting(By.id("dashboard-menu-user")).click();
+        getCustomChromeDriver().findElementWaiting(By.id("dashboard-menu-activity")).click();
+    }
+
+    public void selectHistoric() {
+        getCustomChromeDriver().findElementWaiting(By.id("dashboard-menu-user")).click();
+        getCustomChromeDriver().findElementWaiting(By.id("dashboard-menu-historical")).click();
     }
 
     public void selectPersonalCadtOnMenu() {
