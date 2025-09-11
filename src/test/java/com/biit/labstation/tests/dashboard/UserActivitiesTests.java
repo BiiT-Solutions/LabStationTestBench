@@ -23,7 +23,7 @@ import org.testng.annotations.Test;
 import static com.biit.labstation.tests.Priorities.ACTIVITY_HISTORIC_PRIORITY;
 
 @SpringBootTest
-@Test(groups = "cadtDashboard", priority = ACTIVITY_HISTORIC_PRIORITY)
+@Test(groups = "activities", priority = ACTIVITY_HISTORIC_PRIORITY)
 @Listeners({TestListener.class, ClassTestListener.class})
 public class UserActivitiesTests extends BaseTest implements ITestWithWebDriver {
 

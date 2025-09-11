@@ -23,6 +23,7 @@
                 <include name="organizationAdmin"/>
                 <include name="organizationAdminDashboard"/>
                 <include name="orgAdminMetaviewer"/>
+                <include name="activities"/>
             </run>
         </groups>
         <classes>
@@ -39,6 +40,7 @@
             <class name="com.biit.labstation.tests.cardgame.CardGameTests"/>
             <class name="com.biit.labstation.tests.dashboard.CadtDashboardTests"/>
             <class name="com.biit.labstation.tests.dashboard.OrganizationAdminDashboardTests"/>
+            <class name="com.biit.labstation.tests.dashboard.UserActivitiesTests"/>
             <class name="com.biit.labstation.tests.profilematcher.OrganizationAdminMetaviewerTests"/>
         </classes>
     </test>
