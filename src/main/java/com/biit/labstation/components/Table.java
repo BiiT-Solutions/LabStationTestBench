@@ -38,10 +38,16 @@ public class Table {
     }
 
     public void search(TableId tableId, String text) {
+        ToolTest.waitComponent(SEARCH_WAIT);
         getSearchField(tableId).clear();
-        ToolTest.waitComponent();
         getSearchField(tableId).sendKeys(text);
         getSearchField(tableId).sendKeys(Keys.ENTER);
+        final String content = getSearchField(tableId).getAttribute("value");
+        LabStationLogger.debug(this.getClass().getName(), "Search text content is '{}'.", content);
+        if (!Objects.equals(text, content)) {
+            LabStationLogger.warning(this.getClass().getName(), "Search text content '{}' does not match requested search '{}'.",
+                    content, text);
+        }
         ToolTest.waitComponent(SEARCH_WAIT);
     }
 
@@ -71,7 +77,7 @@ public class Table {
      * Search a cell content from a table, by the text value on a different column.
      *
      * @param tableId      table.
-     * @param content   content to compare.
+     * @param content      content to compare.
      * @param columContent column to compare.
      * @param columnToGet  content to retrieve.
      * @return
