@@ -76,7 +76,11 @@ public class SnackBar {
         if (notifications.size() > 1) {
             LabStationLogger.info(this.getClass().getName(), "Notifications found: '{}'.", notifications.size());
         }
-        notifications.get(notifications.size() - 1).click();
+        if (notifications.isEmpty()) {
+            LabStationLogger.info(this.getClass().getName(), "No notifications found!.");
+        } else {
+            notifications.get(notifications.size() - 1).click();
+        }
     }
 
     public void checkMessage(SnackBar.Type type, String message) {
