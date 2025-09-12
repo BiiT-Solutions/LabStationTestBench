@@ -1,5 +1,6 @@
 package com.biit.labstation.tests.usermanager;
 
+import com.biit.labstation.ScreenShooter;
 import com.biit.labstation.components.Popup;
 import com.biit.labstation.components.PopupId;
 import com.biit.labstation.components.SnackBar;
@@ -59,6 +60,9 @@ public class UserManagerTests extends BaseTest implements ITestWithWebDriver {
     private String jwtUser;
     @Value("${jwt.password}")
     private String jwtPassword;
+
+    @Autowired
+    private ScreenShooter screenShooter;
 
     @BeforeClass
     public void setup() throws InterruptedException {
@@ -788,12 +792,13 @@ public class UserManagerTests extends BaseTest implements ITestWithWebDriver {
     }
 
 
-    @Test()
+    @Test(dependsOnMethods = "assignRolesToGroups")
     public void createJwtUser() {
         userManager.login(adminUser, adminPassword);
 
         userManager.addUser(jwtUser, "token@test.com", "System", "Token", jwtPassword);
         snackBar.checkMessage(SnackBar.Type.REGULAR, SnackBar.USER_CREATED);
+        screenShooter.takeScreenshot(LocalDateTime.now().format(DateTimeFormatter.ISO_DATE_TIME) + "_1");
         userManager.addUserRoles(jwtUser, "UserManagerSystem", "admin");
         snackBar.checkMessage(SnackBar.Type.REGULAR, SnackBar.REQUEST_SUCCESSFUL);
         userManager.addUserRoles(jwtUser, "FactManager", "admin");

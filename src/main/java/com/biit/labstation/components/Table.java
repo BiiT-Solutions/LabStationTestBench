@@ -1,6 +1,7 @@
 package com.biit.labstation.components;
 
 import com.biit.labstation.CustomChromeDriver;
+import com.biit.labstation.ScreenShooter;
 import com.biit.labstation.ToolTest;
 import com.biit.labstation.exceptions.ElementNotFoundAsExpectedException;
 import com.biit.labstation.logger.ComponentLogger;
@@ -8,9 +9,12 @@ import com.biit.labstation.logger.LabStationLogger;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebElement;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.time.Duration;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Objects;
 
@@ -21,6 +25,9 @@ public class Table {
     private static final int WAITING_TIME_SECONDS = 3;
     public static final int CLEAR_WAIT = 20;
     private static final int SEARCH_WAIT = 1000;
+
+    @Autowired
+    private ScreenShooter screenShooter;
 
     private final CustomChromeDriver customChromeDriver;
 
@@ -117,8 +124,10 @@ public class Table {
         await().atMost(Duration.ofSeconds(WAITING_TIME_SECONDS)).until(() -> {
             for (int i = 0; i < countRows(tableId); i++) {
                 if (Objects.equals(getText(tableId, i, column), label)) {
+                    screenShooter.takeScreenshot(LocalDateTime.now().format(DateTimeFormatter.ISO_DATE_TIME) + "_2");
                     selectRow(tableId, i);
                     ComponentLogger.debug(this.getClass().getName(), "Selecting Table '{}'. Row '{}'. Column '{}'.", tableId, label, column);
+                    screenShooter.takeScreenshot(LocalDateTime.now().format(DateTimeFormatter.ISO_DATE_TIME) + "_3");
                     return true;
                 }
             }
