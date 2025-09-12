@@ -13,6 +13,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.time.Duration;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Objects;
 
@@ -44,7 +46,7 @@ public class Table {
 
     public void search(TableId tableId, String text) {
         ToolTest.waitComponent(SEARCH_WAIT);
-        getSearchField(tableId).clear();
+        clearSearch(tableId);
         getSearchField(tableId).sendKeys(text);
         getSearchField(tableId).sendKeys(Keys.ENTER);
         final String content = getSearchField(tableId).getAttribute("value");
@@ -52,6 +54,8 @@ public class Table {
         if (!Objects.equals(text, content)) {
             LabStationLogger.warning(this.getClass().getName(), "Search text content '{}' does not match requested search '{}'.",
                     content, text);
+            final String fileName = LocalDateTime.now().format(DateTimeFormatter.ISO_DATE_TIME) + "_search_failure";
+            screenShooter.takeScreenshot(fileName);
         }
         ToolTest.waitComponent(SEARCH_WAIT);
     }
@@ -131,9 +135,6 @@ public class Table {
                 if (Objects.equals(getText(tableId, i, column), label)) {
                     selectRow(tableId, i);
                     ComponentLogger.debug(this.getClass().getName(), "Selecting Table '{}'. Row '{}'. Column '{}'.", tableId, label, column);
-                    if (Objects.equals("jwt@test.com", label)) {
-                        screenShooter.takeScreenshot("after_selecting_row");
-                    }
                     return true;
                 }
             }

@@ -8,22 +8,22 @@
         <groups>
             <run>
                 <include name="userManagerDefaultData"/>
-                <exclude name="userManagerBasicUserPermissions"/>
-                <exclude name="userManagerEditorUserPermissions"/>
-                <exclude name="userManagerDuplications"/>
-                <exclude name="organization"/>
-                <exclude name="validation"/>
-                <exclude name="login"/>
-                <exclude name="profiles"/>
-                <exclude name="projects"/>
-                <exclude name="cardgame"/>
-                <exclude name="signUp"/>
-                <exclude name="cadt"/>
-                <exclude name="cadtDashboard"/>
-                <exclude name="organizationAdmin"/>
-                <exclude name="organizationAdminDashboard"/>
-                <exclude name="orgAdminMetaviewer"/>
-                <exclude name="activities"/>
+                <include name="userManagerBasicUserPermissions"/>
+                <include name="userManagerEditorUserPermissions"/>
+                <include name="userManagerDuplications"/>
+                <include name="organization"/>
+                <include name="validation"/>
+                <include name="login"/>
+                <include name="profiles"/>
+                <include name="projects"/>
+                <include name="cardgame"/>
+                <include name="signUp"/>
+                <include name="cadt"/>
+                <include name="cadtDashboard"/>
+                <include name="organizationAdmin"/>
+                <include name="organizationAdminDashboard"/>
+                <include name="orgAdminMetaviewer"/>
+                <include name="activities"/>
             </run>
         </groups>
         <classes>
