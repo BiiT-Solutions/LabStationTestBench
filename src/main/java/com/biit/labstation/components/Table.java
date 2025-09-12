@@ -1,6 +1,7 @@
 package com.biit.labstation.components;
 
 import com.biit.labstation.CustomChromeDriver;
+import com.biit.labstation.ScreenShooter;
 import com.biit.labstation.ToolTest;
 import com.biit.labstation.exceptions.ElementNotFoundAsExpectedException;
 import com.biit.labstation.logger.ComponentLogger;
@@ -8,6 +9,7 @@ import com.biit.labstation.logger.LabStationLogger;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebElement;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.time.Duration;
@@ -21,6 +23,9 @@ public class Table {
     private static final int WAITING_TIME_SECONDS = 3;
     public static final int CLEAR_WAIT = 20;
     private static final int SEARCH_WAIT = 1000;
+
+    @Autowired
+    private ScreenShooter screenShooter;
 
     private final CustomChromeDriver customChromeDriver;
 
@@ -43,7 +48,7 @@ public class Table {
         getSearchField(tableId).sendKeys(text);
         getSearchField(tableId).sendKeys(Keys.ENTER);
         final String content = getSearchField(tableId).getAttribute("value");
-        LabStationLogger.debug(this.getClass().getName(), "Search text content is '{}'.", content);
+        LabStationLogger.debug(this.getClass().getName(), "Inserted search text content is '{}'.", content);
         if (!Objects.equals(text, content)) {
             LabStationLogger.warning(this.getClass().getName(), "Search text content '{}' does not match requested search '{}'.",
                     content, text);
@@ -126,6 +131,9 @@ public class Table {
                 if (Objects.equals(getText(tableId, i, column), label)) {
                     selectRow(tableId, i);
                     ComponentLogger.debug(this.getClass().getName(), "Selecting Table '{}'. Row '{}'. Column '{}'.", tableId, label, column);
+                    if (Objects.equals("jwt@test.com", label)) {
+                        screenShooter.takeScreenshot("after_selecting_row");
+                    }
                     return true;
                 }
             }
