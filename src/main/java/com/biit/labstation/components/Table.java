@@ -46,6 +46,7 @@ public class Table {
 
     public void search(TableId tableId, String text) {
         ToolTest.waitComponent(SEARCH_WAIT);
+        getSearchField(tableId).clear();
         clearSearch(tableId);
         getSearchField(tableId).sendKeys(text);
         getSearchField(tableId).sendKeys(Keys.ENTER);
