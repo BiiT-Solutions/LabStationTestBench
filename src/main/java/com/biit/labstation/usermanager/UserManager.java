@@ -1,7 +1,6 @@
 package com.biit.labstation.usermanager;
 
 import com.biit.labstation.CustomChromeDriver;
-import com.biit.labstation.ScreenShooter;
 import com.biit.labstation.ToolTest;
 import com.biit.labstation.components.Dropdown;
 import com.biit.labstation.components.Login;
@@ -15,12 +14,8 @@ import com.biit.labstation.components.Table;
 import com.biit.labstation.components.TableId;
 import com.biit.labstation.logger.LabStationLogger;
 import org.openqa.selenium.By;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
-
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 
 @Component
 public class UserManager extends ToolTest {
@@ -43,9 +38,6 @@ public class UserManager extends ToolTest {
 
     @Value("${usermanager.context}")
     private String context;
-
-    @Autowired
-    private ScreenShooter screenShooter;
 
     public UserManager(CustomChromeDriver customChromeDriver, Login login, NavBar navBar, Table table, Popup popup, Dropdown dropdown, Tab tab,
                        SnackBar snackBar) {
@@ -365,7 +357,6 @@ public class UserManager extends ToolTest {
         }
         LabStationLogger.debug(this.getClass().getName(), "@@ Adding role '{}' to user '{}' on application.", role, user, application);
         table.selectRow(TableId.USERS_TABLE, user, USERNAME_COLUMN);
-        screenShooter.takeScreenshot(LocalDateTime.now().format(DateTimeFormatter.ISO_DATE_TIME) + "_4");
         table.pressButton(TableId.USERS_TABLE, "button-linkage");
         //Wait until a confirmation message is closed.
         waitAndExecute(() -> popup.findElement(PopupId.ROLE, "user-role-button-plus").click());
