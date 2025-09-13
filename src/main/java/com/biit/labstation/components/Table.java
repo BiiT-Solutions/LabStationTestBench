@@ -117,13 +117,21 @@ public class Table {
     }
 
     public void selectRow(TableId tableId, int row) {
+        final WebElement webElement;
         try {
-            getCell(tableId, row, 0).findElement(By.id("biit-checkbox")).findElement(By.id("unchecked"));
-            getCell(tableId, row, 0).findElement(By.id("biit-checkbox")).click();
-            ComponentLogger.debug(this.getClass().getName(), "Selecting Table '{}'. Row '{}'.", tableId, row);
-
+            webElement = getCell(tableId, row, 0).findElement(By.id("biit-checkbox"));
+            //Check that an unchecked element exists.
+            try {
+                webElement.findElement(By.id("unchecked"));
+                webElement.click();
+                ComponentLogger.debug(this.getClass().getName(), "Selecting Table '{}'. Row '{}'.", tableId, row);
+            } catch (Exception e) {
+                ComponentLogger.debug(this.getClass().getName(), "Element on Table '{}'. Row '{}' is already selected.", tableId, row);
+                //Already selected
+            }
         } catch (Exception e) {
-            //Already selected
+            final String fileName = LocalDateTime.now().format(DateTimeFormatter.ISO_DATE_TIME) + "_table_" + tableId + "_failure";
+            screenShooter.takeScreenshot(fileName);
         }
     }
 
