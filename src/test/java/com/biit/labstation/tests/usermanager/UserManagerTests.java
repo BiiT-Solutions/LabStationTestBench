@@ -798,8 +798,13 @@ public class UserManagerTests extends BaseTest implements ITestWithWebDriver {
         userManager.login(adminUser, adminPassword);
 
         userManager.addUser(jwtUser, "token@test.com", "System", "Token", jwtPassword);
+        screenShooter.takeScreenshot("createJwtUser0");
+        table.selectRow(TableId.USERS_TABLE, jwtUser, 3);
         snackBar.checkMessage(SnackBar.Type.REGULAR, SnackBar.USER_CREATED);
+        screenShooter.takeScreenshot("createJwtUser1");
         snackBar.closeLatest();
+        table.selectRow(TableId.USERS_TABLE, jwtUser, 3);
+        screenShooter.takeScreenshot("createJwtUser2");
         userManager.addUserRoles(jwtUser, "UserManagerSystem", "admin");
         snackBar.checkMessage(SnackBar.Type.REGULAR, SnackBar.REQUEST_SUCCESSFUL);
         userManager.addUserRoles(jwtUser, "FactManager", "admin");

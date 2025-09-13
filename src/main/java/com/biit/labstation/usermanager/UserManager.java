@@ -356,7 +356,7 @@ public class UserManager extends ToolTest {
             //Already on this tab.
         }
         LabStationLogger.debug(this.getClass().getName(), "@@ Adding role '{}' to user '{}' on application.", role, user, application);
-        table.selectRowWithoutCheckbox(TableId.USERS_TABLE, user, USERNAME_COLUMN);
+        table.selectRow(TableId.USERS_TABLE, user, USERNAME_COLUMN);
         table.pressButton(TableId.USERS_TABLE, "button-linkage");
         //Wait until a confirmation message is closed.
         waitAndExecute(() -> popup.findElement(PopupId.ROLE, "user-role-button-plus").click());
