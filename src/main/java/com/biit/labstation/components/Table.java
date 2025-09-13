@@ -128,7 +128,7 @@ public class Table {
     }
 
     public void selectRow(TableId tableId, String label, int column) {
-        //search(tableId, label);
+        search(tableId, label);
         await().atMost(Duration.ofSeconds(WAITING_TIME_SECONDS)).until(() -> {
             for (int i = 0; i < countRows(tableId); i++) {
                 if (Objects.equals(getText(tableId, i, column), label)) {
