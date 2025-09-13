@@ -17,6 +17,7 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Objects;
+import java.util.concurrent.atomic.AtomicInteger;
 
 import static org.awaitility.Awaitility.await;
 
@@ -133,34 +134,71 @@ public class Table {
             final String fileName = LocalDateTime.now().format(DateTimeFormatter.ISO_DATE_TIME) + "_table_" + tableId + "_failure";
             screenShooter.takeScreenshot(fileName);
         }
+        checkRowIsSelected(tableId, row);
+    }
+
+    private void checkRowIsSelected(TableId tableId, int row) {
+        if (!isRowSelected(tableId, row)) {
+            ComponentLogger.debug(this.getClass().getName(), "Row is not selected!");
+            final String fileName = LocalDateTime.now().format(DateTimeFormatter.ISO_DATE_TIME) + "_row_not_selected";
+            screenShooter.takeScreenshot(fileName);
+        } else {
+            ComponentLogger.debug(this.getClass().getName(), "Row selected correctly!");
+        }
+    }
+
+    private void checkRowIsNotSelected(TableId tableId, int row) {
+        if (isRowSelected(tableId, row)) {
+            ComponentLogger.debug(this.getClass().getName(), "Row is incorrectly selected!");
+            final String fileName = LocalDateTime.now().format(DateTimeFormatter.ISO_DATE_TIME) + "_row_selected";
+            screenShooter.takeScreenshot(fileName);
+        } else {
+            ComponentLogger.debug(this.getClass().getName(), "Row not selected correctly!");
+        }
+    }
+
+    public boolean isRowSelected(TableId tableId, int row) {
+        final WebElement webElement = getCell(tableId, row, 0).findElement(By.id("biit-checkbox"));
+        try {
+            webElement.findElement(By.id("unchecked"));
+            return false;
+        } catch (Exception e) {
+            return true;
+        }
     }
 
     public void selectRow(TableId tableId, String label, int column) {
         search(tableId, label);
+        final AtomicInteger row = new AtomicInteger();
         await().atMost(Duration.ofSeconds(WAITING_TIME_SECONDS)).until(() -> {
             for (int i = 0; i < countRows(tableId); i++) {
                 if (Objects.equals(getText(tableId, i, column), label)) {
                     selectRow(tableId, i);
+                    row.set(i);
                     ComponentLogger.debug(this.getClass().getName(), "Selecting Table '{}'. Row '{}'. Column '{}'.", tableId, label, column);
                     return true;
                 }
             }
             return false;
         });
+        checkRowIsSelected(tableId, row.get());
     }
 
     public void selectRowWithoutCheckbox(TableId tableId, String label, int column) {
         search(tableId, label);
+        final AtomicInteger row = new AtomicInteger();
         await().atMost(Duration.ofSeconds(WAITING_TIME_SECONDS)).until(() -> {
             for (int i = 0; i < countRows(tableId); i++) {
                 if (Objects.equals(getText(tableId, i, column), label)) {
                     clickRow(tableId, i);
+                    row.set(i);
                     ComponentLogger.debug(this.getClass().getName(), "Selecting Table '{}'. Row '{}'. Column '{}'.", tableId, label, column);
                     return true;
                 }
             }
             return false;
         });
+        checkRowIsSelected(tableId, row.get());
     }
 
     public void unselectRow(TableId tableId, int row) {
@@ -171,20 +209,24 @@ public class Table {
         } catch (Exception e) {
             //Already unselected
         }
+        checkRowIsNotSelected(tableId, row);
     }
 
     public void unselectRow(TableId tableId, String label, int column) {
         try {
+            final AtomicInteger row = new AtomicInteger();
             await().atMost(Duration.ofSeconds(WAITING_TIME_SECONDS)).until(() -> {
                 for (int i = 0; i < countRows(tableId); i++) {
                     if (Objects.equals(getText(tableId, i, column), label)) {
                         unselectRow(tableId, i);
+                        row.set(i);
                         ComponentLogger.debug(this.getClass().getName(), "Unselecting Table '{}'. Row '{}'. Column '{}'.", tableId, label, column);
                         return true;
                     }
                 }
                 return false;
             });
+            checkRowIsNotSelected(tableId, row.get());
         } catch (Exception e) {
             //Already unselected.
         }
