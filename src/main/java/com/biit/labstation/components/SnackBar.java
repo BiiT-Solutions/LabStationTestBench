@@ -1,6 +1,7 @@
 package com.biit.labstation.components;
 
 import com.biit.labstation.CustomChromeDriver;
+import com.biit.labstation.ToolTest;
 import com.biit.labstation.logger.ComponentLogger;
 import com.biit.labstation.logger.LabStationLogger;
 import org.openqa.selenium.By;
@@ -81,6 +82,14 @@ public class SnackBar {
         } else {
             notifications.get(notifications.size() - 1).click();
         }
+    }
+
+    public void closeAll() {
+        final List<WebElement> notifications = customChromeDriver.findElement(By.id("snackbar-canvas")).findElements(By.id("biit-notification"));
+        for (WebElement notification : notifications) {
+            notification.click();
+        }
+        ToolTest.waitComponent();
     }
 
     public void checkMessage(SnackBar.Type type, String message) {

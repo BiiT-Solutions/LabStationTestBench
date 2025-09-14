@@ -799,8 +799,9 @@ public class UserManagerTests extends BaseTest implements ITestWithWebDriver {
 
         ToolTest.waitComponent(1000);
         userManager.addUser(jwtUser, "token@test.com", "System", "Token", jwtPassword);
+        screenShooter.takeScreenshot("createJwtUser0");
         snackBar.checkMessage(SnackBar.Type.REGULAR, SnackBar.USER_CREATED);
-        snackBar.closeLatest();
+        snackBar.closeAll();
         table.selectRow(TableId.USERS_TABLE, jwtUser, 3);
         screenShooter.takeScreenshot("createJwtUser1");
         userManager.addUserRoles(jwtUser, "UserManagerSystem", "admin");
