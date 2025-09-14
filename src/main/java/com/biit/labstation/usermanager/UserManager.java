@@ -62,38 +62,45 @@ public class UserManager extends ToolTest {
     }
 
     public void selectUserOnMenu() {
-        navBar.goTo("nav-item-Users");
-        ToolTest.waitComponent();
+        if (navBar.goTo("nav-item-Users")) {
+            ToolTest.waitComponent();
+        }
     }
 
     public void selectGroupsOnMenu() {
-        navBar.goTo("nav-item-Groups");
-        ToolTest.waitComponent();
+        if (navBar.goTo("nav-item-Groups")) {
+            ToolTest.waitComponent();
+        }
     }
 
     public void selectRolesOnMenu() {
-        navBar.goTo("nav-item-Roles");
-        ToolTest.waitComponent();
+        if (navBar.goTo("nav-item-Roles")) {
+            ToolTest.waitComponent();
+        }
     }
 
     public void selectApplicationsOnMenu() {
-        navBar.goTo("nav-item-Applications");
-        ToolTest.waitComponent();
+        if (navBar.goTo("nav-item-Applications")) {
+            ToolTest.waitComponent();
+        }
     }
 
     public void selectServicesOnMenu() {
-        navBar.goTo("nav-item-Services");
-        ToolTest.waitComponent();
+        if (navBar.goTo("nav-item-Services")) {
+            ToolTest.waitComponent();
+        }
     }
 
     public void selectOrganizationsOnMenu() {
-        navBar.goTo("nav-item-Organizations");
-        ToolTest.waitComponent();
+        if (navBar.goTo("nav-item-Organizations")) {
+            ToolTest.waitComponent();
+        }
     }
 
     public void selectTeamsOnMenu() {
-        navBar.goTo("nav-item-Teams");
-        ToolTest.waitComponent();
+        if (navBar.goTo("nav-item-Teams")) {
+            ToolTest.waitComponent();
+        }
     }
 
 

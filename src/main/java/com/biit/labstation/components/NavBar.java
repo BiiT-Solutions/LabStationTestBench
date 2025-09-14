@@ -17,9 +17,16 @@ public class NavBar {
         this.customChromeDriver = customChromeDriver;
     }
 
-    public void goTo(String id) {
-        ComponentLogger.debug(this.getClass().getName(), "Pressing '{}' on navigation menu.", id);
-        getMenuItem(id).click();
+    public boolean goTo(String id) {
+        final String classAttribute = getMenuItem(id).getAttribute("class");
+        if (classAttribute == null || !classAttribute.contains("active")) {
+            ComponentLogger.debug(this.getClass().getName(), "Pressing '{}' on navigation menu.", id);
+            getMenuItem(id).click();
+            return true;
+        } else {
+            ComponentLogger.debug(this.getClass().getName(), "Menu item '{}' already selected.", id);
+        }
+        return false;
     }
 
     public void goTo(String menuId, String submenuId) {

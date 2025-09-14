@@ -60,8 +60,9 @@ public class Dashboard extends ToolTest {
 
 
     public void selectCustomerListOnMenu() {
-        navBar.goTo("nav-item-Customer List");
-        ToolTest.waitComponent();
+        if (navBar.goTo("nav-item-Customer List")) {
+            ToolTest.waitComponent();
+        }
     }
 
 

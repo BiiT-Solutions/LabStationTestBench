@@ -60,23 +60,27 @@ public class ProfileMatcher extends ToolTest {
     }
 
     public void selectProjectsOnMenu() {
-        navBar.goTo("nav-item-Projects");
-        ToolTest.waitComponent();
+        if (navBar.goTo("nav-item-Projects")) {
+            ToolTest.waitComponent();
+        }
     }
 
     public void selectProfilesOnMenu() {
-        navBar.goTo("nav-item-Profiles");
-        ToolTest.waitComponent();
+        if (navBar.goTo("nav-item-Profiles")) {
+            ToolTest.waitComponent();
+        }
     }
 
     public void selectMatchingsOnMenu() {
-        navBar.goTo("nav-item-Matchings");
-        ToolTest.waitComponent();
+        if (navBar.goTo("nav-item-Matchings")) {
+            ToolTest.waitComponent();
+        }
     }
 
     public void selectTriageOnMenu() {
-        navBar.goTo("nav-item-Triage");
-        ToolTest.waitComponent();
+        if (navBar.goTo("nav-item-Triage")) {
+            ToolTest.waitComponent();
+        }
     }
 
 
