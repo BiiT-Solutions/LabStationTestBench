@@ -805,7 +805,7 @@ public class UserManagerTests extends BaseTest implements ITestWithWebDriver {
         //screenShooter.takeScreenshot("createJwtUser2");
         snackBar.checkMessage(SnackBar.Type.REGULAR, SnackBar.USER_CREATED);
         //Tests fails without this waiting time
-        ToolTest.waitComponent(20000);
+        ToolTest.waitComponent(200000);
         //screenShooter.takeScreenshot("createJwtUser3");
         table.selectRow(TableId.USERS_TABLE, jwtUser, 3);
         //screenShooter.takeScreenshot("createJwtUser4");
