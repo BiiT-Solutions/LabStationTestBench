@@ -798,17 +798,17 @@ public class UserManagerTests extends BaseTest implements ITestWithWebDriver {
         userManager.login(adminUser, adminPassword);
 
         ToolTest.waitComponent(1000);
-        screenShooter.takeScreenshot("createJwtUser0");
+        //screenShooter.takeScreenshot("createJwtUser0");
         table.selectRow(TableId.USERS_TABLE, "admin@test.com", 3);
-        screenShooter.takeScreenshot("createJwtUser1");
+        //screenShooter.takeScreenshot("createJwtUser1");
         userManager.addUser(jwtUser, "token@test.com", "System", "Token", jwtPassword);
-        ToolTest.waitComponent();
-        screenShooter.takeScreenshot("createJwtUser2");
+        //screenShooter.takeScreenshot("createJwtUser2");
         snackBar.checkMessage(SnackBar.Type.REGULAR, SnackBar.USER_CREATED);
-        snackBar.closeAll();
-        screenShooter.takeScreenshot("createJwtUser3");
+        //Tests fails without this waiting time
+        ToolTest.waitComponent(20000);
+        //screenShooter.takeScreenshot("createJwtUser3");
         table.selectRow(TableId.USERS_TABLE, jwtUser, 3);
-        screenShooter.takeScreenshot("createJwtUser4");
+        //screenShooter.takeScreenshot("createJwtUser4");
         userManager.addUserRoles(jwtUser, "UserManagerSystem", "admin");
         snackBar.checkMessage(SnackBar.Type.REGULAR, SnackBar.REQUEST_SUCCESSFUL);
         userManager.addUserRoles(jwtUser, "FactManager", "admin");
