@@ -60,7 +60,7 @@ public class CustomChromeDriver {
         }
         chromeOptions.setAcceptInsecureCerts(true);
         //Adding performance log reader
-        //addPerformanceLogs(chromeOptions);
+        addPerformanceLogs(chromeOptions);
         return chromeOptions;
     }
 

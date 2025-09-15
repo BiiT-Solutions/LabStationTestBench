@@ -799,16 +799,9 @@ public class UserManagerTests extends BaseTest implements ITestWithWebDriver {
         userManager.login(adminUser, adminPassword);
 
         ToolTest.waitComponent(1000);
-        //screenShooter.takeScreenshot("createJwtUser0");
-        table.selectRow(TableId.USERS_TABLE, "admin@test.com", 3);
-        //screenShooter.takeScreenshot("createJwtUser1");
         userManager.addUser(jwtUser, "token@test.com", "System", "Token", jwtPassword);
-        //screenShooter.takeScreenshot("createJwtUser2");
         snackBar.checkMessage(SnackBar.Type.REGULAR, SnackBar.USER_CREATED);
-        //screenShooter.takeScreenshot("createJwtUser3");
-        table.selectRow(TableId.USERS_TABLE, jwtUser, 3);
-        getDriver().analyzeConsoleLog();
-        //screenShooter.takeScreenshot("createJwtUser4");
+        getDriver().refresh();
         userManager.addUserRoles(jwtUser, "UserManagerSystem", "admin");
         snackBar.checkMessage(SnackBar.Type.REGULAR, SnackBar.REQUEST_SUCCESSFUL);
         userManager.addUserRoles(jwtUser, "FactManager", "admin");
@@ -824,13 +817,11 @@ public class UserManagerTests extends BaseTest implements ITestWithWebDriver {
         final Random random = new Random();
         final String userName = (random.nextInt(900) + 100) + "@test.com";
         userManager.addUser(userName, userName, userName, userName, jwtPassword);
-        table.selectRow(TableId.USERS_TABLE, userName, 3);
         userManager.addUserRoles(userName, "UserManagerSystem", "admin");
         snackBar.checkMessage(SnackBar.Type.REGULAR, SnackBar.REQUEST_SUCCESSFUL);
         userManager.addUserRoles(userName, "FactManager", "admin");
         snackBar.checkMessage(SnackBar.Type.REGULAR, SnackBar.REQUEST_SUCCESSFUL);
         userManager.deleteUser(userName);
-        getDriver().analyzeConsoleLog();
         userManager.logout();
     }
 
