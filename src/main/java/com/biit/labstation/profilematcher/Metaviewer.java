@@ -38,7 +38,8 @@ public class Metaviewer {
 
     public String getMetaviewerElementData(int index) {
         return customChromeDriver.findElementWaiting(By.id("metadata-viewer")).findElement(By.id("metaviewer-data")).findElement(By.id("metaviewer-info"))
-                .findElements(By.id("metaviewer-info-row")).get(index).findElement(By.id("field")).findElement(By.id("input")).getAttribute("value");
+                .findElements(By.id("metaviewer-info-row")).get(index).findElement(By.id("field")).findElement(By.className("input-object"))
+                .getAttribute("value");
     }
 
     public void metaviewerElementClose() {
@@ -47,6 +48,6 @@ public class Metaviewer {
 
     public WebElement getMetaviewerFilter(int index) {
         return customChromeDriver.findElementWaiting(By.id("metadata-filter")).findElement(By.id("metaviewer-data")).findElement(By.id("metaviewer-info"))
-                .findElements(By.id("metaviewer-info-row")).get(index).findElement(By.id("field")).findElement(By.id("input"));
+                .findElements(By.id("metaviewer-info-row")).get(index).findElement(By.id("field")).findElement(By.className("input-object"));
     }
 }

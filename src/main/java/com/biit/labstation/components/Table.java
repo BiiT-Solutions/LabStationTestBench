@@ -42,7 +42,7 @@ public class Table {
 
     public WebElement getSearchField(TableId tableId) {
         return customChromeDriver.findElementWaiting(By.id(tableId.getId())).findElement(By.id("biit-table"))
-                .findElement(By.id("options")).findElement(By.id("search")).findElement(By.id("input"));
+                .findElement(By.id("options")).findElement(By.id("search")).findElement(By.className("input-object"));
     }
 
     public void search(TableId tableId, String text) {

@@ -94,16 +94,16 @@ public class ProfileMatcher extends ToolTest {
         table.pressButton(TableId.PROFILES_TABLE, "button-plus");
         tab.selectTab(TabId.PROFILES, "tab-General");
         if (name != null) {
-            popup.findElement(PopupId.PROFILE, "profile-name").findElement(By.id("input")).sendKeys(name);
+            popup.findElement(PopupId.PROFILE, "profile-name").findElement(By.className("input-object")).sendKeys(name);
         }
         if (type != null) {
-            popup.findElement(PopupId.PROFILE, "profile-type").findElement(By.id("input")).sendKeys(type);
+            popup.findElement(PopupId.PROFILE, "profile-type").findElement(By.className("input-object")).sendKeys(type);
         }
         if (code != null) {
-            popup.findElement(PopupId.PROFILE, "profile-tracking-code").findElement(By.id("input")).sendKeys(code);
+            popup.findElement(PopupId.PROFILE, "profile-tracking-code").findElement(By.className("input-object")).sendKeys(code);
         }
         if (description != null) {
-            popup.findElement(PopupId.PROFILE, "profile-description").findElement(By.id("input")).sendKeys(description);
+            popup.findElement(PopupId.PROFILE, "profile-description").findElement(By.className("input-object")).sendKeys(description);
         }
         if (cadtOptions.length > 0) {
             tab.selectTab(TabId.PROFILES, "tab-Profile");
@@ -140,20 +140,20 @@ public class ProfileMatcher extends ToolTest {
         table.pressButton(TableId.PROFILES_TABLE, "button-edit");
         tab.selectTab(TabId.PROFILES, "tab-General");
         if (newName != null) {
-            popup.findElement(PopupId.PROFILE, "profile-name").findElement(By.id("input")).clear();
-            popup.findElement(PopupId.PROFILE, "profile-name").findElement(By.id("input")).sendKeys(newName);
+            popup.findElement(PopupId.PROFILE, "profile-name").findElement(By.className("input-object")).clear();
+            popup.findElement(PopupId.PROFILE, "profile-name").findElement(By.className("input-object")).sendKeys(newName);
         }
         if (type != null) {
-            popup.findElement(PopupId.PROFILE, "profile-type").findElement(By.id("input")).clear();
-            popup.findElement(PopupId.PROFILE, "profile-type").findElement(By.id("input")).sendKeys(type);
+            popup.findElement(PopupId.PROFILE, "profile-type").findElement(By.className("input-object")).clear();
+            popup.findElement(PopupId.PROFILE, "profile-type").findElement(By.className("input-object")).sendKeys(type);
         }
         if (code != null) {
-            popup.findElement(PopupId.PROFILE, "profile-tracking-code").findElement(By.id("input")).clear();
-            popup.findElement(PopupId.PROFILE, "profile-tracking-code").findElement(By.id("input")).sendKeys(code);
+            popup.findElement(PopupId.PROFILE, "profile-tracking-code").findElement(By.className("input-object")).clear();
+            popup.findElement(PopupId.PROFILE, "profile-tracking-code").findElement(By.className("input-object")).sendKeys(code);
         }
         if (description != null) {
-            popup.findElement(PopupId.PROFILE, "profile-description").findElement(By.id("input")).clear();
-            popup.findElement(PopupId.PROFILE, "profile-description").findElement(By.id("input")).sendKeys(description);
+            popup.findElement(PopupId.PROFILE, "profile-description").findElement(By.className("input-object")).clear();
+            popup.findElement(PopupId.PROFILE, "profile-description").findElement(By.className("input-object")).sendKeys(description);
         }
         if (cadtOptions.length > 0) {
             tab.selectTab(TabId.PROFILES, "tab-Profile");
@@ -206,10 +206,10 @@ public class ProfileMatcher extends ToolTest {
         }
         table.pressButton(TableId.PROJECTS_TABLE, "button-plus");
         if (name != null) {
-            popup.findElement(PopupId.PROJECT, "project-name").findElement(By.id("input")).sendKeys(name);
+            popup.findElement(PopupId.PROJECT, "project-name").findElement(By.className("input-object")).sendKeys(name);
         }
         if (description != null) {
-            popup.findElement(PopupId.PROJECT, "project-description").findElement(By.id("input")).sendKeys(description);
+            popup.findElement(PopupId.PROJECT, "project-description").findElement(By.className("input-object")).sendKeys(description);
         }
         popup.findElement(PopupId.PROJECT, "popup-project-save-button").click();
     }

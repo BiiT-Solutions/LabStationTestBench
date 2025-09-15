@@ -109,10 +109,10 @@ public class UserManager extends ToolTest {
         selectServicesOnMenu();
         table.pressButton(TableId.SERVICE_TABLE, "button-plus");
         if (name != null) {
-            popup.findElement(PopupId.SERVICE, "service-name").findElement(By.id("input")).sendKeys(name);
+            popup.findElement(PopupId.SERVICE, "service-name").findElement(By.className("input-object")).sendKeys(name);
         }
         if (description != null) {
-            popup.findElement(PopupId.SERVICE, "service-description").findElement(By.id("input")).sendKeys(description);
+            popup.findElement(PopupId.SERVICE, "service-description").findElement(By.className("input-object")).sendKeys(description);
         }
         popup.findElement(PopupId.SERVICE, "popup-service-save-button").click();
     }
@@ -127,7 +127,7 @@ public class UserManager extends ToolTest {
         table.selectRow(TableId.SERVICE_TABLE, service, 1);
         table.pressButton(TableId.SERVICE_TABLE, "button-linkage");
         popup.findElement(PopupId.ROLE, "popup-service-button-plus").click();
-        popup.findElement(PopupId.ROLE, "create-service-role").findElement(By.id("input")).sendKeys(role);
+        popup.findElement(PopupId.ROLE, "create-service-role").findElement(By.className("input-object")).sendKeys(role);
         popup.findElement(PopupId.ROLE, "popup-save-button").click();
         popup.close(PopupId.ROLE);
         table.unselectRow(TableId.SERVICE_TABLE, service, 1);
@@ -137,8 +137,8 @@ public class UserManager extends ToolTest {
         LabStationLogger.debug(this.getClass().getName(), "@@ Adding application '{}'.", name);
         selectApplicationsOnMenu();
         table.pressButton(TableId.APPLICATION_TABLE, "button-plus");
-        popup.findElement(PopupId.APPLICATION, "application-name").findElement(By.id("input")).sendKeys(name);
-        popup.findElement(PopupId.APPLICATION, "application-description").findElement(By.id("input")).sendKeys(description);
+        popup.findElement(PopupId.APPLICATION, "application-name").findElement(By.className("input-object")).sendKeys(name);
+        popup.findElement(PopupId.APPLICATION, "application-description").findElement(By.className("input-object")).sendKeys(description);
         popup.findElement(PopupId.APPLICATION, "popup-save-button").click();
     }
 
@@ -184,9 +184,9 @@ public class UserManager extends ToolTest {
         LabStationLogger.debug(this.getClass().getName(), "@@ Adding role '{}'.", name);
         selectRolesOnMenu();
         table.pressButton(TableId.ROLE_TABLE, "button-plus");
-        popup.findElement(PopupId.ROLE, "role-name").findElement(By.id("input")).sendKeys(name);
+        popup.findElement(PopupId.ROLE, "role-name").findElement(By.className("input-object")).sendKeys(name);
         if (description != null) {
-            popup.findElement(PopupId.ROLE, "role-description").findElement(By.id("input")).sendKeys(description);
+            popup.findElement(PopupId.ROLE, "role-description").findElement(By.className("input-object")).sendKeys(description);
         }
         popup.findElement(PopupId.ROLE, "save-role-button").click();
     }
@@ -231,8 +231,8 @@ public class UserManager extends ToolTest {
         LabStationLogger.debug(this.getClass().getName(), "@@ Adding group '{}'.", name);
         selectGroupsOnMenu();
         table.pressButton(TableId.USERS_GROUP_TABLE, "button-plus");
-        popup.findElement(PopupId.USER_GROUP, "group-name").findElement(By.id("input")).sendKeys(name);
-        popup.findElement(PopupId.USER_GROUP, "group-description").findElement(By.id("input")).sendKeys(description);
+        popup.findElement(PopupId.USER_GROUP, "group-name").findElement(By.className("input-object")).sendKeys(name);
+        popup.findElement(PopupId.USER_GROUP, "group-description").findElement(By.className("input-object")).sendKeys(description);
         popup.findElement(PopupId.USER_GROUP, "popup-group-save-button").click();
     }
 
@@ -311,14 +311,14 @@ public class UserManager extends ToolTest {
         LabStationLogger.debug(this.getClass().getName(), "@@ Creating user '{}'.", user);
         table.pressButton(TableId.USERS_TABLE, "button-plus");
         tab.selectTab(TabId.USERS, "account-tab");
-        popup.findElement(PopupId.USER, "username").findElement(By.id("input")).sendKeys(user);
-        popup.findElement(PopupId.USER, "email").findElement(By.id("input")).sendKeys(email);
-        popup.findElement(PopupId.USER, "name").findElement(By.id("input")).sendKeys(name);
-        popup.findElement(PopupId.USER, "lastname").findElement(By.id("input")).sendKeys(lastName);
-        popup.findElement(PopupId.USER, "password").findElement(By.id("input")).clear();
-        popup.findElement(PopupId.USER, "password").findElement(By.id("input")).sendKeys(password);
-        popup.findElement(PopupId.USER, "repeat-password").findElement(By.id("input")).clear();
-        popup.findElement(PopupId.USER, "repeat-password").findElement(By.id("input")).sendKeys(password);
+        popup.findElement(PopupId.USER, "username").findElement(By.className("input-object")).sendKeys(user);
+        popup.findElement(PopupId.USER, "email").findElement(By.className("input-object")).sendKeys(email);
+        popup.findElement(PopupId.USER, "name").findElement(By.className("input-object")).sendKeys(name);
+        popup.findElement(PopupId.USER, "lastname").findElement(By.className("input-object")).sendKeys(lastName);
+        popup.findElement(PopupId.USER, "password").findElement(By.className("input-object")).clear();
+        popup.findElement(PopupId.USER, "password").findElement(By.className("input-object")).sendKeys(password);
+        popup.findElement(PopupId.USER, "repeat-password").findElement(By.className("input-object")).clear();
+        popup.findElement(PopupId.USER, "repeat-password").findElement(By.className("input-object")).sendKeys(password);
         waitAndExecute(() -> popup.findElement(PopupId.USER, "popup-user-save-button").click());
     }
 
@@ -333,12 +333,12 @@ public class UserManager extends ToolTest {
         LabStationLogger.debug(this.getClass().getName(), "@@ Editing user '{}'.", user);
         table.pressButton(TableId.USERS_TABLE, "button-edit");
         tab.selectTab(TabId.USERS, "account-tab");
-        popup.findElement(PopupId.USER, "email").findElement(By.id("input")).clear();
-        popup.findElement(PopupId.USER, "email").findElement(By.id("input")).sendKeys(email);
-        popup.findElement(PopupId.USER, "name").findElement(By.id("input")).clear();
-        popup.findElement(PopupId.USER, "name").findElement(By.id("input")).sendKeys(name);
-        popup.findElement(PopupId.USER, "lastname").findElement(By.id("input")).clear();
-        popup.findElement(PopupId.USER, "lastname").findElement(By.id("input")).sendKeys(lastName);
+        popup.findElement(PopupId.USER, "email").findElement(By.className("input-object")).clear();
+        popup.findElement(PopupId.USER, "email").findElement(By.className("input-object")).sendKeys(email);
+        popup.findElement(PopupId.USER, "name").findElement(By.className("input-object")).clear();
+        popup.findElement(PopupId.USER, "name").findElement(By.className("input-object")).sendKeys(name);
+        popup.findElement(PopupId.USER, "lastname").findElement(By.className("input-object")).clear();
+        popup.findElement(PopupId.USER, "lastname").findElement(By.className("input-object")).sendKeys(lastName);
         waitAndExecute(() -> popup.findElement(PopupId.USER, "popup-user-save-button").click());
     }
 
@@ -416,8 +416,8 @@ public class UserManager extends ToolTest {
         LabStationLogger.debug(this.getClass().getName(), "@@ Creating organization '{}'.", organization);
         table.pressButton(TableId.ORGANIZATION_TABLE, "button-plus");
         ToolTest.waitComponent();
-        popup.findElement(PopupId.ORGANIZATION, "organization-name").findElement(By.id("input")).sendKeys(organization);
-        popup.findElement(PopupId.ORGANIZATION, "organization-description").findElement(By.id("input")).sendKeys(description);
+        popup.findElement(PopupId.ORGANIZATION, "organization-name").findElement(By.className("input-object")).sendKeys(organization);
+        popup.findElement(PopupId.ORGANIZATION, "organization-description").findElement(By.className("input-object")).sendKeys(description);
         waitAndExecute(() -> popup.findElement(PopupId.ORGANIZATION, "popup-organization-save-button").click());
     }
 
@@ -448,8 +448,8 @@ public class UserManager extends ToolTest {
         table.pressButton(TableId.ORGANIZATION_TABLE, "button-team");
         ToolTest.waitComponent();
         table.pressButton(TableId.TEAM_TABLE, "organization-team-button-plus");
-        popup.findElement(PopupId.TEAM_FORM, "team-name").findElement(By.id("input")).sendKeys(team);
-        popup.findElement(PopupId.TEAM_FORM, "team-description").findElement(By.id("input")).sendKeys(description);
+        popup.findElement(PopupId.TEAM_FORM, "team-name").findElement(By.className("input-object")).sendKeys(team);
+        popup.findElement(PopupId.TEAM_FORM, "team-description").findElement(By.className("input-object")).sendKeys(description);
         popup.findElement(PopupId.TEAM_FORM, "popup-save-button").click();
         popup.close(PopupId.TEAM);
     }

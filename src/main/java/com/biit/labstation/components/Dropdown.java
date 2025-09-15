@@ -19,7 +19,7 @@ public class Dropdown {
 
     public void selectItem(String parent, String item) {
         ComponentLogger.debug(this.getClass().getName(), "Selecting item '{}' on parent '{}'.", item, parent);
-        customChromeDriver.findElementWaiting(By.id(parent)).findElement(By.id("input")).click();
+        customChromeDriver.findElementWaiting(By.id(parent)).findElement(By.className("input-object")).click();
         final WebElement element = customChromeDriver.findElementWaiting(By.id(parent)).findElement(By.id("dropdown"))
                 .findElement(By.xpath(".//div[@id='content']/a[contains(text(), '" + item + "')]"));
         new Actions(customChromeDriver.getDriver()).scrollToElement(element).perform();
@@ -28,7 +28,7 @@ public class Dropdown {
 
     public void selectItem(String parent, String selector, String item) {
         ComponentLogger.debug(this.getClass().getName(), "Selecting item '{}' on dropdown '{}' in '{}'.", item, selector, parent);
-        customChromeDriver.findElementWaiting(By.id(parent)).findElement(By.id(selector)).findElement(By.id("input")).click();
+        customChromeDriver.findElementWaiting(By.id(parent)).findElement(By.id(selector)).findElement(By.className("input-object")).click();
         ToolTest.waitComponent();
         final WebElement element = customChromeDriver.findElementWaiting(By.id(parent)).findElement(By.id(selector))
                 .findElement(By.id("dropdown")).findElement(By.xpath(".//div[@id='content']/a[contains(text(), '" + item + "')]"));
