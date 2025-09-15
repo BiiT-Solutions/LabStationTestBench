@@ -1,6 +1,7 @@
 package com.biit.labstation;
 
 
+import com.biit.labstation.logger.ConsoleLogger;
 import com.biit.labstation.logger.LabStationLogger;
 import io.github.bonigarcia.wdm.WebDriverManager;
 import jakarta.annotation.PostConstruct;
@@ -12,14 +13,20 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
+import org.openqa.selenium.logging.LogEntries;
+import org.openqa.selenium.logging.LogEntry;
+import org.openqa.selenium.logging.LogType;
+import org.openqa.selenium.logging.LoggingPreferences;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 import java.time.Duration;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.logging.Level;
 
 @Component
 public class CustomChromeDriver {
@@ -52,10 +59,15 @@ public class CustomChromeDriver {
             chromeOptions.addArguments("--headless=new");
         }
         chromeOptions.setAcceptInsecureCerts(true);
-//        if (!headless) {
-//            chromeOptions.setExperimentalOption("detach", true);
-//        }
+        //Adding performance log reader
+        //addPerformanceLogs(chromeOptions);
         return chromeOptions;
+    }
+
+    private void addPerformanceLogs(ChromeOptions chromeOptions) {
+        final LoggingPreferences logPrefs = new LoggingPreferences();
+        logPrefs.enable(LogType.PERFORMANCE, Level.ALL);
+        chromeOptions.setCapability("goog:loggingPrefs", logPrefs);
     }
 
     @PostConstruct
@@ -107,5 +119,18 @@ public class CustomChromeDriver {
     public WebElement findElementWaiting(By parent, By field) {
         getWebDriverWait().until(ExpectedConditions.visibilityOfElementLocated(parent));
         return getWebDriverWait().until(ExpectedConditions.visibilityOfElementLocated(field));
+    }
+
+    public void refresh() {
+        getDriver().navigate().refresh();
+    }
+
+    public void analyzeConsoleLog() {
+        final LogEntries logEntries = getDriver().manage().logs().get(LogType.BROWSER);
+        ConsoleLogger.warning(this.getClass(), "[[[[[[  Starting console log  ]]]]]]");
+        for (LogEntry entry : logEntries) {
+            ConsoleLogger.warning(this.getClass(), new Date(entry.getTimestamp()) + " " + entry.getLevel() + " " + entry.getMessage());
+        }
+        ConsoleLogger.warning(this.getClass(), "[[[[[[   Ending console log   ]]]]]]");
     }
 }

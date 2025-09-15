@@ -39,6 +39,9 @@
     <logger name="com.biit.labstation.logger.TestLogging" additivity="false" level="DEBUG">
         <appender-ref ref="CONSOLE"/>
     </logger>
+    <logger name="com.biit.labstation.logger.ConsoleLogger" additivity="false" level="DEBUG">
+        <appender-ref ref="CONSOLE"/>
+    </logger>
     <logger name="com.biit.server.logger.RestServerExceptionLogger" additivity="false" level="INFO">
         <appender-ref ref="CONSOLE"/>
     </logger>

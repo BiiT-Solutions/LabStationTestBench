@@ -25,6 +25,7 @@ import org.testng.annotations.Test;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.Random;
 
 import static com.biit.labstation.tests.Priorities.USER_MANAGER_PRIORITY;
 
@@ -808,12 +809,30 @@ public class UserManagerTests extends BaseTest implements ITestWithWebDriver {
         ToolTest.waitComponent(200000);
         //screenShooter.takeScreenshot("createJwtUser3");
         table.selectRow(TableId.USERS_TABLE, jwtUser, 3);
+        getDriver().analyzeConsoleLog();
         //screenShooter.takeScreenshot("createJwtUser4");
         userManager.addUserRoles(jwtUser, "UserManagerSystem", "admin");
         snackBar.checkMessage(SnackBar.Type.REGULAR, SnackBar.REQUEST_SUCCESSFUL);
         userManager.addUserRoles(jwtUser, "FactManager", "admin");
         snackBar.checkMessage(SnackBar.Type.REGULAR, SnackBar.REQUEST_SUCCESSFUL);
 
+        userManager.logout();
+    }
+
+
+    @Test(dependsOnMethods = "assignRolesToGroups")
+    public void createRandomUser() {
+        userManager.login(adminUser, adminPassword);
+        final Random random = new Random();
+        final String userName = (random.nextInt(900) + 100) + "@test.com";
+        userManager.addUser(userName, userName, userName, userName, jwtPassword);
+        table.selectRow(TableId.USERS_TABLE, userName, 3);
+        userManager.addUserRoles(userName, "UserManagerSystem", "admin");
+        snackBar.checkMessage(SnackBar.Type.REGULAR, SnackBar.REQUEST_SUCCESSFUL);
+        userManager.addUserRoles(userName, "FactManager", "admin");
+        snackBar.checkMessage(SnackBar.Type.REGULAR, SnackBar.REQUEST_SUCCESSFUL);
+        userManager.deleteUser(userName);
+        getDriver().analyzeConsoleLog();
         userManager.logout();
     }
 

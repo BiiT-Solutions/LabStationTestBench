@@ -28,6 +28,8 @@ public class TestListener implements ITestListener {
         final String fileName = LocalDateTime.now().format(DateTimeFormatter.ISO_DATE_TIME) + "_" + result.getMethod().getMethodName();
         LabStationLogger.debug(this.getClass().getName(), "Creating screenshot on '{}.png'.", fileName);
         screenShooter.takeScreenshot(fileName);
+        LabStationLogger.debug(this.getClass().getName(), "!!! Showing console output.");
+        currentClass.getDriver().analyzeConsoleLog();
         TestLogging.errorMessage(this.getClass().getName(),
                 "### Test failed '" + result.getMethod().getMethodName() + "' from '" + result.getTestClass().getName() + "'. File generated:\n" + fileName);
     }
