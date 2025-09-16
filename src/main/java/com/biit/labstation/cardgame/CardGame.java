@@ -146,7 +146,7 @@ public class CardGame extends ToolTest {
                     .build().perform();
             LabStationLogger.info(this.getClass(), "Selecting competence '{}'.", competence);
 
-            ToolTest.waitComponent();
+            ToolTest.waitComponentOneSecond();
         }
     }
 
@@ -160,7 +160,7 @@ public class CardGame extends ToolTest {
                     .build().perform();
             LabStationLogger.info(this.getClass(), "Unselecting competence '{}'.", competence);
 
-            ToolTest.waitComponent();
+            ToolTest.waitComponentOneSecond();
         }
     }
 
@@ -173,7 +173,7 @@ public class CardGame extends ToolTest {
                     .release(getCustomChromeDriver().findElement(By.id("dismissed-items")).findElement(By.id("card-drop-place")))
                     .build().perform();
             LabStationLogger.info(this.getClass(), "Discarding competence '{}'.", competence);
-            ToolTest.waitComponent();
+            ToolTest.waitComponentOneSecond();
         }
     }
 
@@ -186,7 +186,7 @@ public class CardGame extends ToolTest {
                     .release(getCustomChromeDriver().findElement(By.id("card-mat")))
                     .build().perform();
             LabStationLogger.info(this.getClass(), "Discarding competence '{}'.", competence);
-            ToolTest.waitComponent();
+            ToolTest.waitComponentOneSecond();
         }
     }
 

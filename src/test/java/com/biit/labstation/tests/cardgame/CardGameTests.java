@@ -65,9 +65,9 @@ public class CardGameTests extends BaseTest implements ITestWithWebDriver {
 
         cardGame.discardCompetences(Competence.TENACITY, Competence.BUSINESS_MINDED, Competence.BUILDING_AND_MAINTAINING);
 
+        ToolTest.waitComponent();
         //One extra card.
         cardGame.chooseCompetences(Competence.ENGAGEMENT, Competence.DECISIVENESS);
-        ToolTest.waitComponent();
         snackBar.checkMessage(SnackBar.Type.WARNING, SnackBar.CANNOT_SELECT_MORE_THAN_TEN);
 
         Assert.assertTrue(cardGame.canSubmitTest());

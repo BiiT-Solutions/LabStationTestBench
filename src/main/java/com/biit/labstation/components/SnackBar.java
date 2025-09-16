@@ -99,9 +99,11 @@ public class SnackBar {
     private void checkMessage(String type, String message) {
         await().atMost(Duration.ofSeconds(WAITING_TIME_SECONDS)).and().with().pollDelay(SNACKBAR_WAITING_TIME, TimeUnit.MILLISECONDS).until(() -> {
             try {
+                final String snackBarMessage = getMessage();
+                final String snackBarType = getMessageType();
                 LabStationLogger.debug(this.getClass().getName(), "Comparing messages: '{}' ({}) with '{}' ({}).",
-                        message, type, getMessage(), getMessageType());
-                if (Objects.equals(getMessageType(), type) && Objects.equals(getMessage(), message)) {
+                        message, type, snackBarMessage, snackBarType);
+                if (Objects.equals(snackBarType, type) && Objects.equals(snackBarMessage, message)) {
                     closeLatest();
                     LabStationLogger.debug(this.getClass().getName(), "Message found!");
                     return true;

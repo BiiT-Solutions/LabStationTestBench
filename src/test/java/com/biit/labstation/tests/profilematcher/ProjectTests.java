@@ -40,9 +40,6 @@ public class ProjectTests extends BaseTest implements ITestWithWebDriver {
     private Table table;
 
     @Autowired
-    private SnackBar snackBar;
-
-    @Autowired
     private Popup popup;
 
     @Value("${admin.user}")

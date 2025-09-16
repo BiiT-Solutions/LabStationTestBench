@@ -29,7 +29,7 @@ import static com.biit.labstation.tests.Priorities.DASHBOARD_PRIORITY;
 @DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_CLASS)
 public class CadtDashboardTests extends BaseTest implements ITestWithWebDriver {
 
-    public static final int CADT_WAITING_TIME = 150000;
+    public static final int CADT_WAITING_TIME = 120000;
 
 
     @Autowired
@@ -46,13 +46,11 @@ public class CadtDashboardTests extends BaseTest implements ITestWithWebDriver {
     @BeforeClass
     public void waitForCadt() {
         //Cadt takes time to be processed. We need to wait until it is ready
-        if (headLessMode) {
-            try {
-                LabStationLogger.info(this.getClass(), "Waiting for cadt to be ready...");
-                Thread.sleep(CADT_WAITING_TIME);
-            } catch (InterruptedException e) {
-                Thread.currentThread().interrupt();
-            }
+        try {
+            LabStationLogger.info(this.getClass(), "Waiting for cadt to be ready...");
+            Thread.sleep(CADT_WAITING_TIME);
+        } catch (InterruptedException e) {
+            Thread.currentThread().interrupt();
         }
     }
 
