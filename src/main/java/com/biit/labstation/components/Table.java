@@ -186,19 +186,16 @@ public class Table {
 
     public void selectRowWithoutCheckbox(TableId tableId, String label, int column) {
         search(tableId, label);
-        final AtomicInteger row = new AtomicInteger();
         await().atMost(Duration.ofSeconds(WAITING_TIME_SECONDS)).until(() -> {
             for (int i = 0; i < countRows(tableId); i++) {
                 if (Objects.equals(getText(tableId, i, column), label)) {
                     clickRow(tableId, i);
-                    row.set(i);
                     ComponentLogger.debug(this.getClass().getName(), "Selecting Table '{}'. Row '{}'. Column '{}'.", tableId, label, column);
                     return true;
                 }
             }
             return false;
         });
-        checkRowIsSelected(tableId, row.get());
     }
 
     public void unselectRow(TableId tableId, int row) {

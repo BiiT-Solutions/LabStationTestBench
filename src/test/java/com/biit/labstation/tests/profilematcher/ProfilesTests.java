@@ -93,7 +93,8 @@ public class ProfilesTests extends BaseTest implements ITestWithWebDriver {
         }
     }
 
-    @Test(dependsOnMethods = "editProfile")
+    //@Test(dependsOnMethods = "editProfile")
+    @Test
     public void nothingToCompare() {
         profileMatcher.login(adminUser, adminPassword);
         profileMatcher.openProfileForMatching(NEW_PROFILE_NAME);

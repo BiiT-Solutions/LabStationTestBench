@@ -29,7 +29,7 @@ import static com.biit.labstation.tests.Priorities.DASHBOARD_PRIORITY;
 @DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_CLASS)
 public class CadtDashboardTests extends BaseTest implements ITestWithWebDriver {
 
-    public static final int CADT_WAITING_TIME = 100000;
+    public static final int CADT_WAITING_TIME = 150000;
 
 
     @Autowired

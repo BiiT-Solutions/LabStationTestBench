@@ -19,6 +19,7 @@ import org.springframework.stereotype.Component;
 @Component
 public class ProfileMatcher extends ToolTest {
 
+    private static final int WAITING_PROFILE_LOAD = 1000;
     private static final int NAME_PROFILE_TABLE_COLUMN = 1;
     private static final int NAME_PROJECT_TABLE_COLUMN = 1;
     private static final int USERNAME_USER_TABLE_COLUMN = 1;
@@ -174,7 +175,7 @@ public class ProfileMatcher extends ToolTest {
         }
         //This table has no checkbox. Show the standard
         table.selectRowWithoutCheckbox(TableId.PROFILES_TABLE, profile, 0);
-        ToolTest.waitComponent();
+        ToolTest.waitComponent(WAITING_PROFILE_LOAD);
         table.pressButton(TableId.PROFILES_TABLE, "open-profile");
         ToolTest.waitComponent();
         getCustomChromeDriver().findElement(By.id("profile-details")).findElement(By.id("compare-button")).click();
