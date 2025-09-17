@@ -10,8 +10,8 @@ import java.time.Duration;
 import static org.awaitility.Awaitility.await;
 
 public abstract class ToolTest {
-    public static final int WAITING_TIME = 300;
-    public static final int ONE_SECOND_WAITING_TIME = 1000;
+    public static final int WAITING_TIME = 500;
+    public static final int ONE_SECOND_WAITING_TIME = 2000;
     protected static final int WAITING_TIME_SECONDS = 3;
     protected static final int LONG_WAITING_TIME_SECONDS = 15;
     private static final int WAITING_TO_ACCESS_BROWSER = 2000;
