@@ -39,6 +39,7 @@ public class SnackBar {
 
     protected static final int WAITING_TIME_SECONDS = 5;
     protected static final int SNACKBAR_WAITING_TIME = 250;
+    protected static final int SNACKBAR_INTERVAL_TIME = 500;
 
     private final CustomChromeDriver customChromeDriver;
 
@@ -97,21 +98,22 @@ public class SnackBar {
     }
 
     private void checkMessage(String type, String message) {
-        await().atMost(Duration.ofSeconds(WAITING_TIME_SECONDS)).and().with().pollDelay(SNACKBAR_WAITING_TIME, TimeUnit.MILLISECONDS).until(() -> {
-            try {
-                final String snackBarMessage = getMessage();
-                final String snackBarType = getMessageType();
-                LabStationLogger.debug(this.getClass().getName(), "Comparing messages: '{}' ({}) with '{}' ({}).",
-                        message, type, snackBarMessage, snackBarType);
-                if (Objects.equals(snackBarType, type) && Objects.equals(snackBarMessage, message)) {
-                    closeLatest();
-                    LabStationLogger.debug(this.getClass().getName(), "Message found!");
-                    return true;
-                }
-            } catch (Exception e) {
-                //Not present yet.
-            }
-            return false;
-        });
+        await().atMost(Duration.ofSeconds(WAITING_TIME_SECONDS)).and().with().pollDelay(SNACKBAR_WAITING_TIME, TimeUnit.MILLISECONDS).with()
+                .pollInterval(SNACKBAR_INTERVAL_TIME, TimeUnit.MILLISECONDS).until(() -> {
+                    try {
+                        final String snackBarMessage = getMessage();
+                        final String snackBarType = getMessageType();
+                        LabStationLogger.debug(this.getClass().getName(), "Comparing messages: '{}' ({}) with '{}' ({}).",
+                                message, type, snackBarMessage, snackBarType);
+                        if (Objects.equals(snackBarType, type) && Objects.equals(snackBarMessage, message)) {
+                            closeLatest();
+                            LabStationLogger.debug(this.getClass().getName(), "Message found!");
+                            return true;
+                        }
+                    } catch (Exception e) {
+                        //Not present yet.
+                    }
+                    return false;
+                });
     }
 }

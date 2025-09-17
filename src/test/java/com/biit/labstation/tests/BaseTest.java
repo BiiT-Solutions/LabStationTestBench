@@ -83,7 +83,7 @@ public abstract class BaseTest extends AbstractTestNGSpringContextTests implemen
     }
 
     @BeforeSuite
-    public void prepareFolder() throws IOException {
+    public void prepareFolder() {
         try {
             Files.createDirectories(Paths.get(screenShotsFolder));
         } catch (Exception e) {
@@ -94,7 +94,7 @@ public abstract class BaseTest extends AbstractTestNGSpringContextTests implemen
 
     @BeforeSuite
     public void configureAwait() {
-        Awaitility.setDefaultPollInterval(10, TimeUnit.MILLISECONDS);
+        Awaitility.setDefaultPollInterval(250, TimeUnit.MILLISECONDS);
         Awaitility.setDefaultPollDelay(Duration.ZERO);
         Awaitility.setDefaultTimeout(Duration.ofSeconds(3));
     }
