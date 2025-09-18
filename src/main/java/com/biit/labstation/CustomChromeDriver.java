@@ -51,8 +51,11 @@ public class CustomChromeDriver {
         chromeOptions.addArguments("--no-sandbox");
         chromeOptions.addArguments("--disable-search-engine-choice-screen");
         chromeOptions.addArguments("--lang=" + language);
-        //Previous line not working, adding a workaround.
         final Map<String, Object> prefs = new HashMap<>();
+        //Disabling window requesting for password change.
+        prefs.put("profile.password_manager_leak_detection", false);
+        prefs.put("profile.password_manager_enabled", false);
+        //Previous language setting not working, adding a workaround.
         prefs.put("intl.accept_languages", language);
         chromeOptions.setExperimentalOption("prefs", prefs);
         if (headless) {
