@@ -54,6 +54,7 @@ public class CustomChromeDriver {
         final Map<String, Object> prefs = new HashMap<>();
         //Disabling window requesting for password change.
         prefs.put("profile.password_manager_leak_detection", false);
+        prefs.put("credentials_enable_service", false);
         prefs.put("profile.password_manager_enabled", false);
         //Previous language setting not working, adding a workaround.
         prefs.put("intl.accept_languages", language);
