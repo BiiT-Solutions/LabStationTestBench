@@ -38,8 +38,8 @@ public class SnackBar {
     }
 
     protected static final int WAITING_TIME_SECONDS = 5;
-    protected static final int SNACKBAR_WAITING_TIME = 250;
-    protected static final int SNACKBAR_INTERVAL_TIME = 500;
+    protected static final int SNACKBAR_POOL_DELAY_TIME = 250;
+    protected static final int SNACKBAR_INTERVAL_TIME = 1000;
 
     private final CustomChromeDriver customChromeDriver;
 
@@ -56,7 +56,7 @@ public class SnackBar {
     }
 
     public String getMessage() {
-        await().atMost(Duration.ofSeconds(WAITING_TIME_SECONDS)).and().with().pollDelay(1, TimeUnit.SECONDS).until(() -> {
+        await().atMost(Duration.ofSeconds(WAITING_TIME_SECONDS)).and().with().pollDelay(SNACKBAR_POOL_DELAY_TIME, TimeUnit.SECONDS).until(() -> {
             try {
                 //Wait until snackbar is visible.
                 customChromeDriver.findElementWaiting(By.id("snackbar-canvas")).findElement(By.id("biit-notification"));
@@ -65,6 +65,10 @@ public class SnackBar {
                 return false;
             }
         });
+        return getMessageText();
+    }
+
+    private String getMessageText() {
         final String text = customChromeDriver.findElementWaiting(By.id("snackbar-canvas"), By.id("biit-notification"))
                 .findElement(By.id("message")).getText();
         if (!text.isBlank()) {
@@ -98,10 +102,10 @@ public class SnackBar {
     }
 
     private void checkMessage(String type, String message) {
-        await().atMost(Duration.ofSeconds(WAITING_TIME_SECONDS)).and().with().pollDelay(SNACKBAR_WAITING_TIME, TimeUnit.MILLISECONDS).with()
+        await().atMost(Duration.ofSeconds(WAITING_TIME_SECONDS)).and().with().pollDelay(SNACKBAR_POOL_DELAY_TIME, TimeUnit.MILLISECONDS).with()
                 .pollInterval(SNACKBAR_INTERVAL_TIME, TimeUnit.MILLISECONDS).until(() -> {
                     try {
-                        final String snackBarMessage = getMessage();
+                        final String snackBarMessage = getMessageText();
                         final String snackBarType = getMessageType();
                         LabStationLogger.debug(this.getClass().getName(), "Comparing messages: '{}' ({}) with '{}' ({}).",
                                 message, type, snackBarMessage, snackBarType);
