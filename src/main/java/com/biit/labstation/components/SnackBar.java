@@ -48,7 +48,7 @@ public class SnackBar {
     }
 
     public String getMessageType() {
-        final String attribute = customChromeDriver.findElementWaiting(By.id("snackbar-canvas"), By.id("biit-notification")).getAttribute("class");
+        final String attribute = customChromeDriver.findElement(By.id("snackbar-canvas"), By.id("biit-notification")).getAttribute("class");
         if (attribute != null) {
             return attribute.replace("notification-canvas", "").trim();
         }
@@ -69,7 +69,7 @@ public class SnackBar {
     }
 
     private String getMessageText() {
-        final String text = customChromeDriver.findElementWaiting(By.id("snackbar-canvas"), By.id("biit-notification"))
+        final String text = customChromeDriver.findElement(By.id("snackbar-canvas"), By.id("biit-notification"))
                 .findElement(By.id("message")).getText();
         if (!text.isBlank()) {
             ComponentLogger.debug(this.getClass().getName(), "SnackBar Text: '{}'.", text);

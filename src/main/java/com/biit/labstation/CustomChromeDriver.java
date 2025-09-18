@@ -112,6 +112,10 @@ public class CustomChromeDriver {
         return getDriver().findElement(field);
     }
 
+    public WebElement findElement(By parent, By field) {
+        return getDriver().findElement(parent).findElement(field);
+    }
+
     public WebElement findElementWaiting(By field) {
         return getWebDriverWait().until(ExpectedConditions.visibilityOfElementLocated(field));
     }
