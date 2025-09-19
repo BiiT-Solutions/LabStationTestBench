@@ -43,7 +43,7 @@
             <class name="com.biit.labstation.tests.dashboard.OrganizationAdminDashboardTests"/>
             <class name="com.biit.labstation.tests.dashboard.UserActivitiesTests"/>
             <class name="com.biit.labstation.tests.profilematcher.OrganizationAdminMetaviewerTests"/>
-            <class name="com.biit.labstation.tests.appointments.WorkshopsTests"/>
+            <class name="com.biit.labstation.tests.appointments.AppointmentTests"/>
         </classes>
     </test>
 </suite>

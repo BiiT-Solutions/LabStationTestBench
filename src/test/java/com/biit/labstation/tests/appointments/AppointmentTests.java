@@ -7,6 +7,7 @@ import com.biit.labstation.logger.ClassTestListener;
 import com.biit.labstation.logger.TestListener;
 import com.biit.labstation.tests.BaseTest;
 import com.biit.labstation.tests.ITestWithWebDriver;
+import com.biit.labstation.tests.dashboard.OrganizationAdminDashboardTests;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -17,13 +18,15 @@ import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
 
+import java.time.DayOfWeek;
+
 import static com.biit.labstation.tests.Priorities.APPOINTMENT_CENTER_WORKSHOPS_PRIORITY;
 
 @SpringBootTest
 @Test(groups = "workshops", priority = APPOINTMENT_CENTER_WORKSHOPS_PRIORITY)
 @Listeners({TestListener.class, ClassTestListener.class})
 @DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_CLASS)
-public class WorkshopsTests extends BaseTest implements ITestWithWebDriver {
+public class AppointmentTests extends BaseTest implements ITestWithWebDriver {
 
     private static final String WORKSHOP_TITLE = "Workshop1";
     private static final String WORKSHOP_DESCRIPTION = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam fringilla ultrices urna in commodo. Mauris posuere, elit in vulputate egestas, nisl mauris tempor nulla, ut euismod nibh leo viverra tellus.";
@@ -34,6 +37,10 @@ public class WorkshopsTests extends BaseTest implements ITestWithWebDriver {
     private static final String WORKSHOP_NEW_DESCRIPTION = "";
     private static final Integer WORKSHOP_NEW_COST = 50;
     private static final Integer WORKSHOP_NEW_DURATION = 120;
+
+    private static final String APPOINTMENT_NEW_TITLE = "Appointment1";
+    private static final String APPOINTMENT_NEW_DESCRIPTION = "This is an appointment.";
+    private static final Integer APPOINTMENT_NEW_COST = 75;
 
 
     @Value("${admin.user}")
@@ -49,6 +56,7 @@ public class WorkshopsTests extends BaseTest implements ITestWithWebDriver {
         appointmentCenter.access();
     }
 
+
     @Test
     public void createSimpleWorkshop() {
         appointmentCenter.login(adminUser, adminPassword);
@@ -58,7 +66,28 @@ public class WorkshopsTests extends BaseTest implements ITestWithWebDriver {
         appointmentCenter.logout();
     }
 
+
     @Test(dependsOnMethods = "createSimpleWorkshop")
+    public void createAppointmentFromWorkshop() {
+        appointmentCenter.login(adminUser, adminPassword);
+        Assert.assertEquals(appointmentCenter.getNumberOfAppointments(), 0);
+        appointmentCenter.createAppointmentFromWorkshop(WORKSHOP_TITLE, APPOINTMENT_NEW_TITLE, APPOINTMENT_NEW_DESCRIPTION, null, APPOINTMENT_NEW_COST,
+                DayOfWeek.MONDAY, 12);
+        ToolTest.waitComponentOneSecond();
+        Assert.assertEquals(appointmentCenter.getNumberOfAppointments(), 1);
+        appointmentCenter.logout();
+    }
+
+
+    @Test(dependsOnMethods = "createAppointmentFromWorkshop")
+    public void subscribeToAppointment() {
+        appointmentCenter.login(OrganizationAdminDashboardTests.IN_ORG_USER_NAME, OrganizationAdminDashboardTests.IN_ORG_USER_PASSWORD);
+        appointmentCenter.subscribeToAppointment(WORKSHOP_TITLE, APPOINTMENT_NEW_TITLE);
+        appointmentCenter.logout();
+    }
+
+
+    @Test(dependsOnMethods = "subscribeToAppointment")
     public void editWorkshop() {
         appointmentCenter.login(adminUser, adminPassword);
         appointmentCenter.editWorkshop(WORKSHOP_TITLE, WORKSHOP_NEW_TITLE, WORKSHOP_NEW_DESCRIPTION, null, WORKSHOP_NEW_DURATION, WORKSHOP_NEW_COST, null);
@@ -74,9 +103,16 @@ public class WorkshopsTests extends BaseTest implements ITestWithWebDriver {
         appointmentCenter.deleteWorkshop(WORKSHOP_NEW_TITLE);
         ToolTest.waitComponent();
         Assert.assertEquals(appointmentCenter.getNumberOfWorkshops(), 0);
+        Assert.assertEquals(appointmentCenter.getNumberOfAppointments(), 1);
         appointmentCenter.logout();
     }
 
+    @Test(dependsOnMethods = "deleteWorkshop")
+    public void unsubscribeFromAppointment() {
+        appointmentCenter.login(OrganizationAdminDashboardTests.IN_ORG_USER_NAME, OrganizationAdminDashboardTests.IN_ORG_USER_PASSWORD);
+        appointmentCenter.unsubscribeFromAppointment(APPOINTMENT_NEW_TITLE);
+        appointmentCenter.logout();
+    }
 
     @AfterClass(alwaysRun = true)
     public void cleanup() {

@@ -30,6 +30,10 @@ public class SnackBar {
     public static final String CANNOT_SELECT_MORE_THAN_TEN = "You cannot select more than 10 cards. Please, deselect one to select another.";
     public static final String USERNAME_ALREADY_EXISTS = "The user already exists.";
     public static final String DATA_CONFLICTS = "Inserted data conflicts with already existing data on database.";
+    public static final String WORKSHOP_DELETED = "Workshop has been deleted successfully.";
+    public static final String APPOINTMENT_DELETED = "Appointment has been deleted successfully.";
+    public static final String APPOINTMENT_SUBSCRIBED = "Appointment has been subscribed successfully.";
+    public static final String APPOINTMENT_UNSUBSCRIBED = "Appointment has been unsubscribed successfully.";
 
     public enum Type {
         REGULAR,

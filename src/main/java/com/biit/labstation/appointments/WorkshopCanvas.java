@@ -68,8 +68,7 @@ public class WorkshopCanvas {
         ToolTest.waitComponent();
     }
 
-    public void editWorkshop(String sourceTitle, String title, String description, Collection<String> speakers, int duration, Integer cost, AppointmentTheme theme) {
-
+    public void editWorkshop(String title, String description, Collection<String> speakers, int duration, Integer cost, AppointmentTheme theme) {
         LabStationLogger.debug(this.getClass().getName(), "@@ Adding workshop '{}'.", title);
         popup.findElement(PopupId.WORKSHOP, "event-title").findElement(By.className("input-object")).clear();
         popup.findElement(PopupId.WORKSHOP, "event-title").findElement(By.className("input-object")).sendKeys(title);
@@ -95,16 +94,23 @@ public class WorkshopCanvas {
 
 
     public void selectContextMenuOnWorkshop(String title, String option) {
-        final List<WebElement> elements = customChromeDriver.findElementWaiting(By.id("workshops")).findElements(By.className("workshop"));
-        for (WebElement element : elements) {
-            if (element.getText().contains("\n" + title.toUpperCase() + "\n")) {
-                mouse.selectContextMenu(element, option);
-                break;
-            }
+        final WebElement workshop = getWorkshop(title);
+        if (workshop != null) {
+            mouse.selectContextMenu(workshop, option);
         }
     }
 
-    public int getNumberOfWorkshops() {
+    public WebElement getWorkshop(String title) {
+        final List<WebElement> elements = customChromeDriver.findElementWaiting(By.id("workshops")).findElements(By.className("workshop"));
+        for (WebElement element : elements) {
+            if (element.getText().contains("\n" + title.toUpperCase() + "\n")) {
+                return element;
+            }
+        }
+        return null;
+    }
+
+    public int countWorkshops() {
         return customChromeDriver.findElementWaiting(By.id("workshops")).findElements(By.className("workshop")).size();
     }
 }
