@@ -30,6 +30,12 @@ public class WorkshopsTests extends BaseTest implements ITestWithWebDriver {
     private static final Integer WORKSHOP_COST = 100;
     private static final Integer WORKSHOP_DURATION = 60;
 
+    private static final String WORKSHOP_NEW_TITLE = "Workshop2";
+    private static final String WORKSHOP_NEW_DESCRIPTION = "";
+    private static final Integer WORKSHOP_NEW_COST = 50;
+    private static final Integer WORKSHOP_NEW_DURATION = 120;
+
+
     @Value("${admin.user}")
     private String adminUser;
     @Value("${admin.password}")
@@ -52,11 +58,20 @@ public class WorkshopsTests extends BaseTest implements ITestWithWebDriver {
         appointmentCenter.logout();
     }
 
-
     @Test(dependsOnMethods = "createSimpleWorkshop")
+    public void editWorkshop() {
+        appointmentCenter.login(adminUser, adminPassword);
+        appointmentCenter.editWorkshop(WORKSHOP_TITLE, WORKSHOP_NEW_TITLE, WORKSHOP_NEW_DESCRIPTION, null, WORKSHOP_NEW_DURATION, WORKSHOP_NEW_COST, null);
+        ToolTest.waitComponent();
+        Assert.assertEquals(appointmentCenter.getNumberOfWorkshops(), 1);
+        appointmentCenter.logout();
+    }
+
+
+    @Test(dependsOnMethods = "editWorkshop")
     public void deleteWorkshop() {
         appointmentCenter.login(adminUser, adminPassword);
-        appointmentCenter.deleteWorkshop(WORKSHOP_TITLE);
+        appointmentCenter.deleteWorkshop(WORKSHOP_NEW_TITLE);
         ToolTest.waitComponent();
         Assert.assertEquals(appointmentCenter.getNumberOfWorkshops(), 0);
         appointmentCenter.logout();
