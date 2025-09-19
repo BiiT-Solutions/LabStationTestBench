@@ -26,7 +26,8 @@ public class Mouse {
     public void selectContextMenu(WebElement element, String menuItem) {
         rightClick(element);
         ToolTest.waitComponent();
-        final List<WebElement> options = customChromeDriver.findElementWaiting(By.className("ngx-contextmenu")).findElements(By.className("ngx-contextmenu--item-content"));
+        final List<WebElement> options = customChromeDriver.findElementWaiting(By.className("ngx-contextmenu"))
+                .findElements(By.className("ngx-contextmenu--item-content"));
         for (WebElement option : options) {
             if (option.getText().contains(menuItem)) {
                 option.click();
