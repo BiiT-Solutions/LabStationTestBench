@@ -49,9 +49,6 @@ public class ProfilesTests extends BaseTest implements ITestWithWebDriver {
     @Autowired
     private Popup popup;
 
-    @Autowired
-    private ScreenShooter screenShooter;
-
     @Value("${admin.user}")
     private String adminUser;
     @Value("${admin.password}")

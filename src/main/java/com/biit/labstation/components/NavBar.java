@@ -12,7 +12,6 @@ public class NavBar {
 
     private final CustomChromeDriver customChromeDriver;
 
-
     public NavBar(CustomChromeDriver customChromeDriver) {
         this.customChromeDriver = customChromeDriver;
     }

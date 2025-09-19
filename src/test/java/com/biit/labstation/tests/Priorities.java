@@ -23,4 +23,6 @@ public class Priorities {
     public static final int DASHBOARD_PRIORITY = CARD_GAME_PRIORITY + 1;
     public static final int ACTIVITY_HISTORIC_PRIORITY = DASHBOARD_PRIORITY + 1;
     public static final int ORGANIZATION_ADMIN_DASHBOARD_PRIORITY = ACTIVITY_HISTORIC_PRIORITY + 1;
+
+    public static final int APPOINTMENT_CENTER_WORKSHOPS_PRIORITY = 2000;
 }

@@ -24,6 +24,7 @@
                 <include name="organizationAdminDashboard"/>
                 <include name="orgAdminMetaviewer"/>
                 <include name="activities"/>
+                <include name="workshops"/>
             </run>
         </groups>
         <classes>
@@ -42,6 +43,7 @@
             <class name="com.biit.labstation.tests.dashboard.OrganizationAdminDashboardTests"/>
             <class name="com.biit.labstation.tests.dashboard.UserActivitiesTests"/>
             <class name="com.biit.labstation.tests.profilematcher.OrganizationAdminMetaviewerTests"/>
+            <class name="com.biit.labstation.tests.appointments.WorkshopsTests"/>
         </classes>
     </test>
 </suite>

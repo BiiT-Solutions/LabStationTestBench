@@ -106,7 +106,11 @@ public class UserManager extends ToolTest {
 
     public void addService(String name, String description) {
         LabStationLogger.debug(this.getClass().getName(), "@@ Adding service '{}'.", name);
-        selectServicesOnMenu();
+        try {
+            selectServicesOnMenu();
+        } catch (Exception e) {
+            //Already on this tab.
+        }
         table.pressButton(TableId.SERVICE_TABLE, "button-plus");
         if (name != null) {
             popup.findElement(PopupId.SERVICE, "service-name").findElement(By.className("input-object")).sendKeys(name);

@@ -28,7 +28,9 @@ public enum PopupId {
     ASSIGN_PROFILES_POPUP("profiles-popup"),
     USERS_PROFILES_POPUP("user-profiles-popup"),
     CANDIDATES_POPUP("candidates-popup"),
-    LOGIN_WARNING("warning-popup");
+    LOGIN_WARNING("warning-popup"),
+    WORKSHOP("workshop-popup"),
+    DELETE_WORKSHOP("delete-workshop-popup");
 
     private final String id;
 

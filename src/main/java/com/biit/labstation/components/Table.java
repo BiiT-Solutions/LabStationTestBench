@@ -9,7 +9,6 @@ import com.biit.labstation.logger.LabStationLogger;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebElement;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.time.Duration;
@@ -27,12 +26,12 @@ public class Table {
     public static final int CLEAR_WAIT = 20;
     private static final int SEARCH_WAIT = 1000;
 
-    @Autowired
-    private ScreenShooter screenShooter;
+    private final ScreenShooter screenShooter;
 
     private final CustomChromeDriver customChromeDriver;
 
-    public Table(CustomChromeDriver customChromeDriver) {
+    public Table(ScreenShooter screenShooter, CustomChromeDriver customChromeDriver) {
+        this.screenShooter = screenShooter;
         this.customChromeDriver = customChromeDriver;
     }
 
