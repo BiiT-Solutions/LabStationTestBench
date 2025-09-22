@@ -4,6 +4,7 @@ import com.biit.labstation.CustomChromeDriver;
 import com.biit.labstation.ToolTest;
 import com.biit.labstation.components.Dropdown;
 import com.biit.labstation.components.Mouse;
+import com.biit.labstation.components.Multiselect;
 import com.biit.labstation.components.Popup;
 import com.biit.labstation.components.PopupId;
 import com.biit.labstation.logger.LabStationLogger;
@@ -29,15 +30,15 @@ public class CalendarCanvas {
 
     private final Popup popup;
 
-    private final Dropdown dropdown;
+    private final Multiselect multiselect;
 
     private final Mouse mouse;
 
-    public CalendarCanvas(CustomChromeDriver customChromeDriver, Popup popup, Dropdown dropdown,
+    public CalendarCanvas(CustomChromeDriver customChromeDriver, Popup popup, Multiselect multiselect,
                           Mouse mouse) {
         this.customChromeDriver = customChromeDriver;
         this.popup = popup;
-        this.dropdown = dropdown;
+        this.multiselect = multiselect;
         this.mouse = mouse;
     }
 
@@ -71,8 +72,10 @@ public class CalendarCanvas {
             popup.findElement(PopupId.APPOINTMENT, "appointment-description").findElement(By.className("input-object")).sendKeys(description);
         }
         if (hosts != null) {
+            //Click on the arrow.
+            customChromeDriver.findElementWaiting(By.id("appointment-speakers")).click();
             for (String host : hosts) {
-                dropdown.selectItem("appointment-speakers", host);
+                multiselect.selectItem("appointment-speakers", host);
             }
         }
 
@@ -128,6 +131,6 @@ public class CalendarCanvas {
     }
 
     public List<String> getAttendees() {
-        return dropdown.getSelectedItems("appointment-attendees");
+        return multiselect.getSelectedItems("appointment-attendees");
     }
 }

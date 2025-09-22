@@ -13,19 +13,19 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Component
-public class Dropdown {
+public class Multiselect {
 
     private final CustomChromeDriver customChromeDriver;
 
-    public Dropdown(CustomChromeDriver customChromeDriver) {
+    public Multiselect(CustomChromeDriver customChromeDriver) {
         this.customChromeDriver = customChromeDriver;
     }
 
     public void selectItem(String parent, String item) {
         ComponentLogger.debug(this.getClass().getName(), "Selecting item '{}' on parent '{}'.", item, parent);
         customChromeDriver.findElementWaiting(By.id(parent)).findElement(By.className("input-object")).click();
-        final WebElement element = customChromeDriver.findElementWaiting(By.id(parent)).findElement(By.id("dropdown"))
-                .findElement(By.xpath(".//div[@id='content']/a[contains(text(), '" + item + "')]"));
+        final WebElement element = customChromeDriver.findElementWaiting(By.id(parent)).findElement(By.id("options"))
+                .findElement(By.xpath(".//a[contains(text(), '" + item + "')]"));
         new Actions(customChromeDriver.getDriver()).scrollToElement(element).perform();
         element.click();
     }
@@ -41,7 +41,7 @@ public class Dropdown {
     }
 
     public List<String> getItems(String parent) {
-        final List<WebElement> options = customChromeDriver.findElementWaiting(By.id(parent)).findElement(By.id("dropdown"))
+        final List<WebElement> options = customChromeDriver.findElementWaiting(By.id(parent)).findElement(By.id("options"))
                 .findElements(By.className("biit-checkbox"));
         return options.stream().map(WebElement::getText).collect(Collectors.toList());
     }
@@ -50,7 +50,7 @@ public class Dropdown {
         //Click on the arrow.
         customChromeDriver.findElementWaiting(By.id(parent)).click();
         ToolTest.waitComponent();
-        final List<WebElement> options = customChromeDriver.findElementWaiting(By.id(parent)).findElement(By.id("dropdown"))
+        final List<WebElement> options = customChromeDriver.findElementWaiting(By.id(parent)).findElement(By.id("options"))
                 .findElements(By.className("biit-checkbox"));
         final List<String> selected = new ArrayList<>();
         options.forEach(option -> {

@@ -16,10 +16,10 @@ import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
 
-import static com.biit.labstation.tests.Priorities.APPOINTMENT_MICROSOFT_PRIORITY;
+import static com.biit.labstation.tests.Priorities.APPOINTMENT_GOOGLE_PRIORITY;
 
 @SpringBootTest
-@Test(groups = "connectToGoogle", priority = APPOINTMENT_MICROSOFT_PRIORITY)
+@Test(groups = "connectToGoogle", priority = APPOINTMENT_GOOGLE_PRIORITY)
 @Listeners({TestListener.class, ClassTestListener.class})
 @DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_CLASS)
 public class GoogleAppointmentConnectTests extends BaseTest implements ITestWithWebDriver {
