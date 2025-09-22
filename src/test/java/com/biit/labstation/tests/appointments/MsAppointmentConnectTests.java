@@ -1,6 +1,8 @@
 package com.biit.labstation.tests.appointments;
 
+import com.biit.labstation.ToolTest;
 import com.biit.labstation.appointments.AppointmentCenter;
+import com.biit.labstation.appointments.CalendarCanvas;
 import com.biit.labstation.components.Popup;
 import com.biit.labstation.components.Tab;
 import com.biit.labstation.logger.ClassTestListener;
@@ -11,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.annotation.DirtiesContext;
+import org.testng.Assert;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
@@ -32,6 +35,9 @@ public class MsAppointmentConnectTests extends BaseTest implements ITestWithWebD
     private AppointmentCenter appointmentCenter;
 
     @Autowired
+    private CalendarCanvas calendarCanvas;
+
+    @Autowired
     private Popup popup;
 
     @BeforeClass
@@ -43,13 +49,19 @@ public class MsAppointmentConnectTests extends BaseTest implements ITestWithWebD
     public void connectToMicrosoft() {
         appointmentCenter.login(adminUser, adminPassword);
         appointmentCenter.connectToMicrosoft();
+        ToolTest.waitComponentFiveSecond();
+        Assert.assertEquals(calendarCanvas.countAppointments(), 7);
         appointmentCenter.logout();
     }
 
     @Test(dependsOnMethods = "connectToMicrosoft", alwaysRun = true)
     public void disconnectFromMicrosoft() {
         appointmentCenter.login(adminUser, adminPassword);
+        ToolTest.waitComponentOneSecond();
+        Assert.assertEquals(calendarCanvas.countAppointments(), 7);
         appointmentCenter.disconnectFromMicrosoft();
+        ToolTest.waitComponentFiveSecond();
+        Assert.assertEquals(calendarCanvas.countAppointments(), 0);
         appointmentCenter.logout();
     }
 }
