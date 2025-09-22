@@ -128,7 +128,7 @@ public class AppointmentTests extends BaseTest implements ITestWithWebDriver {
         appointmentCenter.logout();
     }
 
-    @Test
+    @Test(dependsOnMethods = "unsubscribeFromAppointment")
     public void manualAppointmentAdd() {
         appointmentCenter.login(adminUser, adminPassword);
         appointmentCenter.createAppointment("TestAppointment", null, null, 15, LocalDateTime.now(), LocalDateTime.now().plusHours(1));
@@ -136,7 +136,7 @@ public class AppointmentTests extends BaseTest implements ITestWithWebDriver {
     }
 
     @Test(dependsOnMethods = "manualAppointmentAdd")
-    public void deleteAppointmentAdd() {
+    public void deleteAppointment() {
         appointmentCenter.login(adminUser, adminPassword);
         appointmentCenter.deleteAppointment("TestAppointment");
         appointmentCenter.logout();
