@@ -2,7 +2,6 @@ package com.biit.labstation.appointments;
 
 import com.biit.labstation.CustomChromeDriver;
 import com.biit.labstation.ToolTest;
-import com.biit.labstation.components.Dropdown;
 import com.biit.labstation.components.Mouse;
 import com.biit.labstation.components.Multiselect;
 import com.biit.labstation.components.Popup;
