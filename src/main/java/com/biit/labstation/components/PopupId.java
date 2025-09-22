@@ -32,7 +32,9 @@ public enum PopupId {
     WORKSHOP("workshop-popup"),
     APPOINTMENT("appointment-popup"),
     DELETE_WORKSHOP("delete-workshop-popup"),
-    DELETE_APPOINTMENT("delete-event-popup");
+    DELETE_APPOINTMENT("delete-event-popup"),
+    EXTERNAL_CALENDAR("external-calendar-popup"),
+    SYNCHRONIZE_CALENDAR("synchronize-calendar-popup");
 
     private final String id;
 

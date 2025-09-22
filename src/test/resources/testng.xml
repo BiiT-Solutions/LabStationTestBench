@@ -25,6 +25,7 @@
                 <include name="orgAdminMetaviewer"/>
                 <include name="activities"/>
                 <include name="workshops"/>
+                <include name="connectToMs"/>
             </run>
         </groups>
         <classes>
@@ -44,6 +45,7 @@
             <class name="com.biit.labstation.tests.dashboard.UserActivitiesTests"/>
             <class name="com.biit.labstation.tests.profilematcher.OrganizationAdminMetaviewerTests"/>
             <class name="com.biit.labstation.tests.appointments.AppointmentTests"/>
+            <class name="com.biit.labstation.tests.appointments.MsAppointmentConnectTests"/>
         </classes>
     </test>
 </suite>

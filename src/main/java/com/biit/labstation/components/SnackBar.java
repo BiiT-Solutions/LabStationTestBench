@@ -34,6 +34,8 @@ public class SnackBar {
     public static final String APPOINTMENT_DELETED = "Appointment has been deleted successfully.";
     public static final String APPOINTMENT_SUBSCRIBED = "Appointment has been subscribed successfully.";
     public static final String APPOINTMENT_UNSUBSCRIBED = "Appointment has been unsubscribed successfully.";
+    public static final String EXTERNAL_CALENDAR_PERMISSIONS_SUBSCRIBED = "Calendar access permissions have been successfully obtained.";
+    public static final String EXTERNAL_CALENDAR_PERMISSIONS_UNSUBSCRIBED = "Access permissions were removed successfully.";
 
     public enum Type {
         REGULAR,
