@@ -91,8 +91,7 @@ public class AppointmentTests extends BaseTest implements ITestWithWebDriver {
     }
 
 
-    //@Test(dependsOnMethods = "subscribeToAppointment")
-    @Test
+    @Test(dependsOnMethods = "subscribeToAppointment")
     public void checkPeopleSubscribed() {
         appointmentCenter.login(adminUser, adminPassword);
         Assert.assertEquals(appointmentCenter.getAttendees(APPOINTMENT_NEW_TITLE).size(), 1);
