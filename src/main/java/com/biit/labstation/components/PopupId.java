@@ -31,7 +31,8 @@ public enum PopupId {
     LOGIN_WARNING("warning-popup"),
     WORKSHOP("workshop-popup"),
     APPOINTMENT("appointment-popup"),
-    DELETE_WORKSHOP("delete-workshop-popup");
+    DELETE_WORKSHOP("delete-workshop-popup"),
+    DELETE_APPOINTMENT("delete-event-popup");
 
     private final String id;
 

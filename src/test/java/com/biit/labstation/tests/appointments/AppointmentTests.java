@@ -20,6 +20,7 @@ import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
 
 import java.time.DayOfWeek;
+import java.time.LocalDateTime;
 
 import static com.biit.labstation.tests.Priorities.APPOINTMENT_CENTER_WORKSHOPS_PRIORITY;
 
@@ -126,6 +127,21 @@ public class AppointmentTests extends BaseTest implements ITestWithWebDriver {
         appointmentCenter.unsubscribeFromAppointment(APPOINTMENT_NEW_TITLE);
         appointmentCenter.logout();
     }
+
+    @Test
+    public void manualAppointmentAdd() {
+        appointmentCenter.login(adminUser, adminPassword);
+        appointmentCenter.createAppointment("TestAppointment", null, null, 15, LocalDateTime.now(), LocalDateTime.now().plusHours(1));
+        appointmentCenter.logout();
+    }
+
+    @Test(dependsOnMethods = "manualAppointmentAdd")
+    public void deleteAppointmentAdd() {
+        appointmentCenter.login(adminUser, adminPassword);
+        appointmentCenter.deleteAppointment("TestAppointment");
+        appointmentCenter.logout();
+    }
+
 
     @AfterClass(alwaysRun = true)
     public void cleanup() {
