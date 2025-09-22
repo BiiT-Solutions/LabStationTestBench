@@ -3,8 +3,6 @@ package com.biit.labstation.tests.appointments;
 import com.biit.labstation.ToolTest;
 import com.biit.labstation.appointments.AppointmentCenter;
 import com.biit.labstation.appointments.CalendarCanvas;
-import com.biit.labstation.components.Popup;
-import com.biit.labstation.components.Tab;
 import com.biit.labstation.logger.ClassTestListener;
 import com.biit.labstation.logger.TestListener;
 import com.biit.labstation.tests.BaseTest;
@@ -21,10 +19,10 @@ import org.testng.annotations.Test;
 import static com.biit.labstation.tests.Priorities.APPOINTMENT_MICROSOFT_PRIORITY;
 
 @SpringBootTest
-@Test(groups = "connectToMs", priority = APPOINTMENT_MICROSOFT_PRIORITY)
+@Test(groups = "connectToGoogle", priority = APPOINTMENT_MICROSOFT_PRIORITY)
 @Listeners({TestListener.class, ClassTestListener.class})
 @DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_CLASS)
-public class MsAppointmentConnectTests extends BaseTest implements ITestWithWebDriver {
+public class GoogleAppointmentConnectTests extends BaseTest implements ITestWithWebDriver {
 
     @Value("${admin.user}")
     private String adminUser;
@@ -43,20 +41,20 @@ public class MsAppointmentConnectTests extends BaseTest implements ITestWithWebD
     }
 
     @Test
-    public void connectToMicrosoft() {
+    public void connectToGoogle() {
         appointmentCenter.login(adminUser, adminPassword);
-        appointmentCenter.connectToMicrosoft();
+        appointmentCenter.connectToGoogle();
         ToolTest.waitComponentFiveSecond();
         Assert.assertEquals(calendarCanvas.countAppointments(), 7);
         appointmentCenter.logout();
     }
 
-    @Test(dependsOnMethods = "connectToMicrosoft", alwaysRun = true)
-    public void disconnectFromMicrosoft() {
+    @Test(dependsOnMethods = "connectToGoogle", alwaysRun = true)
+    public void disconnectFromGoogle() {
         appointmentCenter.login(adminUser, adminPassword);
         ToolTest.waitComponentOneSecond();
         Assert.assertEquals(calendarCanvas.countAppointments(), 7);
-        appointmentCenter.disconnectFromMicrosoft();
+        appointmentCenter.disconnectFromGoogle();
         ToolTest.waitComponentFiveSecond();
         Assert.assertEquals(calendarCanvas.countAppointments(), 0);
         appointmentCenter.logout();

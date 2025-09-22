@@ -26,6 +26,8 @@
                 <include name="activities"/>
                 <include name="workshops"/>
                 <include name="connectToMs"/>
+                <!-- Selenium cannot connect to Google -->
+                <exclude name="connectToGoogle"/>
             </run>
         </groups>
         <classes>
@@ -46,6 +48,7 @@
             <class name="com.biit.labstation.tests.profilematcher.OrganizationAdminMetaviewerTests"/>
             <class name="com.biit.labstation.tests.appointments.AppointmentTests"/>
             <class name="com.biit.labstation.tests.appointments.MsAppointmentConnectTests"/>
+            <class name="com.biit.labstation.tests.appointments.GoogleAppointmentConnectTests"/>
         </classes>
     </test>
 </suite>

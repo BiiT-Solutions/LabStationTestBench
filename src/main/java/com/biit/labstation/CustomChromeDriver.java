@@ -59,6 +59,9 @@ public class CustomChromeDriver {
         //Previous language setting not working, adding a workaround.
         prefs.put("intl.accept_languages", language);
         chromeOptions.setExperimentalOption("prefs", prefs);
+        //Disable automation message. For login in Google Calendar.
+//        chromeOptions.setExperimentalOption("useAutomationExtension", false);
+//        chromeOptions.setExperimentalOption("excludeSwitches", Collections.singletonList("enable-automation"));
         if (headless) {
             chromeOptions.addArguments("--headless=new");
         }
