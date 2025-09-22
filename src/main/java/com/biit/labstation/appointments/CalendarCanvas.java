@@ -71,4 +71,8 @@ public class CalendarCanvas {
         }
         return null;
     }
+
+    public List<String> getAttendees() {
+        return dropdown.getSelectedItems("appointment-attendees");
+    }
 }

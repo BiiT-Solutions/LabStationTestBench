@@ -3,6 +3,7 @@ package com.biit.labstation.tests.appointments;
 
 import com.biit.labstation.ToolTest;
 import com.biit.labstation.appointments.AppointmentCenter;
+import com.biit.labstation.components.Popup;
 import com.biit.labstation.logger.ClassTestListener;
 import com.biit.labstation.logger.TestListener;
 import com.biit.labstation.tests.BaseTest;
@@ -51,6 +52,9 @@ public class AppointmentTests extends BaseTest implements ITestWithWebDriver {
     @Autowired
     private AppointmentCenter appointmentCenter;
 
+    @Autowired
+    private Popup popup;
+
     @BeforeClass
     public void setup() {
         appointmentCenter.access();
@@ -83,6 +87,16 @@ public class AppointmentTests extends BaseTest implements ITestWithWebDriver {
     public void subscribeToAppointment() {
         appointmentCenter.login(OrganizationAdminDashboardTests.IN_ORG_USER_NAME, OrganizationAdminDashboardTests.IN_ORG_USER_PASSWORD);
         appointmentCenter.subscribeToAppointment(WORKSHOP_TITLE, APPOINTMENT_NEW_TITLE);
+        appointmentCenter.logout();
+    }
+
+
+    //@Test(dependsOnMethods = "subscribeToAppointment")
+    @Test
+    public void checkPeopleSubscribed() {
+        appointmentCenter.login(adminUser, adminPassword);
+        Assert.assertEquals(appointmentCenter.getAttendees(APPOINTMENT_NEW_TITLE).size(), 1);
+        popup.close(null);
         appointmentCenter.logout();
     }
 

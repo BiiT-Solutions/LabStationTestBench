@@ -23,4 +23,8 @@ public class EventCard {
     public WebElement unsubscribeButton() {
         return customChromeDriver.findElementWaiting(By.id(ID)).findElement(By.id("unsubscribe-button"));
     }
+
+    public WebElement editButton() {
+        return customChromeDriver.findElementWaiting(By.id(ID)).findElement(By.id("edit-button"));
+    }
 }

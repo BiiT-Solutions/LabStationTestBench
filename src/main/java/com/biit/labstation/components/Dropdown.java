@@ -8,6 +8,10 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
 import org.springframework.stereotype.Component;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
+
 @Component
 public class Dropdown {
 
@@ -34,5 +38,29 @@ public class Dropdown {
                 .findElement(By.id("dropdown")).findElement(By.xpath(".//div[@id='content']/a[contains(text(), '" + item + "')]"));
         new Actions(customChromeDriver.getDriver()).scrollToElement(element).perform();
         element.click();
+    }
+
+    public List<String> getItems(String parent) {
+        final List<WebElement> options = customChromeDriver.findElementWaiting(By.id(parent)).findElement(By.id("options"))
+                .findElements(By.className("biit-checkbox"));
+        return options.stream().map(WebElement::getText).collect(Collectors.toList());
+    }
+
+    public List<String> getSelectedItems(String parent) {
+        //Click on the arrow.
+        customChromeDriver.findElementWaiting(By.id(parent)).click();
+        ToolTest.waitComponent();
+        final List<WebElement> options = customChromeDriver.findElementWaiting(By.id(parent)).findElement(By.id("options"))
+                .findElements(By.className("biit-checkbox"));
+        final List<String> selected = new ArrayList<>();
+        options.forEach(option -> {
+            try {
+                option.findElement(By.id("checked"));
+                selected.add(option.getText().trim());
+            } catch (Exception ignore) {
+                //Not selected.
+            }
+        });
+        return selected;
     }
 }
