@@ -55,6 +55,10 @@ public class CalendarCanvas {
         return customChromeDriver.findElementWaiting(By.id("canvas")).findElement(By.className("main")).findElement(By.id("add-appointment"));
     }
 
+    public WebElement getConnectAppointmentButton() {
+        return customChromeDriver.findElementWaiting(By.id("canvas")).findElement(By.className("main")).findElement(By.id("link-calendar"));
+    }
+
     public void editAppointment(String title, String description, Collection<String> hosts, Integer cost, LocalDateTime startingTime,
                                 LocalDateTime endingTime) {
         LabStationLogger.debug(this.getClass().getName(), "@@ Adding workshop '{}'.", title);
