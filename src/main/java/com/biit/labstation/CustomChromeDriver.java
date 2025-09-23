@@ -36,7 +36,7 @@ public class CustomChromeDriver {
     private static final Integer HEIGHT = 1080;
     private static final Duration WAIT_TIMEOUT_SECS = Duration.ofSeconds(3);
 
-    private String language = "en";
+    private String language = "en-GB";
 
     private WebDriver driver;
 
@@ -51,6 +51,7 @@ public class CustomChromeDriver {
         chromeOptions.addArguments("--no-sandbox");
         chromeOptions.addArguments("--disable-search-engine-choice-screen");
         chromeOptions.addArguments("--lang=" + language);
+        chromeOptions.addArguments("--accept-lang=" + language);
         final Map<String, Object> prefs = new HashMap<>();
         //Disabling window requesting for password change.
         prefs.put("profile.password_manager_leak_detection", false);
@@ -58,6 +59,7 @@ public class CustomChromeDriver {
         prefs.put("profile.password_manager_enabled", false);
         //Previous language setting not working, adding a workaround.
         prefs.put("intl.accept_languages", language);
+        prefs.put("intl.selected_languages", language);
         chromeOptions.setExperimentalOption("prefs", prefs);
         //Disable automation message. For login in Google Calendar.
 //        chromeOptions.setExperimentalOption("useAutomationExtension", false);

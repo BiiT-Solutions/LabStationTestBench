@@ -87,28 +87,20 @@ public class CalendarCanvas {
             popup.findElement(PopupId.APPOINTMENT, "appointment-cost").findElement(By.className("input-object")).sendKeys(cost.toString());
         }
         if (startingTime != null) {
-            String fileName = LocalDateTime.now().format(DateTimeFormatter.ISO_DATE_TIME) + "_sending_keys_1";
-            screenShooter.takeScreenshot(fileName);
+            final String keys = startingTime.format(DateTimeFormatter.ofPattern(DATE_FORMAT))
+                    + Keys.TAB
+                    + startingTime.format(DateTimeFormatter.ofPattern(TIME_FORMAT));
             popup.findElement(PopupId.APPOINTMENT, "appointment-starting-time").findElement(By.className("input-object")).clear();
-            popup.findElement(PopupId.APPOINTMENT, "appointment-starting-time").findElement(By.className("input-object")).sendKeys(
-                    startingTime.format(DateTimeFormatter.ofPattern(DATE_FORMAT))
-                            + Keys.TAB
-                            + startingTime.format(DateTimeFormatter.ofPattern(TIME_FORMAT))
-            );
-            fileName = LocalDateTime.now().format(DateTimeFormatter.ISO_DATE_TIME) + "_sending_keys_2";
-            screenShooter.takeScreenshot(fileName);
+            LabStationLogger.debug(this.getClass().getName(), "Starting time '{}'.", keys);
+            popup.findElement(PopupId.APPOINTMENT, "appointment-starting-time").findElement(By.className("input-object")).sendKeys(keys);
         }
         if (endingTime != null) {
             popup.findElement(PopupId.APPOINTMENT, "appointment-ending-time").findElement(By.className("input-object")).clear();
-            String fileName = LocalDateTime.now().format(DateTimeFormatter.ISO_DATE_TIME) + "_sending_keys_3";
-            screenShooter.takeScreenshot(fileName);
             final String keys = endingTime.format(DateTimeFormatter.ofPattern(DATE_FORMAT))
                     + Keys.TAB
                     + endingTime.format(DateTimeFormatter.ofPattern(TIME_FORMAT));
-            LabStationLogger.debug(this.getClass().getName(), "--> Sending keys '{}'.", keys);
+            LabStationLogger.debug(this.getClass().getName(), "Ending time '{}'.", keys);
             popup.findElement(PopupId.APPOINTMENT, "appointment-ending-time").findElement(By.className("input-object")).sendKeys(keys);
-            fileName = LocalDateTime.now().format(DateTimeFormatter.ISO_DATE_TIME) + "_sending_keys_4";
-            screenShooter.takeScreenshot(fileName);
         }
         popup.findElement(PopupId.APPOINTMENT, "appointment-button-save").click();
     }
