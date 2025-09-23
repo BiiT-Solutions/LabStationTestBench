@@ -36,7 +36,7 @@ public class CustomChromeDriver {
     private static final Integer HEIGHT = 1080;
     private static final Duration WAIT_TIMEOUT_SECS = Duration.ofSeconds(3);
 
-    private String language = "en-GB";
+    private String language = "en";
 
     private WebDriver driver;
 
@@ -92,7 +92,6 @@ public class CustomChromeDriver {
 
     @PreDestroy
     public void closeDriver() {
-
         if (DESTROY_DRIVER) {
             try {
                 if (driver != null) {

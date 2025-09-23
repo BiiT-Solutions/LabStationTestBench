@@ -66,7 +66,7 @@ public class AppointmentTests extends BaseTest implements ITestWithWebDriver {
     public void createSimpleWorkshop() {
         appointmentCenter.login(adminUser, adminPassword);
         appointmentCenter.createWorkshop(WORKSHOP_TITLE, WORKSHOP_DESCRIPTION, null, WORKSHOP_DURATION, WORKSHOP_COST, null);
-        ToolTest.waitComponent();
+        ToolTest.waitComponentOneSecond();
         Assert.assertEquals(appointmentCenter.getNumberOfWorkshops(), 1);
         appointmentCenter.logout();
     }
