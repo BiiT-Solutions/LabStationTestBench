@@ -1,6 +1,7 @@
 package com.biit.labstation.appointments;
 
 import com.biit.labstation.CustomChromeDriver;
+import com.biit.labstation.ScreenShooter;
 import com.biit.labstation.ToolTest;
 import com.biit.labstation.components.Mouse;
 import com.biit.labstation.components.Multiselect;
@@ -33,12 +34,15 @@ public class CalendarCanvas {
 
     private final Mouse mouse;
 
+    private final ScreenShooter screenShooter;
+
     public CalendarCanvas(CustomChromeDriver customChromeDriver, Popup popup, Multiselect multiselect,
-                          Mouse mouse) {
+                          Mouse mouse, ScreenShooter screenShooter) {
         this.customChromeDriver = customChromeDriver;
         this.popup = popup;
         this.multiselect = multiselect;
         this.mouse = mouse;
+        this.screenShooter = screenShooter;
     }
 
     public WebElement getScheduleSlot(int dayOfWeek, int hour) {
@@ -83,20 +87,28 @@ public class CalendarCanvas {
             popup.findElement(PopupId.APPOINTMENT, "appointment-cost").findElement(By.className("input-object")).sendKeys(cost.toString());
         }
         if (startingTime != null) {
+            String fileName = LocalDateTime.now().format(DateTimeFormatter.ISO_DATE_TIME) + "_sending_keys_1";
+            screenShooter.takeScreenshot(fileName);
             popup.findElement(PopupId.APPOINTMENT, "appointment-starting-time").findElement(By.className("input-object")).clear();
             popup.findElement(PopupId.APPOINTMENT, "appointment-starting-time").findElement(By.className("input-object")).sendKeys(
                     startingTime.format(DateTimeFormatter.ofPattern(DATE_FORMAT))
                             + Keys.TAB
                             + startingTime.format(DateTimeFormatter.ofPattern(TIME_FORMAT))
             );
+            fileName = LocalDateTime.now().format(DateTimeFormatter.ISO_DATE_TIME) + "_sending_keys_2";
+            screenShooter.takeScreenshot(fileName);
         }
         if (endingTime != null) {
             popup.findElement(PopupId.APPOINTMENT, "appointment-ending-time").findElement(By.className("input-object")).clear();
+            String fileName = LocalDateTime.now().format(DateTimeFormatter.ISO_DATE_TIME) + "_sending_keys_3";
+            screenShooter.takeScreenshot(fileName);
             popup.findElement(PopupId.APPOINTMENT, "appointment-ending-time").findElement(By.className("input-object")).sendKeys(
                     endingTime.format(DateTimeFormatter.ofPattern(DATE_FORMAT))
                             + Keys.TAB
                             + endingTime.format(DateTimeFormatter.ofPattern(TIME_FORMAT))
             );
+            fileName = LocalDateTime.now().format(DateTimeFormatter.ISO_DATE_TIME) + "_sending_keys_4";
+            screenShooter.takeScreenshot(fileName);
         }
         popup.findElement(PopupId.APPOINTMENT, "appointment-button-save").click();
     }

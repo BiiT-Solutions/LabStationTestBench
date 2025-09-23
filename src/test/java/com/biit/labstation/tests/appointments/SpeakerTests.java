@@ -44,9 +44,6 @@ public class SpeakerTests extends BaseTest implements ITestWithWebDriver {
     @Autowired
     private UserManager userManager;
 
-    @Autowired
-    private CalendarCanvas calendarCanvas;
-
     @BeforeClass
     public void setupUserManager() {
         userManager.access();
