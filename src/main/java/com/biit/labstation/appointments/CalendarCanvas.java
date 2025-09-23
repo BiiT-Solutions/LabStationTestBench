@@ -102,11 +102,11 @@ public class CalendarCanvas {
             popup.findElement(PopupId.APPOINTMENT, "appointment-ending-time").findElement(By.className("input-object")).clear();
             String fileName = LocalDateTime.now().format(DateTimeFormatter.ISO_DATE_TIME) + "_sending_keys_3";
             screenShooter.takeScreenshot(fileName);
-            popup.findElement(PopupId.APPOINTMENT, "appointment-ending-time").findElement(By.className("input-object")).sendKeys(
-                    endingTime.format(DateTimeFormatter.ofPattern(DATE_FORMAT))
-                            + Keys.TAB
-                            + endingTime.format(DateTimeFormatter.ofPattern(TIME_FORMAT))
-            );
+            final String keys = endingTime.format(DateTimeFormatter.ofPattern(DATE_FORMAT))
+                    + Keys.TAB
+                    + endingTime.format(DateTimeFormatter.ofPattern(TIME_FORMAT));
+            LabStationLogger.debug(this.getClass().getName(), "--> Sending keys '{}'.", keys);
+            popup.findElement(PopupId.APPOINTMENT, "appointment-ending-time").findElement(By.className("input-object")).sendKeys(keys);
             fileName = LocalDateTime.now().format(DateTimeFormatter.ISO_DATE_TIME) + "_sending_keys_4";
             screenShooter.takeScreenshot(fileName);
         }
