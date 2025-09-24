@@ -24,6 +24,7 @@ public class CalendarCanvas {
 
     private static final String CANVAS_ID = "calendar";
     private static final String DATE_FORMAT = "ddMMyyyy";
+    private static final String USA_DATE_FORMAT = "MMddyyyy";
     private static final String TIME_FORMAT = "hhmm";
 
     private final CustomChromeDriver customChromeDriver;
@@ -86,23 +87,35 @@ public class CalendarCanvas {
         if (cost != null) {
             popup.findElement(PopupId.APPOINTMENT, "appointment-cost").findElement(By.className("input-object")).sendKeys(cost.toString());
         }
-        if (startingTime != null) {
-            final String keys = startingTime.format(DateTimeFormatter.ofPattern(DATE_FORMAT))
-                    + Keys.TAB
-                    + startingTime.format(DateTimeFormatter.ofPattern(TIME_FORMAT));
-            popup.findElement(PopupId.APPOINTMENT, "appointment-starting-time").findElement(By.className("input-object")).clear();
-            LabStationLogger.debug(this.getClass().getName(), "Starting time '{}'.", keys);
-            popup.findElement(PopupId.APPOINTMENT, "appointment-starting-time").findElement(By.className("input-object")).sendKeys(keys);
-        }
-        if (endingTime != null) {
-            popup.findElement(PopupId.APPOINTMENT, "appointment-ending-time").findElement(By.className("input-object")).clear();
-            final String keys = endingTime.format(DateTimeFormatter.ofPattern(DATE_FORMAT))
-                    + Keys.TAB
-                    + endingTime.format(DateTimeFormatter.ofPattern(TIME_FORMAT));
-            LabStationLogger.debug(this.getClass().getName(), "Ending time '{}'.", keys);
-            popup.findElement(PopupId.APPOINTMENT, "appointment-ending-time").findElement(By.className("input-object")).sendKeys(keys);
-        }
+
+        setDatePicker("appointment-starting-time", startingTime, DATE_FORMAT);
+        setDatePicker("appointment-ending-time", startingTime, DATE_FORMAT);
+
         popup.findElement(PopupId.APPOINTMENT, "appointment-button-save").click();
+        ToolTest.waitComponent();
+
+        //Check if it dates are in english mode.
+        try {
+            //Exist error on dates!
+            popup.findElement(PopupId.APPOINTMENT, "appointment-starting-time").findElement(By.className("input-error"));
+            setDatePicker("appointment-starting-time", startingTime, USA_DATE_FORMAT);
+            setDatePicker("appointment-ending-time", startingTime, USA_DATE_FORMAT);
+            popup.findElement(PopupId.APPOINTMENT, "appointment-button-save").click();
+            ToolTest.waitComponent();
+        } catch (Exception e) {
+            //Everything was correct. Ignore.
+        }
+    }
+
+    private void setDatePicker(String datePicker, LocalDateTime time, String dateFormat) {
+        if (time != null) {
+            final String keys = time.format(DateTimeFormatter.ofPattern(dateFormat))
+                    + Keys.TAB
+                    + time.format(DateTimeFormatter.ofPattern(TIME_FORMAT));
+            popup.findElement(PopupId.APPOINTMENT, datePicker).findElement(By.className("input-object")).clear();
+            LabStationLogger.debug(this.getClass().getName(), "Setting time '{}'.", keys);
+            popup.findElement(PopupId.APPOINTMENT, datePicker).findElement(By.className("input-object")).sendKeys(keys);
+        }
     }
 
     public void deleteAppointment(String title) {
