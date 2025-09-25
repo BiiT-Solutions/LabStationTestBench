@@ -36,6 +36,8 @@ public class CustomChromeDriver {
     private static final Integer HEIGHT = 1080;
     private static final Duration WAIT_TIMEOUT_SECS = Duration.ofSeconds(3);
 
+    private static final int CAMERA_DISABLED = 2;
+
     private String language = "en-GB";
 
     private WebDriver driver;
@@ -60,6 +62,9 @@ public class CustomChromeDriver {
         //Previous language setting not working, adding a workaround.
         prefs.put("intl.accept_languages", language);
         prefs.put("intl.selected_languages", language);
+        //Disable asking for camera and mic permissions.
+        prefs.put("profile.default_content_setting_values.media_stream_mic", CAMERA_DISABLED);
+        prefs.put("profile.default_content_setting_values.media_stream_camera", CAMERA_DISABLED);
         chromeOptions.setExperimentalOption("prefs", prefs);
         //Disable automation message. For login in Google Calendar.
 //        chromeOptions.setExperimentalOption("useAutomationExtension", false);

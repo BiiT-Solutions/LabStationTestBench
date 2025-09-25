@@ -66,14 +66,16 @@ public abstract class ToolTest {
     public abstract void access();
 
     public void login(String username, String password) {
+        access();
+        waitComponent();
         try {
             login.acceptCookies();
         } catch (Exception e) {
             //Ignored.
         }
-        ToolTest.waitComponent();
+        waitComponent();
         login.logIn(username, password);
-        ToolTest.waitComponent();
+        waitComponent();
     }
 
     public abstract void logout();

@@ -138,8 +138,10 @@ public class AppointmentTests extends BaseTest implements ITestWithWebDriver {
     @Test(dependsOnMethods = "deleteWorkshopAppointment")
     public void addManualAppointment() {
         appointmentCenter.login(adminUser, adminPassword);
+        ToolTest.waitComponentOneSecond();
         final int previousAppointments = appointmentCenter.getNumberOfAppointments();
         appointmentCenter.createAppointment("TestAppointment", null, null, 15, LocalDateTime.now(), LocalDateTime.now().plusHours(1));
+        ToolTest.waitComponentOneSecond();
         Assert.assertEquals(appointmentCenter.getNumberOfAppointments(), previousAppointments + 1);
         appointmentCenter.logout();
     }
@@ -147,8 +149,10 @@ public class AppointmentTests extends BaseTest implements ITestWithWebDriver {
     @Test(dependsOnMethods = "addManualAppointment")
     public void deleteManualAppointment() {
         appointmentCenter.login(adminUser, adminPassword);
+        ToolTest.waitComponentOneSecond();
         final int previousAppointments = appointmentCenter.getNumberOfAppointments();
         appointmentCenter.deleteAppointment("TestAppointment");
+        ToolTest.waitComponentOneSecond();
         Assert.assertEquals(appointmentCenter.getNumberOfAppointments(), previousAppointments - 1);
         appointmentCenter.logout();
     }

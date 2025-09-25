@@ -29,6 +29,7 @@
                 <!-- Selenium cannot connect to Google -->
                 <exclude name="connectToGoogle"/>
                 <include name="speakers"/>
+                <include name="boardingPass"/>
             </run>
         </groups>
         <classes>
@@ -51,6 +52,7 @@
             <class name="com.biit.labstation.tests.appointments.MsAppointmentConnectTests"/>
             <class name="com.biit.labstation.tests.appointments.GoogleAppointmentConnectTests"/>
             <class name="com.biit.labstation.tests.appointments.SpeakerTests"/>
+            <class name="com.biit.labstation.tests.boardingpass.BoardingPassTests"/>
         </classes>
     </test>
 </suite>

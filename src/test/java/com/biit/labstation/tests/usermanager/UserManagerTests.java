@@ -805,6 +805,8 @@ public class UserManagerTests extends BaseTest implements ITestWithWebDriver {
         snackBar.checkMessage(SnackBar.Type.REGULAR, SnackBar.REQUEST_SUCCESSFUL);
         userManager.addUserRoles(jwtUser, "FactManager", "admin");
         snackBar.checkMessage(SnackBar.Type.REGULAR, SnackBar.REQUEST_SUCCESSFUL);
+        userManager.addUserRoles(jwtUser, "AppointmentCenter", "admin");
+        snackBar.checkMessage(SnackBar.Type.REGULAR, SnackBar.REQUEST_SUCCESSFUL);
 
         userManager.logout();
     }

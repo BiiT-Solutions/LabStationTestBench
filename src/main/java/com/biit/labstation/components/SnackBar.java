@@ -36,6 +36,7 @@ public class SnackBar {
     public static final String APPOINTMENT_UNSUBSCRIBED = "Appointment has been unsubscribed successfully.";
     public static final String EXTERNAL_CALENDAR_PERMISSIONS_SUBSCRIBED = "Calendar access permissions have been successfully obtained.";
     public static final String EXTERNAL_CALENDAR_PERMISSIONS_UNSUBSCRIBED = "Access permissions were removed successfully.";
+    public static final String VALIDATION_FAILED = "Validation failed. Please check if some fields are empty or invalid.";
 
     public enum Type {
         REGULAR,

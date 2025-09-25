@@ -1,12 +1,12 @@
 package com.biit.labstation.appointments;
 
 import com.biit.labstation.CustomChromeDriver;
-import com.biit.labstation.ScreenShooter;
 import com.biit.labstation.ToolTest;
 import com.biit.labstation.components.Mouse;
 import com.biit.labstation.components.Multiselect;
 import com.biit.labstation.components.Popup;
 import com.biit.labstation.components.PopupId;
+import com.biit.labstation.components.SnackBar;
 import com.biit.labstation.logger.LabStationLogger;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
@@ -35,15 +35,15 @@ public class CalendarCanvas {
 
     private final Mouse mouse;
 
-    private final ScreenShooter screenShooter;
+    private final SnackBar snackBar;
 
     public CalendarCanvas(CustomChromeDriver customChromeDriver, Popup popup, Multiselect multiselect,
-                          Mouse mouse, ScreenShooter screenShooter) {
+                          Mouse mouse, SnackBar snackBar) {
         this.customChromeDriver = customChromeDriver;
         this.popup = popup;
         this.multiselect = multiselect;
         this.mouse = mouse;
-        this.screenShooter = screenShooter;
+        this.snackBar = snackBar;
     }
 
     public WebElement getScheduleSlot(int dayOfWeek, int hour) {
@@ -96,6 +96,8 @@ public class CalendarCanvas {
 
         //Check if it dates are in english mode.
         try {
+            snackBar.checkMessage(SnackBar.Type.ERROR, SnackBar.VALIDATION_FAILED);
+            LabStationLogger.warning(this.getClass(), "Validation error found. Trying different format.");
             //Exist error on dates!
             popup.findElement(PopupId.APPOINTMENT, "appointment-starting-time").findElement(By.className("input-error"));
             setDatePicker("appointment-starting-time", startingTime, USA_DATE_FORMAT);
@@ -104,6 +106,7 @@ public class CalendarCanvas {
             ToolTest.waitComponent();
         } catch (Exception e) {
             //Everything was correct. Ignore.
+            LabStationLogger.debug(this.getClass(), e.getMessage());
         }
     }
 
@@ -113,7 +116,7 @@ public class CalendarCanvas {
                     + Keys.TAB
                     + time.format(DateTimeFormatter.ofPattern(TIME_FORMAT));
             popup.findElement(PopupId.APPOINTMENT, datePicker).findElement(By.className("input-object")).clear();
-            LabStationLogger.debug(this.getClass().getName(), "Setting time '{}'.", keys);
+            LabStationLogger.debug(this.getClass().getName(), "Setting time '{}' as format '{}'.", keys, dateFormat);
             popup.findElement(PopupId.APPOINTMENT, datePicker).findElement(By.className("input-object")).sendKeys(keys);
         }
     }

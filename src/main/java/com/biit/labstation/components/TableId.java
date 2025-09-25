@@ -14,7 +14,8 @@ public enum TableId {
     PROFILES_TABLE("profiles-table"),
     PROJECTS_TABLE("projects-table"),
     CANDIDATES_TABLE("candidates-table"),
-    ACTIVITY_TABLE("activity-table");
+    ACTIVITY_TABLE("activity-table"),
+    ATTENDANCE_TABLE("attendance-list-data");
 
     private final String id;
 

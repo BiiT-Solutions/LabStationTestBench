@@ -103,7 +103,7 @@ public class WorkshopCanvas {
     public WebElement getWorkshop(String title) {
         final List<WebElement> elements = customChromeDriver.findElementWaiting(By.id("workshops")).findElements(By.className("workshop"));
         for (WebElement element : elements) {
-            if (element.getText().contains("\n" + title.toUpperCase() + "\n")) {
+            if (element.getText().contains("\n" + title.toUpperCase())) {
                 return element;
             }
         }
