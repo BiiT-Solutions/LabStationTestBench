@@ -3,7 +3,10 @@ package com.biit.labstation;
 import com.biit.labstation.components.Login;
 import com.biit.labstation.components.Popup;
 import com.biit.labstation.components.PopupId;
+import com.biit.labstation.exceptions.ElementNotFoundAsExpectedException;
 import com.biit.labstation.logger.LabStationLogger;
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebElement;
 
 import java.time.Duration;
 
@@ -106,5 +109,13 @@ public abstract class ToolTest {
         }
         popup.close(PopupId.LOGIN_WARNING);
         login.signUp(username, password, name, lastname, email);
+    }
+
+    public void join(String title) {
+        final WebElement webElement = getCustomChromeDriver().findElementWaiting(By.id("join-button"));
+        if (!webElement.getText().contains(title.toUpperCase())) {
+            throw new ElementNotFoundAsExpectedException("Button is not for title '" + title + "',");
+        }
+        webElement.click();
     }
 }

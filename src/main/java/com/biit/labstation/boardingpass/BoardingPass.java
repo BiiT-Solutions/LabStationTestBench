@@ -101,7 +101,7 @@ public class BoardingPass extends ToolTest {
 
     public boolean isAttending(String user) {
         //ABSENT
-        return table.getCell(TableId.ATTENDANCE_TABLE, user, 0, 1).getText().contains("Attending");
+        return table.getCell(TableId.ATTENDANCE_TABLE, user, 0, 1).getText().contains("CHECKED IN");
     }
 
 }

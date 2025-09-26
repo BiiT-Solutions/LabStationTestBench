@@ -103,6 +103,7 @@ public class BoardingPassTests extends BaseTest implements ITestWithWebDriver {
         appointmentCenter.logout();
     }
 
+
     @Test(dependsOnMethods = "subscribeToAppointment")
     public void checkAppointmentContentFromAttendee() {
         boardingPass.login(OrganizationAdminDashboardTests.IN_ORG_USER_NAME, OrganizationAdminDashboardTests.IN_ORG_USER_PASSWORD);
@@ -115,6 +116,7 @@ public class BoardingPassTests extends BaseTest implements ITestWithWebDriver {
         boardingPass.logout();
     }
 
+
     @Test(dependsOnMethods = "checkAppointmentContentFromAttendee")
     public void checkAttendeeHasNoArrived() {
         boardingPass.login(adminUser, adminPassword);
@@ -124,6 +126,7 @@ public class BoardingPassTests extends BaseTest implements ITestWithWebDriver {
         Assert.assertEquals(boardingPass.getAttendanceNumber(), "0 / 1");
         boardingPass.logout();
     }
+
 
     @Test(dependsOnMethods = "checkAppointmentContentFromAttendee")
     public void checkListOfAttendance() {
@@ -140,11 +143,10 @@ public class BoardingPassTests extends BaseTest implements ITestWithWebDriver {
     @Test(dependsOnMethods = {"checkAttendeeHasNoArrived", "checkListOfAttendance"})
     public void attendAppointment() {
         final List<AppointmentDTO> appointmentDTOs = appointmentCenterClient.findAll();
-        final Optional<QrCodeDTO> qrCode = appointmentCenterClient.getQrCode(appointmentDTOs.get(0).getId());
-        Assert.assertTrue(qrCode.isPresent());
-        final Optional<AppointmentDTO> appointmentDTO = appointmentCenterClient.attendByQrCode(appointmentDTOs.get(0).getId(), qrCode.get(),
+        final Optional<QrCodeDTO> qrCode = appointmentCenterClient.getQrCode(appointmentDTOs.get(0).getId(),
                 appointmentDTOs.get(0).getAttendees().iterator().next());
-        Assert.assertTrue(appointmentDTO.isPresent());
+        Assert.assertTrue(qrCode.isPresent());
+        appointmentCenterClient.attendByQrCode(appointmentDTOs.get(0).getId(), qrCode.get());
     }
 
 
@@ -163,7 +165,7 @@ public class BoardingPassTests extends BaseTest implements ITestWithWebDriver {
 
     @Test(dependsOnMethods = "checkAttendeeIsAccepted")
     public void checkAppointmentContentFromAttendeeWhenAttending() {
-        boardingPass.access();
+//        boardingPass.access();
         boardingPass.login(OrganizationAdminDashboardTests.IN_ORG_USER_NAME, OrganizationAdminDashboardTests.IN_ORG_USER_PASSWORD);
         ToolTest.waitComponentFiveSecond();
         Assert.assertEquals(boardingPass.getUserName(), "Jack O'Neill");
@@ -171,7 +173,8 @@ public class BoardingPassTests extends BaseTest implements ITestWithWebDriver {
         Assert.assertTrue(boardingPass.getUserDate().length() > 10);
         Assert.assertFalse(boardingPass.getUserAddress().isEmpty());
         Assert.assertNotNull(boardingPass.getQrCode());
-        //TODO button join!
+        boardingPass.join(APPOINTMENT_TITLE);
+        ToolTest.waitComponentOneSecond();
         boardingPass.logout();
     }
 
