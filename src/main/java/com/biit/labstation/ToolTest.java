@@ -78,7 +78,7 @@ public abstract class ToolTest {
         }
         waitComponent();
         login.logIn(username, password);
-        waitComponent();
+        waitComponentOneSecond();
     }
 
     public abstract void logout();
