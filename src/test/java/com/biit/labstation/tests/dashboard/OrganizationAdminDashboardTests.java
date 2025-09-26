@@ -250,8 +250,6 @@ public class OrganizationAdminDashboardTests extends BaseTest implements ITestWi
     public void cleanup() {
         try {
             userManager.login(adminUser, adminPassword);
-            userManager.deleteUser(NON_ORG_USER_NAME);
-            userManager.deleteUser(IN_ORG_USER_NAME);
         } catch (Exception e) {
             //Ignore
         }

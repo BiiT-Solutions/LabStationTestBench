@@ -46,7 +46,6 @@ public class SpeakerTests extends BaseTest implements ITestWithWebDriver {
 
     @BeforeClass
     public void setupUserManager() {
-        userManager.access();
         userManager.login(adminUser, adminPassword);
         userManager.addUserToGroup(SPEAKER, SPEAKER_GROUP);
         userManager.logout();
