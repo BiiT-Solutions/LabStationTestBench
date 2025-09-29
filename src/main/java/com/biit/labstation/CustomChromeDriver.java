@@ -97,15 +97,19 @@ public class CustomChromeDriver {
             driver.manage().window().setSize(new Dimension(WIDTH, HEIGHT));
             webDriverWait = new WebDriverWait(driver, WAIT_TIMEOUT_SECS);
 
-            //Get locale from chrome and ensure that is working.
-            final String script = "return navigator.language;";
-            final String locale = (String) ((JavascriptExecutor) driver).executeScript(script);
-            if (!Objects.equals(locale, this.language)) {
-                LabStationLogger.warning(this.getClass(), "Language is set to " + locale + " and not to " + this.language);
-                throw new ChromeDriverException("Language is set to " + locale + " and not to " + this.language);
-            }
+            checkChromeLanguage();
         }
         return driver;
+    }
+
+    private void checkChromeLanguage() {
+        //Get locale from chrome and ensure that is working.
+        final String script = "return navigator.language;";
+        final String locale = (String) ((JavascriptExecutor) driver).executeScript(script);
+        if (!Objects.equals(locale, this.language)) {
+            LabStationLogger.warning(this.getClass(), "Language is set to " + locale + " and not to " + this.language);
+            throw new ChromeDriverException("Language is set to " + locale + " and not to " + this.language);
+        }
     }
 
     @PreDestroy
