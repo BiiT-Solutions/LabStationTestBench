@@ -1,16 +1,16 @@
 package com.biit.labstation.dashboard;
 
 public enum CadtHeatmapRow {
-    VISIONARY(9),
-    SCIENTIST(5),
-    TRADESMAN(8),
+    ADAPTABILITY_ACTION(0),
+    BANKER(1),
     INNOVATOR(2),
     LEADER(3),
-    STRATEGIST(6),
-    BANKER(1),
     RECEPTIVE(4),
+    SCIENTIST(5),
+    STRATEGIST(6),
     STRUCTURE_INSPIRATION(7),
-    ADAPTABILITY_ACTION(0);
+    TRADESMAN(8),
+    VISIONARY(9);
 
 
     private int column;
