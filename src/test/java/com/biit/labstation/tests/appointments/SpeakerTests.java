@@ -1,7 +1,6 @@
 package com.biit.labstation.tests.appointments;
 
 import com.biit.labstation.appointments.AppointmentCenter;
-import com.biit.labstation.appointments.CalendarCanvas;
 import com.biit.labstation.logger.ClassTestListener;
 import com.biit.labstation.logger.TestListener;
 import com.biit.labstation.tests.BaseTest;
@@ -66,19 +65,32 @@ public class SpeakerTests extends BaseTest implements ITestWithWebDriver {
 
     @AfterClass
     public void deleteSpeakerAppointment() {
-        appointmentCenter.access();
-        appointmentCenter.login(adminUser, adminPassword);
-        appointmentCenter.deleteAppointment(APPOINTMENT);
-        appointmentCenter.logout();
+        try {
+            appointmentCenter.access();
+            appointmentCenter.login(adminUser, adminPassword);
+            appointmentCenter.deleteAppointment(APPOINTMENT);
+            appointmentCenter.logout();
+        } catch (Exception e) {
+            //Ignore
+        }
     }
 
 
     @AfterClass(alwaysRun = true)
     public void removeGroup() {
-        userManager.access();
-        userManager.login(adminUser, adminPassword);
-        userManager.removeUserFromGroup(SPEAKER, SPEAKER_GROUP);
-        userManager.logout();
+        try {
+            userManager.access();
+            userManager.login(adminUser, adminPassword);
+            userManager.removeUserFromGroup(SPEAKER, SPEAKER_GROUP);
+            userManager.logout();
+        } catch (Exception e) {
+            //Ignore
+        }
+    }
+
+    @AfterClass(dependsOnMethods = {"removeGroup", "deleteSpeakerAppointment"}, alwaysRun = true)
+    public void closeDriver() {
+        userManager.getCustomChromeDriver().closeDriver();
     }
 
 }

@@ -193,4 +193,9 @@ public class BoardingPassTests extends BaseTest implements ITestWithWebDriver {
         appointmentCenter.deleteWorkshop(APPOINTMENT_TITLE);
         appointmentCenter.logout();
     }
+
+    @AfterClass(dependsOnMethods = {"deleteWorkshop", "deleteAppointment"}, alwaysRun = true)
+    public void closeDriver() {
+        appointmentCenter.getCustomChromeDriver().closeDriver();
+    }
 }

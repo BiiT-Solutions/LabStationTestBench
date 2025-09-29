@@ -3,8 +3,6 @@ package com.biit.labstation.tests.appointments;
 import com.biit.labstation.ToolTest;
 import com.biit.labstation.appointments.AppointmentCenter;
 import com.biit.labstation.appointments.CalendarCanvas;
-import com.biit.labstation.components.Popup;
-import com.biit.labstation.components.Tab;
 import com.biit.labstation.logger.ClassTestListener;
 import com.biit.labstation.logger.TestListener;
 import com.biit.labstation.tests.BaseTest;
@@ -14,6 +12,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.annotation.DirtiesContext;
 import org.testng.Assert;
+import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
@@ -60,5 +59,19 @@ public class MsAppointmentConnectTests extends BaseTest implements ITestWithWebD
         ToolTest.waitComponentFiveSecond();
         Assert.assertEquals(calendarCanvas.countAppointments(), 0);
         appointmentCenter.logout();
+    }
+
+    @AfterClass(alwaysRun = true)
+    public void cleanup() {
+        try {
+            appointmentCenter.logout();
+        } catch (Exception e) {
+            //Ignore
+        }
+    }
+
+    @AfterClass(dependsOnMethods = "cleanup", alwaysRun = true)
+    public void closeDriver() {
+        appointmentCenter.getCustomChromeDriver().closeDriver();
     }
 }

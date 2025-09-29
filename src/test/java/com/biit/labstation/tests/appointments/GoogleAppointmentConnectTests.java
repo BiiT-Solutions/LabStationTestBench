@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.annotation.DirtiesContext;
 import org.testng.Assert;
+import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
@@ -58,5 +59,19 @@ public class GoogleAppointmentConnectTests extends BaseTest implements ITestWith
         ToolTest.waitComponentFiveSecond();
         Assert.assertEquals(calendarCanvas.countAppointments(), 0);
         appointmentCenter.logout();
+    }
+
+    @AfterClass(alwaysRun = true)
+    public void cleanup() {
+        try {
+            appointmentCenter.logout();
+        } catch (Exception e) {
+            //Ignore
+        }
+    }
+
+    @AfterClass(dependsOnMethods = "cleanup", alwaysRun = true)
+    public void closeDriver() {
+        appointmentCenter.getCustomChromeDriver().closeDriver();
     }
 }
