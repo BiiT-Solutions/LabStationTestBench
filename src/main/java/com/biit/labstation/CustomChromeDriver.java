@@ -1,6 +1,7 @@
 package com.biit.labstation;
 
 
+import com.biit.labstation.exceptions.ChromeDriverException;
 import com.biit.labstation.logger.ConsoleLogger;
 import com.biit.labstation.logger.LabStationLogger;
 import io.github.bonigarcia.wdm.WebDriverManager;
@@ -8,6 +9,7 @@ import jakarta.annotation.PostConstruct;
 import jakarta.annotation.PreDestroy;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Dimension;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.Point;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -26,6 +28,7 @@ import java.time.Duration;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 import java.util.logging.Level;
 
 @Component
@@ -93,6 +96,14 @@ public class CustomChromeDriver {
             driver.manage().window().setPosition(new Point(0, 0));
             driver.manage().window().setSize(new Dimension(WIDTH, HEIGHT));
             webDriverWait = new WebDriverWait(driver, WAIT_TIMEOUT_SECS);
+
+            //Get locale from chrome and ensure that is working.
+            final String script = "return navigator.language;";
+            final String locale = (String) ((JavascriptExecutor) driver).executeScript(script);
+            if (!Objects.equals(locale, this.language)) {
+                LabStationLogger.warning(this.getClass(), "Language is set to " + locale + " and not to " + this.language);
+                throw new ChromeDriverException("Language is set to " + locale + " and not to " + this.language);
+            }
         }
         return driver;
     }
