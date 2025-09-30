@@ -152,7 +152,7 @@ public class AppointmentTests extends BaseTest implements ITestWithWebDriver {
         ToolTest.waitComponentFiveSecond();
         final int previousAppointments = appointmentCenter.getNumberOfAppointments();
         appointmentCenter.deleteAppointment("TestAppointment");
-        ToolTest.waitComponentOneSecond();
+        ToolTest.waitComponentThreeSecond();
         Assert.assertEquals(appointmentCenter.getNumberOfAppointments(), previousAppointments - 1);
         appointmentCenter.logout();
     }
