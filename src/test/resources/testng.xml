@@ -30,6 +30,7 @@
                 <exclude name="connectToGoogle"/>
                 <include name="speakers"/>
                 <include name="boardingPass"/>
+                <include name="nca"/>
             </run>
         </groups>
         <classes>
@@ -53,6 +54,7 @@
             <class name="com.biit.labstation.tests.appointments.GoogleAppointmentConnectTests"/>
             <class name="com.biit.labstation.tests.appointments.SpeakerTests"/>
             <class name="com.biit.labstation.tests.boardingpass.BoardingPassTests"/>
+            <class name="com.biit.labstation.tests.nca.NcaTests"/>
         </classes>
     </test>
 </suite>

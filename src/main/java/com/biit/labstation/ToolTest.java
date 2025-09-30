@@ -89,13 +89,17 @@ public abstract class ToolTest {
     public abstract void logout();
 
     public void access(String serverDomain, String context) {
+        access(serverDomain, context, false);
+    }
+
+    public void access(String serverDomain, String context, boolean ignoreUrlCheck) {
         try {
             final String requestedUrl = serverDomain + context;
             LabStationLogger.debug(this.getClass().getName(), "Accessing to URL '{}'.", requestedUrl);
             customChromeDriver.getDriver().get(requestedUrl);
             waitComponent(WAITING_TO_ACCESS_BROWSER);
             final String currentUrl = customChromeDriver.getDriver().getCurrentUrl();
-            if (currentUrl == null || !currentUrl.startsWith(requestedUrl)) {
+            if (!ignoreUrlCheck && (currentUrl == null || !currentUrl.startsWith(requestedUrl))) {
                 LabStationLogger.info(this.getClass(), "Browser is not ready yet! Current URL is '{}'. Requested is '{}'. Waiting...",
                         currentUrl, requestedUrl);
                 access(serverDomain, context);

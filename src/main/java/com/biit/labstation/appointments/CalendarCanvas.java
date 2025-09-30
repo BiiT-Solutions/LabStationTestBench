@@ -106,7 +106,6 @@ public class CalendarCanvas {
             ToolTest.waitComponent();
         } catch (Exception e) {
             //Everything was correct. Ignore.
-            LabStationLogger.debug(this.getClass(), e.getMessage());
         }
     }
 

@@ -27,6 +27,7 @@ import org.springframework.stereotype.Component;
 import java.time.Duration;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.logging.Level;
@@ -142,6 +143,10 @@ public class CustomChromeDriver {
 
     public WebElement findElement(By parent, By field) {
         return getDriver().findElement(parent).findElement(field);
+    }
+
+    public List<WebElement> findElements(By field) {
+        return getDriver().findElements(field);
     }
 
     public WebElement findElementWaiting(By field) {

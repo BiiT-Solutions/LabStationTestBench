@@ -347,6 +347,10 @@ public class UserManagerTests extends BaseTest implements ITestWithWebDriver {
         snackBar.checkMessage(SnackBar.Type.REGULAR, SnackBar.REQUEST_SUCCESSFUL);
         userManager.linkApplicationRoleWithServiceRole("BiitSurveys", "user", "KafkaProxy", "editor");
         snackBar.checkMessage(SnackBar.Type.REGULAR, SnackBar.REQUEST_SUCCESSFUL);
+        userManager.addApplicationRole("BiitSurveys", "NCA");
+        snackBar.checkMessage(SnackBar.Type.REGULAR, SnackBar.REQUEST_SUCCESSFUL);
+        userManager.linkApplicationRoleWithServiceRole("BiitSurveys", "NCA", "KafkaProxy", "editor");
+        snackBar.checkMessage(SnackBar.Type.REGULAR, SnackBar.REQUEST_SUCCESSFUL);
 
         userManager.addApplicationRole("CardGame", "user");
         snackBar.checkMessage(SnackBar.Type.REGULAR, SnackBar.REQUEST_SUCCESSFUL);
@@ -690,6 +694,8 @@ public class UserManagerTests extends BaseTest implements ITestWithWebDriver {
         userManager.addGroupRole("Employee", "BaseFormDroolsEngine", "user");
         snackBar.checkMessage(SnackBar.Type.REGULAR, SnackBar.REQUEST_SUCCESSFUL);
         userManager.addGroupRole("Employee", "BiitSurveys", "user");
+        snackBar.checkMessage(SnackBar.Type.REGULAR, SnackBar.REQUEST_SUCCESSFUL);
+        userManager.addGroupRole("Employee", "BiitSurveys", "NCA");
         snackBar.checkMessage(SnackBar.Type.REGULAR, SnackBar.REQUEST_SUCCESSFUL);
         userManager.addGroupRole("Employee", "CardGame", "user");
         snackBar.checkMessage(SnackBar.Type.REGULAR, SnackBar.REQUEST_SUCCESSFUL);

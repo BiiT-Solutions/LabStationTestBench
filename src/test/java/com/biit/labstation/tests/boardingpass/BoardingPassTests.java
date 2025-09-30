@@ -54,6 +54,8 @@ public class BoardingPassTests extends BaseTest implements ITestWithWebDriver {
     public void createAppointmentFromWorkshop() {
         appointmentCenter.login(adminUser, adminPassword);
         appointmentCenter.createWorkshop(APPOINTMENT_TITLE, "", null, 90, 10, null);
+        //TODO(jhortelano): remove refresh when issue 738 is solved.
+        appointmentCenter.getCustomChromeDriver().refresh();
         ToolTest.waitComponentOneSecond();
         Assert.assertEquals(appointmentCenter.getNumberOfWorkshops(), 1);
 

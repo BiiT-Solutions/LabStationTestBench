@@ -30,4 +30,6 @@ public class Priorities {
     public static final int SPEAKERS_PRIORITY = APPOINTMENT_GOOGLE_PRIORITY + 1;
 
     public static final int BOARDING_PASS_PRIORITY = 3000;
+
+    public static final int NCA_PRIORITY = 3000;
 }
