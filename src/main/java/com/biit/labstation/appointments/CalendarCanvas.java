@@ -66,7 +66,7 @@ public class CalendarCanvas {
 
     public void editAppointment(String title, String description, Collection<String> hosts, Integer cost, LocalDateTime startingTime,
                                 LocalDateTime endingTime) {
-        LabStationLogger.debug(this.getClass().getName(), "@@ Adding workshop '{}'.", title);
+        LabStationLogger.debug(this.getClass().getName(), "@@ Adding appointment '{}'.", title);
         if (title != null) {
             popup.findElement(PopupId.APPOINTMENT, "appointment-title").findElement(By.className("input-object")).clear();
             popup.findElement(PopupId.APPOINTMENT, "appointment-title").findElement(By.className("input-object")).sendKeys(title);
@@ -123,11 +123,13 @@ public class CalendarCanvas {
 
     public void deleteAppointment(String title) {
         selectContextMenuOnAppointment(title, "Delete Appointment");
+        LabStationLogger.debug(this.getClass().getName(), "Confirming delete button.");
         popup.findElement(PopupId.DELETE_APPOINTMENT, "confirm-event-delete-button").click();
         ToolTest.waitComponent();
     }
 
     public void selectContextMenuOnAppointment(String title, String option) {
+        LabStationLogger.debug(this.getClass().getName(), "Selecting context menu from '{}' '{}'.", title, option);
         final WebElement appointment = getAppointment(title);
         if (appointment != null) {
             new Actions(customChromeDriver.getDriver()).scrollToElement(appointment).perform();

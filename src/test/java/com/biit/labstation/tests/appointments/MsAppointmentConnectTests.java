@@ -44,20 +44,22 @@ public class MsAppointmentConnectTests extends BaseTest implements ITestWithWebD
     @Test
     public void connectToMicrosoft() {
         appointmentCenter.login(adminUser, adminPassword);
+        int previousAppointments = calendarCanvas.countAppointments();
         appointmentCenter.connectToMicrosoft();
         ToolTest.waitComponentFiveSecond();
-        Assert.assertEquals(calendarCanvas.countAppointments(), 7);
+        Assert.assertEquals(calendarCanvas.countAppointments(), previousAppointments + 7);
         appointmentCenter.logout();
     }
+
 
     @Test(dependsOnMethods = "connectToMicrosoft", alwaysRun = true)
     public void disconnectFromMicrosoft() {
         appointmentCenter.login(adminUser, adminPassword);
-        ToolTest.waitComponentOneSecond();
-        Assert.assertEquals(calendarCanvas.countAppointments(), 7);
+        ToolTest.waitComponentFiveSecond();
+        int previousAppointments = calendarCanvas.countAppointments();
         appointmentCenter.disconnectFromMicrosoft();
         ToolTest.waitComponentFiveSecond();
-        Assert.assertEquals(calendarCanvas.countAppointments(), 0);
+        Assert.assertEquals(calendarCanvas.countAppointments(), previousAppointments - 7);
         appointmentCenter.logout();
     }
 

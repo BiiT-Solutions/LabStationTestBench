@@ -10,11 +10,11 @@ import org.awaitility.Awaitility;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.test.context.testng.AbstractTestNGSpringContextTests;
+import org.testng.SkipException;
 import org.testng.annotations.AfterSuite;
 import org.testng.annotations.BeforeSuite;
 
 import java.io.File;
-import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.time.Duration;
@@ -42,6 +42,11 @@ public abstract class BaseTest extends AbstractTestNGSpringContextTests implemen
     private String adminUser;
     @Value("${admin.password}")
     private String adminPassword;
+
+    @Value("${stop.after.failure}")
+    private boolean stopTestsAfterFailure = false;
+
+    public static boolean testFailureDetected = false;
 
     @Override
     public CustomChromeDriver getDriver() {
@@ -97,6 +102,13 @@ public abstract class BaseTest extends AbstractTestNGSpringContextTests implemen
         Awaitility.setDefaultPollInterval(250, TimeUnit.MILLISECONDS);
         Awaitility.setDefaultPollDelay(Duration.ZERO);
         Awaitility.setDefaultTimeout(Duration.ofSeconds(3));
+    }
+
+    @BeforeSuite
+    public void stopTestsIfHasFailed() {
+        if (stopTestsAfterFailure && testFailureDetected) {
+            throw new SkipException("Test skipped as one has failed!");
+        }
     }
 
     @AfterSuite

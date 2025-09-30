@@ -1,6 +1,7 @@
 package com.biit.labstation.logger;
 
 import com.biit.labstation.ScreenShooter;
+import com.biit.labstation.tests.BaseTest;
 import com.biit.labstation.tests.ITestWithWebDriver;
 import org.testng.ITestContext;
 import org.testng.ITestListener;
@@ -32,6 +33,8 @@ public class TestListener implements ITestListener {
         currentClass.getDriver().analyzeConsoleLog();
         TestLogging.errorMessage(this.getClass().getName(),
                 "### Test failed '" + result.getMethod().getMethodName() + "' from '" + result.getTestClass().getName() + "'. File generated:\n" + fileName);
+        //Stop next tests as they can fail now.
+        BaseTest.testFailureDetected = true;
     }
 
     @Override

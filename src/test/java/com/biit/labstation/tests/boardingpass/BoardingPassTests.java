@@ -178,20 +178,45 @@ public class BoardingPassTests extends BaseTest implements ITestWithWebDriver {
         boardingPass.logout();
     }
 
-
-    @AfterClass
-    public void deleteAppointment() {
-        appointmentCenter.login(adminUser, adminPassword);
-        appointmentCenter.deleteAppointment(APPOINTMENT_TITLE);
-        appointmentCenter.logout();
+    @AfterClass(alwaysRun = true)
+    public void cleanup() {
+        try {
+            appointmentCenter.logout();
+        } catch (Exception e) {
+            //Ignore
+        }
     }
 
 
-    @AfterClass
+    @AfterClass(dependsOnMethods = "cleanup")
+    public void deleteAppointment() {
+        try {
+            appointmentCenter.login(adminUser, adminPassword);
+            appointmentCenter.deleteAppointment(APPOINTMENT_TITLE);
+        } catch (Exception e) {
+            //Ignore
+        }
+        try {
+            appointmentCenter.logout();
+        } catch (Exception e) {
+            //Ignore
+        }
+    }
+
+
+    @AfterClass(dependsOnMethods = "cleanup")
     public void deleteWorkshop() {
-        appointmentCenter.login(adminUser, adminPassword);
-        appointmentCenter.deleteWorkshop(APPOINTMENT_TITLE);
-        appointmentCenter.logout();
+        try {
+            appointmentCenter.login(adminUser, adminPassword);
+            appointmentCenter.deleteWorkshop(APPOINTMENT_TITLE);
+        } catch (Exception e) {
+            //Ignore
+        }
+        try {
+            appointmentCenter.logout();
+        } catch (Exception e) {
+            //Ignore
+        }
     }
 
     @AfterClass(dependsOnMethods = {"deleteWorkshop", "deleteAppointment"}, alwaysRun = true)

@@ -149,7 +149,7 @@ public class AppointmentTests extends BaseTest implements ITestWithWebDriver {
     @Test(dependsOnMethods = "addManualAppointment")
     public void deleteManualAppointment() {
         appointmentCenter.login(adminUser, adminPassword);
-        ToolTest.waitComponentOneSecond();
+        ToolTest.waitComponentFiveSecond();
         final int previousAppointments = appointmentCenter.getNumberOfAppointments();
         appointmentCenter.deleteAppointment("TestAppointment");
         ToolTest.waitComponentOneSecond();
