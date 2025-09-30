@@ -5,13 +5,13 @@ import com.biit.labstation.ScreenShooter;
 import com.biit.labstation.ToolTest;
 import com.biit.labstation.components.SnackBar;
 import com.biit.labstation.logger.LabStationLogger;
-import com.biit.labstation.usermanager.UserManager;
 import org.awaitility.Awaitility;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.test.context.testng.AbstractTestNGSpringContextTests;
 import org.testng.SkipException;
 import org.testng.annotations.AfterSuite;
+import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.BeforeSuite;
 
 import java.io.File;
@@ -31,9 +31,6 @@ public abstract class BaseTest extends AbstractTestNGSpringContextTests implemen
 
     @Autowired
     private ScreenShooter screenShooter;
-
-    @Autowired
-    private UserManager userManager;
 
     @Autowired
     private SnackBar snackBar;
@@ -104,9 +101,10 @@ public abstract class BaseTest extends AbstractTestNGSpringContextTests implemen
         Awaitility.setDefaultTimeout(Duration.ofSeconds(3));
     }
 
-    @BeforeSuite
+    @BeforeMethod
     public void stopTestsIfHasFailed() {
         if (stopTestsAfterFailure && testFailureDetected) {
+            LabStationLogger.warning(this.getClass(), "Ignoring tests due to failure!");
             throw new SkipException("Test skipped as one has failed!");
         }
     }
