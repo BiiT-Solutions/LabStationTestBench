@@ -89,7 +89,7 @@ public class CalendarCanvas {
         }
 
         setDatePicker("appointment-starting-time", startingTime, DATE_FORMAT);
-        setDatePicker("appointment-ending-time", startingTime, DATE_FORMAT);
+        setDatePicker("appointment-ending-time", endingTime, DATE_FORMAT);
 
         popup.findElement(PopupId.APPOINTMENT, "appointment-button-save").click();
         ToolTest.waitComponent();
@@ -101,7 +101,7 @@ public class CalendarCanvas {
             //Exist error on dates!
             popup.findElement(PopupId.APPOINTMENT, "appointment-starting-time").findElement(By.className("input-error"));
             setDatePicker("appointment-starting-time", startingTime, USA_DATE_FORMAT);
-            setDatePicker("appointment-ending-time", startingTime, USA_DATE_FORMAT);
+            setDatePicker("appointment-ending-time", endingTime, USA_DATE_FORMAT);
             popup.findElement(PopupId.APPOINTMENT, "appointment-button-save").click();
             ToolTest.waitComponent();
         } catch (Exception e) {
@@ -122,6 +122,7 @@ public class CalendarCanvas {
     }
 
     public void deleteAppointment(String title) {
+        LabStationLogger.info(this.getClass().getName(), "Deleting appointment '{}'.", title);
         selectContextMenuOnAppointment(title, "Delete Appointment");
         LabStationLogger.debug(this.getClass().getName(), "Confirming delete button.");
         ToolTest.waitComponent();
@@ -146,9 +147,11 @@ public class CalendarCanvas {
         final List<WebElement> events = customChromeDriver.findElementWaiting(By.id(CANVAS_ID)).findElements(By.className("cal-event"));
         for (WebElement element : events) {
             if (element.getText().contains("\n" + title.toUpperCase())) {
+                LabStationLogger.debug(this.getClass().getName(), "Appointment '{}' found on canvas.", title);
                 return element;
             }
         }
+        LabStationLogger.warning(this.getClass().getName(), "Appointment '{}' not found on canvas!", title);
         return null;
     }
 
