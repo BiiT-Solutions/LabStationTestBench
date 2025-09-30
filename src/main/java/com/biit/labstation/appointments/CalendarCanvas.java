@@ -124,6 +124,7 @@ public class CalendarCanvas {
     public void deleteAppointment(String title) {
         selectContextMenuOnAppointment(title, "Delete Appointment");
         LabStationLogger.debug(this.getClass().getName(), "Confirming delete button.");
+        ToolTest.waitComponent();
         popup.findElement(PopupId.DELETE_APPOINTMENT, "confirm-event-delete-button").click();
         ToolTest.waitComponent();
     }

@@ -44,6 +44,7 @@ public class MsAppointmentConnectTests extends BaseTest implements ITestWithWebD
     @Test
     public void connectToMicrosoft() {
         appointmentCenter.login(adminUser, adminPassword);
+        ToolTest.waitComponentThreeSecond();
         int previousAppointments = calendarCanvas.countAppointments();
         appointmentCenter.connectToMicrosoft();
         ToolTest.waitComponentFiveSecond();

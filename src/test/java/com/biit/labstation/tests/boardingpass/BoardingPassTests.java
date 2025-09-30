@@ -54,7 +54,6 @@ public class BoardingPassTests extends BaseTest implements ITestWithWebDriver {
     public void createAppointmentFromWorkshop() {
         appointmentCenter.login(adminUser, adminPassword);
         appointmentCenter.createWorkshop(APPOINTMENT_TITLE, "", null, 90, 10, null);
-        appointmentCenter.getCustomChromeDriver().refresh();
         ToolTest.waitComponentOneSecond();
         Assert.assertEquals(appointmentCenter.getNumberOfWorkshops(), 1);
 
