@@ -716,7 +716,7 @@ public class UserManagerTests extends BaseTest implements ITestWithWebDriver {
         userManager.addGroupRole("Employee", "FactsDashboard", "CADT");
         snackBar.checkMessage(SnackBar.Type.REGULAR, SnackBar.REQUEST_SUCCESSFUL);
 
-        Assert.assertEquals(userManager.getTotalRolesByGroup("Employee"), 12);
+        Assert.assertEquals(userManager.getTotalRolesByGroup("Employee"), 13);
 
         userManager.addGroupRole("HR", "AppointmentCenter", "manager");
         snackBar.checkMessage(SnackBar.Type.REGULAR, SnackBar.REQUEST_SUCCESSFUL);

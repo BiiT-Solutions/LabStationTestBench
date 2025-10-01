@@ -31,5 +31,5 @@ public class Priorities {
 
     public static final int BOARDING_PASS_PRIORITY = 3000;
 
-    public static final int NCA_PRIORITY = 3000;
+    public static final int NCA_PRIORITY = 4000;
 }
