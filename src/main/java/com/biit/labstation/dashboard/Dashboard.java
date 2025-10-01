@@ -48,19 +48,26 @@ public class Dashboard extends ToolTest {
     }
 
     public void selectPersonalCadtOnMenu() {
-        navBar.goTo("nav-item-CADT", "nav-subitem-Personal");
-        ToolTest.waitComponent();
+        if (navBar.goTo("nav-item-cadt", "nav-subitem-personal")) {
+            ToolTest.waitComponent();
+        }
     }
 
-
     public void selectCadtOverviewOnMenu() {
-        navBar.goTo("nav-item-CADT", "nav-subitem-Overview");
-        ToolTest.waitComponent();
+        if (navBar.goTo("nav-item-cadt", "nav-subitem-overview")) {
+            ToolTest.waitComponent();
+        }
+    }
+
+    public void selectNcaOverviewOnMenu() {
+        if (navBar.goTo("nav-item-nca", "nav-subitem-personal")) {
+            ToolTest.waitComponent();
+        }
     }
 
 
     public void selectCustomerListOnMenu() {
-        if (navBar.goTo("nav-item-Customer List")) {
+        if (navBar.goTo("nav-item-customer-list")) {
             ToolTest.waitComponent();
         }
     }
@@ -76,7 +83,7 @@ public class Dashboard extends ToolTest {
                 + "//*[local-name()='" + node + "' and @id='" + id + "']"));
     }
 
-    public String getCadtHeatMapValue(int column, CadtHeatmapRow row) {
+    public String getHeatMapValue(int column, HeatmapRow row) {
         return getCustomChromeDriver().findElementWaiting(By.id("chart")).findElement(By.className("apexcharts-inner"))
                 .findElements(By.className("apexcharts-heatmap-series")).get(row.getColumn())
                 .findElements(By.className("apexcharts-data-labels")).get(column)

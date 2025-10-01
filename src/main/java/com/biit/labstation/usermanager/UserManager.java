@@ -62,43 +62,43 @@ public class UserManager extends ToolTest {
     }
 
     public void selectUserOnMenu() {
-        if (navBar.goTo("nav-item-Users")) {
+        if (navBar.goTo("nav-item-users")) {
             ToolTest.waitComponent();
         }
     }
 
     public void selectGroupsOnMenu() {
-        if (navBar.goTo("nav-item-Groups")) {
+        if (navBar.goTo("nav-item-groups")) {
             ToolTest.waitComponent();
         }
     }
 
     public void selectRolesOnMenu() {
-        if (navBar.goTo("nav-item-Roles")) {
+        if (navBar.goTo("nav-item-roles")) {
             ToolTest.waitComponent();
         }
     }
 
     public void selectApplicationsOnMenu() {
-        if (navBar.goTo("nav-item-Applications")) {
+        if (navBar.goTo("nav-item-applications")) {
             ToolTest.waitComponent();
         }
     }
 
     public void selectServicesOnMenu() {
-        if (navBar.goTo("nav-item-Services")) {
+        if (navBar.goTo("nav-item-services")) {
             ToolTest.waitComponent();
         }
     }
 
     public void selectOrganizationsOnMenu() {
-        if (navBar.goTo("nav-item-Organizations")) {
+        if (navBar.goTo("nav-item-organizations")) {
             ToolTest.waitComponent();
         }
     }
 
     public void selectTeamsOnMenu() {
-        if (navBar.goTo("nav-item-Teams")) {
+        if (navBar.goTo("nav-item-teams")) {
             ToolTest.waitComponent();
         }
     }

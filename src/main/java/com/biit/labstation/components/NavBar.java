@@ -28,9 +28,16 @@ public class NavBar {
         return false;
     }
 
-    public void goTo(String menuId, String submenuId) {
+    public boolean goTo(String menuId, String submenuId) {
         ComponentLogger.debug(this.getClass().getName(), "Pressing '{}' and '{}' on navigation menu.", menuId, submenuId);
-        getSubmenuItem(menuId, submenuId).click();
+        final WebElement menuItem = getSubmenuItem(menuId, submenuId);
+        if (menuItem != null) {
+            menuItem.click();
+            return true;
+        } else {
+            ComponentLogger.debug(this.getClass().getName(), "Menu item '{}' not found", submenuId);
+        }
+        return false;
     }
 
     public WebElement getMenuItem(String id) {

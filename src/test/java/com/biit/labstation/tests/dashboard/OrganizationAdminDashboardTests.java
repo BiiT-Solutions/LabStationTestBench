@@ -142,39 +142,41 @@ public class OrganizationAdminDashboardTests extends BaseTest implements ITestWi
 
         dashboard.selectCadtOverviewOnMenu();
 
+        LabStationLogger.info(this.getClass(), "@@ Checking CADT overview");
+
         ToolTest.waitComponent();
-        Assert.assertEquals(dashboard.getCadtHeatMapValue(ADMIN_USER_COLUMN, CadtHeatmapRow.VISIONARY), "-1");
-        Assert.assertEquals(dashboard.getCadtHeatMapValue(ADMIN_USER_COLUMN, CadtHeatmapRow.SCIENTIST), "1");
-        Assert.assertEquals(dashboard.getCadtHeatMapValue(ADMIN_USER_COLUMN, CadtHeatmapRow.TRADESMAN), "0");
-        Assert.assertEquals(dashboard.getCadtHeatMapValue(ADMIN_USER_COLUMN, CadtHeatmapRow.INNOVATOR), "-2");
-        Assert.assertEquals(dashboard.getCadtHeatMapValue(ADMIN_USER_COLUMN, CadtHeatmapRow.LEADER), "1");
-        Assert.assertEquals(dashboard.getCadtHeatMapValue(ADMIN_USER_COLUMN, CadtHeatmapRow.STRATEGIST), "1");
-        Assert.assertEquals(dashboard.getCadtHeatMapValue(ADMIN_USER_COLUMN, CadtHeatmapRow.BANKER), "0");
-        Assert.assertEquals(dashboard.getCadtHeatMapValue(ADMIN_USER_COLUMN, CadtHeatmapRow.RECEPTIVE), "1");
-        Assert.assertEquals(dashboard.getCadtHeatMapValue(ADMIN_USER_COLUMN, CadtHeatmapRow.STRUCTURE_INSPIRATION), "-1");
-        Assert.assertEquals(dashboard.getCadtHeatMapValue(ADMIN_USER_COLUMN, CadtHeatmapRow.ADAPTABILITY_ACTION), "1");
+        Assert.assertEquals(dashboard.getHeatMapValue(ADMIN_USER_COLUMN, CadtHeatmapRow.VISIONARY), "-1");
+        Assert.assertEquals(dashboard.getHeatMapValue(ADMIN_USER_COLUMN, CadtHeatmapRow.SCIENTIST), "1");
+        Assert.assertEquals(dashboard.getHeatMapValue(ADMIN_USER_COLUMN, CadtHeatmapRow.TRADESMAN), "0");
+        Assert.assertEquals(dashboard.getHeatMapValue(ADMIN_USER_COLUMN, CadtHeatmapRow.INNOVATOR), "-2");
+        Assert.assertEquals(dashboard.getHeatMapValue(ADMIN_USER_COLUMN, CadtHeatmapRow.LEADER), "1");
+        Assert.assertEquals(dashboard.getHeatMapValue(ADMIN_USER_COLUMN, CadtHeatmapRow.STRATEGIST), "1");
+        Assert.assertEquals(dashboard.getHeatMapValue(ADMIN_USER_COLUMN, CadtHeatmapRow.BANKER), "0");
+        Assert.assertEquals(dashboard.getHeatMapValue(ADMIN_USER_COLUMN, CadtHeatmapRow.RECEPTIVE), "1");
+        Assert.assertEquals(dashboard.getHeatMapValue(ADMIN_USER_COLUMN, CadtHeatmapRow.STRUCTURE_INSPIRATION), "-1");
+        Assert.assertEquals(dashboard.getHeatMapValue(ADMIN_USER_COLUMN, CadtHeatmapRow.ADAPTABILITY_ACTION), "1");
 
-        Assert.assertEquals(dashboard.getCadtHeatMapValue(NON_ORG_USER_COLUMN, CadtHeatmapRow.VISIONARY), "-1");
-        Assert.assertEquals(dashboard.getCadtHeatMapValue(NON_ORG_USER_COLUMN, CadtHeatmapRow.SCIENTIST), "-1");
-        Assert.assertEquals(dashboard.getCadtHeatMapValue(NON_ORG_USER_COLUMN, CadtHeatmapRow.TRADESMAN), "1");
-        Assert.assertEquals(dashboard.getCadtHeatMapValue(NON_ORG_USER_COLUMN, CadtHeatmapRow.INNOVATOR), "0");
-        Assert.assertEquals(dashboard.getCadtHeatMapValue(NON_ORG_USER_COLUMN, CadtHeatmapRow.LEADER), "0");
-        Assert.assertEquals(dashboard.getCadtHeatMapValue(NON_ORG_USER_COLUMN, CadtHeatmapRow.STRATEGIST), "1");
-        Assert.assertEquals(dashboard.getCadtHeatMapValue(NON_ORG_USER_COLUMN, CadtHeatmapRow.BANKER), "1");
-        Assert.assertEquals(dashboard.getCadtHeatMapValue(NON_ORG_USER_COLUMN, CadtHeatmapRow.RECEPTIVE), "2");
-        Assert.assertEquals(dashboard.getCadtHeatMapValue(NON_ORG_USER_COLUMN, CadtHeatmapRow.STRUCTURE_INSPIRATION), "-1");
-        Assert.assertEquals(dashboard.getCadtHeatMapValue(NON_ORG_USER_COLUMN, CadtHeatmapRow.ADAPTABILITY_ACTION), "-1");
+        Assert.assertEquals(dashboard.getHeatMapValue(NON_ORG_USER_COLUMN, CadtHeatmapRow.VISIONARY), "-1");
+        Assert.assertEquals(dashboard.getHeatMapValue(NON_ORG_USER_COLUMN, CadtHeatmapRow.SCIENTIST), "-1");
+        Assert.assertEquals(dashboard.getHeatMapValue(NON_ORG_USER_COLUMN, CadtHeatmapRow.TRADESMAN), "1");
+        Assert.assertEquals(dashboard.getHeatMapValue(NON_ORG_USER_COLUMN, CadtHeatmapRow.INNOVATOR), "0");
+        Assert.assertEquals(dashboard.getHeatMapValue(NON_ORG_USER_COLUMN, CadtHeatmapRow.LEADER), "0");
+        Assert.assertEquals(dashboard.getHeatMapValue(NON_ORG_USER_COLUMN, CadtHeatmapRow.STRATEGIST), "1");
+        Assert.assertEquals(dashboard.getHeatMapValue(NON_ORG_USER_COLUMN, CadtHeatmapRow.BANKER), "1");
+        Assert.assertEquals(dashboard.getHeatMapValue(NON_ORG_USER_COLUMN, CadtHeatmapRow.RECEPTIVE), "2");
+        Assert.assertEquals(dashboard.getHeatMapValue(NON_ORG_USER_COLUMN, CadtHeatmapRow.STRUCTURE_INSPIRATION), "-1");
+        Assert.assertEquals(dashboard.getHeatMapValue(NON_ORG_USER_COLUMN, CadtHeatmapRow.ADAPTABILITY_ACTION), "-1");
 
-        Assert.assertEquals(dashboard.getCadtHeatMapValue(IN_ORG_USER_COLUMN, CadtHeatmapRow.VISIONARY), "1");
-        Assert.assertEquals(dashboard.getCadtHeatMapValue(IN_ORG_USER_COLUMN, CadtHeatmapRow.SCIENTIST), "2");
-        Assert.assertEquals(dashboard.getCadtHeatMapValue(IN_ORG_USER_COLUMN, CadtHeatmapRow.TRADESMAN), "0");
-        Assert.assertEquals(dashboard.getCadtHeatMapValue(IN_ORG_USER_COLUMN, CadtHeatmapRow.INNOVATOR), "0");
-        Assert.assertEquals(dashboard.getCadtHeatMapValue(IN_ORG_USER_COLUMN, CadtHeatmapRow.LEADER), "1");
-        Assert.assertEquals(dashboard.getCadtHeatMapValue(IN_ORG_USER_COLUMN, CadtHeatmapRow.STRATEGIST), "1");
-        Assert.assertEquals(dashboard.getCadtHeatMapValue(IN_ORG_USER_COLUMN, CadtHeatmapRow.BANKER), "-1");
-        Assert.assertEquals(dashboard.getCadtHeatMapValue(IN_ORG_USER_COLUMN, CadtHeatmapRow.RECEPTIVE), "0");
-        Assert.assertEquals(dashboard.getCadtHeatMapValue(IN_ORG_USER_COLUMN, CadtHeatmapRow.STRUCTURE_INSPIRATION), "-1");
-        Assert.assertEquals(dashboard.getCadtHeatMapValue(IN_ORG_USER_COLUMN, CadtHeatmapRow.ADAPTABILITY_ACTION), "1");
+        Assert.assertEquals(dashboard.getHeatMapValue(IN_ORG_USER_COLUMN, CadtHeatmapRow.VISIONARY), "1");
+        Assert.assertEquals(dashboard.getHeatMapValue(IN_ORG_USER_COLUMN, CadtHeatmapRow.SCIENTIST), "2");
+        Assert.assertEquals(dashboard.getHeatMapValue(IN_ORG_USER_COLUMN, CadtHeatmapRow.TRADESMAN), "0");
+        Assert.assertEquals(dashboard.getHeatMapValue(IN_ORG_USER_COLUMN, CadtHeatmapRow.INNOVATOR), "0");
+        Assert.assertEquals(dashboard.getHeatMapValue(IN_ORG_USER_COLUMN, CadtHeatmapRow.LEADER), "1");
+        Assert.assertEquals(dashboard.getHeatMapValue(IN_ORG_USER_COLUMN, CadtHeatmapRow.STRATEGIST), "1");
+        Assert.assertEquals(dashboard.getHeatMapValue(IN_ORG_USER_COLUMN, CadtHeatmapRow.BANKER), "-1");
+        Assert.assertEquals(dashboard.getHeatMapValue(IN_ORG_USER_COLUMN, CadtHeatmapRow.RECEPTIVE), "0");
+        Assert.assertEquals(dashboard.getHeatMapValue(IN_ORG_USER_COLUMN, CadtHeatmapRow.STRUCTURE_INSPIRATION), "-1");
+        Assert.assertEquals(dashboard.getHeatMapValue(IN_ORG_USER_COLUMN, CadtHeatmapRow.ADAPTABILITY_ACTION), "1");
         dashboard.logout();
     }
 
@@ -185,27 +187,27 @@ public class OrganizationAdminDashboardTests extends BaseTest implements ITestWi
 
         dashboard.selectCadtOverviewOnMenu();
 
-        Assert.assertEquals(dashboard.getCadtHeatMapValue(ADMIN_USER_COLUMN, CadtHeatmapRow.VISIONARY), "-1");
-        Assert.assertEquals(dashboard.getCadtHeatMapValue(ADMIN_USER_COLUMN, CadtHeatmapRow.SCIENTIST), "1");
-        Assert.assertEquals(dashboard.getCadtHeatMapValue(ADMIN_USER_COLUMN, CadtHeatmapRow.TRADESMAN), "0");
-        Assert.assertEquals(dashboard.getCadtHeatMapValue(ADMIN_USER_COLUMN, CadtHeatmapRow.INNOVATOR), "-2");
-        Assert.assertEquals(dashboard.getCadtHeatMapValue(ADMIN_USER_COLUMN, CadtHeatmapRow.LEADER), "1");
-        Assert.assertEquals(dashboard.getCadtHeatMapValue(ADMIN_USER_COLUMN, CadtHeatmapRow.STRATEGIST), "1");
-        Assert.assertEquals(dashboard.getCadtHeatMapValue(ADMIN_USER_COLUMN, CadtHeatmapRow.BANKER), "0");
-        Assert.assertEquals(dashboard.getCadtHeatMapValue(ADMIN_USER_COLUMN, CadtHeatmapRow.RECEPTIVE), "1");
-        Assert.assertEquals(dashboard.getCadtHeatMapValue(ADMIN_USER_COLUMN, CadtHeatmapRow.STRUCTURE_INSPIRATION), "-1");
-        Assert.assertEquals(dashboard.getCadtHeatMapValue(ADMIN_USER_COLUMN, CadtHeatmapRow.ADAPTABILITY_ACTION), "1");
+        Assert.assertEquals(dashboard.getHeatMapValue(ADMIN_USER_COLUMN, CadtHeatmapRow.VISIONARY), "-1");
+        Assert.assertEquals(dashboard.getHeatMapValue(ADMIN_USER_COLUMN, CadtHeatmapRow.SCIENTIST), "1");
+        Assert.assertEquals(dashboard.getHeatMapValue(ADMIN_USER_COLUMN, CadtHeatmapRow.TRADESMAN), "0");
+        Assert.assertEquals(dashboard.getHeatMapValue(ADMIN_USER_COLUMN, CadtHeatmapRow.INNOVATOR), "-2");
+        Assert.assertEquals(dashboard.getHeatMapValue(ADMIN_USER_COLUMN, CadtHeatmapRow.LEADER), "1");
+        Assert.assertEquals(dashboard.getHeatMapValue(ADMIN_USER_COLUMN, CadtHeatmapRow.STRATEGIST), "1");
+        Assert.assertEquals(dashboard.getHeatMapValue(ADMIN_USER_COLUMN, CadtHeatmapRow.BANKER), "0");
+        Assert.assertEquals(dashboard.getHeatMapValue(ADMIN_USER_COLUMN, CadtHeatmapRow.RECEPTIVE), "1");
+        Assert.assertEquals(dashboard.getHeatMapValue(ADMIN_USER_COLUMN, CadtHeatmapRow.STRUCTURE_INSPIRATION), "-1");
+        Assert.assertEquals(dashboard.getHeatMapValue(ADMIN_USER_COLUMN, CadtHeatmapRow.ADAPTABILITY_ACTION), "1");
 
-        Assert.assertEquals(dashboard.getCadtHeatMapValue(IN_ORG_USER_COLUMN - 1, CadtHeatmapRow.VISIONARY), "1");
-        Assert.assertEquals(dashboard.getCadtHeatMapValue(IN_ORG_USER_COLUMN - 1, CadtHeatmapRow.SCIENTIST), "2");
-        Assert.assertEquals(dashboard.getCadtHeatMapValue(IN_ORG_USER_COLUMN - 1, CadtHeatmapRow.TRADESMAN), "0");
-        Assert.assertEquals(dashboard.getCadtHeatMapValue(IN_ORG_USER_COLUMN - 1, CadtHeatmapRow.INNOVATOR), "0");
-        Assert.assertEquals(dashboard.getCadtHeatMapValue(IN_ORG_USER_COLUMN - 1, CadtHeatmapRow.LEADER), "1");
-        Assert.assertEquals(dashboard.getCadtHeatMapValue(IN_ORG_USER_COLUMN - 1, CadtHeatmapRow.STRATEGIST), "1");
-        Assert.assertEquals(dashboard.getCadtHeatMapValue(IN_ORG_USER_COLUMN - 1, CadtHeatmapRow.BANKER), "-1");
-        Assert.assertEquals(dashboard.getCadtHeatMapValue(IN_ORG_USER_COLUMN - 1, CadtHeatmapRow.RECEPTIVE), "0");
-        Assert.assertEquals(dashboard.getCadtHeatMapValue(IN_ORG_USER_COLUMN - 1, CadtHeatmapRow.STRUCTURE_INSPIRATION), "-1");
-        Assert.assertEquals(dashboard.getCadtHeatMapValue(IN_ORG_USER_COLUMN - 1, CadtHeatmapRow.ADAPTABILITY_ACTION), "1");
+        Assert.assertEquals(dashboard.getHeatMapValue(IN_ORG_USER_COLUMN - 1, CadtHeatmapRow.VISIONARY), "1");
+        Assert.assertEquals(dashboard.getHeatMapValue(IN_ORG_USER_COLUMN - 1, CadtHeatmapRow.SCIENTIST), "2");
+        Assert.assertEquals(dashboard.getHeatMapValue(IN_ORG_USER_COLUMN - 1, CadtHeatmapRow.TRADESMAN), "0");
+        Assert.assertEquals(dashboard.getHeatMapValue(IN_ORG_USER_COLUMN - 1, CadtHeatmapRow.INNOVATOR), "0");
+        Assert.assertEquals(dashboard.getHeatMapValue(IN_ORG_USER_COLUMN - 1, CadtHeatmapRow.LEADER), "1");
+        Assert.assertEquals(dashboard.getHeatMapValue(IN_ORG_USER_COLUMN - 1, CadtHeatmapRow.STRATEGIST), "1");
+        Assert.assertEquals(dashboard.getHeatMapValue(IN_ORG_USER_COLUMN - 1, CadtHeatmapRow.BANKER), "-1");
+        Assert.assertEquals(dashboard.getHeatMapValue(IN_ORG_USER_COLUMN - 1, CadtHeatmapRow.RECEPTIVE), "0");
+        Assert.assertEquals(dashboard.getHeatMapValue(IN_ORG_USER_COLUMN - 1, CadtHeatmapRow.STRUCTURE_INSPIRATION), "-1");
+        Assert.assertEquals(dashboard.getHeatMapValue(IN_ORG_USER_COLUMN - 1, CadtHeatmapRow.ADAPTABILITY_ACTION), "1");
 
         //No more users are visible
 

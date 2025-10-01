@@ -1,6 +1,6 @@
 package com.biit.labstation.dashboard;
 
-public enum CadtHeatmapRow {
+public enum CadtHeatmapRow implements HeatmapRow {
     ADAPTABILITY_ACTION(0),
     BANKER(1),
     INNOVATOR(2),
