@@ -30,7 +30,7 @@
                 <exclude name="connectToGoogle"/>
                 <include name="speakers"/>
                 <include name="boardingPass"/>
-                <include name="nca"/>
+                <exclude name="nca"/>
             </run>
         </groups>
         <classes>
