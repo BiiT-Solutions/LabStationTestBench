@@ -60,7 +60,6 @@ public class NCA extends ToolTest {
                 getCustomChromeDriver().findElement(By.id(selection)).click();
                 LabStationLogger.debug(this.getClass(), "Selecting '{}' on '{}' number '{}'.", selection, question, questionNumber);
             }
-            ToolTest.waitComponent();
             try {
                 getCustomChromeDriver().findElement(By.id("submitted-message"));
                 LabStationLogger.debug(this.getClass(), "NCA Finished!");
