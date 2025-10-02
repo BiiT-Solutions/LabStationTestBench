@@ -17,6 +17,7 @@ public abstract class ToolTest {
     public static final int ONE_SECOND_WAITING_TIME = 2000;
     public static final int THREE_SECONDS_WAITING_TIME = 3000;
     public static final int FIVE_SECONDS_WAITING_TIME = 5000;
+    public static final int TEN_SECONDS_WAITING_TIME = 10000;
     protected static final int WAITING_TIME_SECONDS = 3;
     protected static final int LONG_WAITING_TIME_SECONDS = 15;
     private static final int WAITING_TO_ACCESS_BROWSER = 2000;
@@ -60,6 +61,10 @@ public abstract class ToolTest {
 
     public static void waitComponentFiveSecond() {
         waitComponent(FIVE_SECONDS_WAITING_TIME);
+    }
+
+    public static void waitComponentTenSecond() {
+        waitComponent(TEN_SECONDS_WAITING_TIME);
     }
 
     public static void waitComponent(int milliseconds) {
