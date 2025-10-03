@@ -68,10 +68,6 @@ public abstract class ToolTest {
         waitComponent(TEN_SECONDS_WAITING_TIME);
     }
 
-    public static void waitComponentTwentySecond() {
-        waitComponent(TWENTY_SECONDS_WAITING_TIME);
-    }
-
     public static void waitComponent(int milliseconds) {
         try {
             Thread.sleep(milliseconds);

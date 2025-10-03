@@ -59,8 +59,14 @@ public class Dashboard extends ToolTest {
         }
     }
 
-    public void selectNcaOverviewOnMenu() {
+    public void selectNcaPersonalOnMenu() {
         if (navBar.goTo("nav-item-nca", "nav-subitem-personal")) {
+            ToolTest.waitComponent();
+        }
+    }
+
+    public void selectNcaOverviewOnMenu() {
+        if (navBar.goTo("nav-item-nca", "nav-subitem-overview")) {
             ToolTest.waitComponent();
         }
     }

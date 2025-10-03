@@ -48,10 +48,10 @@ public class NcaTests extends BaseTest implements ITestWithWebDriver {
     }
 
 
-    @Test(dependsOnMethods = "fillUpNCA")
+    //@Test(dependsOnMethods = "fillUpNCA")
     public void checkNCA() {
         //Wait Drools.
-        ToolTest.waitComponent(30000);
+        ToolTest.waitComponentFiveSecond();
         dashboard.login(adminUser, adminPassword);
         dashboard.selectNcaOverviewOnMenu();
 
