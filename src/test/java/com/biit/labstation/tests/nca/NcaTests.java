@@ -47,7 +47,7 @@ public class NcaTests extends BaseTest implements ITestWithWebDriver {
         nca.logout();
     }
 
-    //@Test(dependsOnMethods = "fillUpNCA")
+
     @Test(dependsOnMethods = "fillUpNCA")
     public void checkNCA() {
         //Wait Drools.
