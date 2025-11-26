@@ -26,6 +26,7 @@ import com.biit.labstation.ToolTest;
 import com.biit.labstation.components.Login;
 import com.biit.labstation.components.NavBar;
 import com.biit.labstation.components.Popup;
+import com.biit.labstation.logger.ComponentLogger;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.springframework.beans.factory.annotation.Value;
@@ -96,6 +97,17 @@ public class Dashboard extends ToolTest {
     public void selectCustomerListOnMenu() {
         if (navBar.goTo("nav-item-customer-list")) {
             ToolTest.waitComponent();
+        }
+    }
+
+    public void showCustomerListTable() {
+        final WebElement clientListMenu = getCustomChromeDriver().findElementWaiting(By.id("show-menu"));
+        final String classAttribute = clientListMenu.getAttribute("class");
+        if (classAttribute == null || !classAttribute.contains("hided-clients")) {
+            ComponentLogger.debug(this.getClass().getName(), "Clients hidden!");
+            clientListMenu.click();
+        } else {
+            ComponentLogger.debug(this.getClass().getName(), "Clients already shown!");
         }
     }
 

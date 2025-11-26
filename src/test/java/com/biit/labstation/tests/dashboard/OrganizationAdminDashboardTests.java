@@ -245,7 +245,7 @@ public class OrganizationAdminDashboardTests extends BaseTest implements ITestWi
         ToolTest.waitComponent();
         dashboard.selectCustomerListOnMenu();
         ToolTest.waitComponent();
-
+        dashboard.showCustomerListTable();
         //Admin, Jack and Ptah has createdOn the user organization. + OrgAdmin.
         Assert.assertEquals(table.countRows(TableId.USERS_TABLE), 4);
 

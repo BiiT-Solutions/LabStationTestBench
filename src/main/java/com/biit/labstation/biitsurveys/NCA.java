@@ -75,6 +75,7 @@ public class NCA extends ToolTest {
                     getCustomChromeDriver().findElement(By.id("no")).click();
                     LabStationLogger.debug(this.getClass(), "Selecting 'no' on '{}' number '{}'.", question, questionNumber);
                 }
+                ToolTest.waitComponentHalfSecond();
             } catch (Exception e) {
                 //It is not a yes/no but a 1/2/3/4/5 question
                 final String selection = "value" + (random.nextInt(5) + 1);
