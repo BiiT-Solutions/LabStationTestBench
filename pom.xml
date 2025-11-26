@@ -52,6 +52,7 @@
 
     <properties>
         <main.basedir>${project.basedir}</main.basedir>
+        <selenium.version>4.38.0</selenium.version>
     </properties>
 
     <dependencies>

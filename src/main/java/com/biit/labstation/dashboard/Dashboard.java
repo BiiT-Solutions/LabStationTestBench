@@ -101,13 +101,20 @@ public class Dashboard extends ToolTest {
     }
 
     public void showCustomerListTable() {
-        final WebElement clientListMenu = getCustomChromeDriver().findElementWaiting(By.id("show-menu"));
-        final String classAttribute = clientListMenu.getAttribute("class");
-        if (classAttribute == null || !classAttribute.contains("hided-clients")) {
-            ComponentLogger.debug(this.getClass().getName(), "Clients hidden!");
+        try {
+            final WebElement clientListMenu = getCustomChromeDriver().findElementWaiting(By.className("show-client-list-menu"));
             clientListMenu.click();
-        } else {
+        } catch (Exception e) {
             ComponentLogger.debug(this.getClass().getName(), "Clients already shown!");
+        }
+    }
+
+    public void hideCustomerListTable() {
+        try {
+            final WebElement clientListMenu = getCustomChromeDriver().findElementWaiting(By.className("hide-client-list-menu"));
+            clientListMenu.click();
+        } catch (Exception e) {
+            ComponentLogger.debug(this.getClass().getName(), "Clients already hidden!");
         }
     }
 
