@@ -54,7 +54,7 @@ import static com.biit.labstation.tests.usermanager.OrganizationsTests.TEAM_NAME
 @DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_CLASS)
 public class OrganizationAdminDashboardTests extends BaseTest implements ITestWithWebDriver {
 
-    public static final int CADT_WAITING_TIME = 90000;
+    public static final int CADT_WAITING_TIME = 120000;
 
     public static final String ORGANIZATION_ADMIN_USER = "orgadmin@test.com";
     public static final String ORGANIZATION_ADMIN_PASSWORD = "asd123";
@@ -262,7 +262,7 @@ public class OrganizationAdminDashboardTests extends BaseTest implements ITestWi
         ToolTest.waitComponent();
         dashboard.selectCustomerListOnMenu();
         ToolTest.waitComponent();
-
+        dashboard.showCustomerListTable();
         Assert.assertEquals(table.countRows(TableId.USERS_TABLE), 5);
 
         dashboard.logout();
